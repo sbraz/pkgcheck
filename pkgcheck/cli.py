@@ -51,7 +51,7 @@ class OptionParser(commandline.OptionParser):
       packages to check.
     - src_repo is specified with -r or defaults to target_repo. It is used
       to get the profiles directory and other non-package repository data.
-    - repo_bases are the path(s) to selected repo(s).
+    - repo_paths are the path(s) to selected repo(s).
     - search_repo is a multiplex of target_repo and src_repo if they are
       different or just target_repo if they are the same. This is used for
       things like visibility checks (it is passed to the checkers in "start").
@@ -66,7 +66,7 @@ class OptionParser(commandline.OptionParser):
 
         # These are all set in check_values based on other options, so have
         # no default set through add_option.
-        self.set_default('repo_bases', [])
+        self.set_default('repo_paths', [])
         self.set_default('guessed_target_repo', False)
         self.set_default('guessed_suite', False)
         self.set_default('default_suite', False)
@@ -151,8 +151,8 @@ class OptionParser(commandline.OptionParser):
                     repo = suite.target_repo
                     if repo is None:
                         continue
-                    repo_base = getattr(repo, 'base', None)
-                    if repo_base is not None and cwd.startswith(repo_base):
+                    repo_path = getattr(repo, 'location', None)
+                    if repo_path is not None and cwd.startswith(repo_path):
                         candidates[repo] = name
                 if len(candidates) == 1:
                     values.guessed_suite = True
@@ -191,8 +191,8 @@ class OptionParser(commandline.OptionParser):
                     # definition with a base that contains our dir.
                     if cwd is None:
                         cwd = os.getcwd()
-                    repo_base = getattr(values.suite.target_repo, 'base', None)
-                    if repo_base is not None and cwd.startswith(repo_base):
+                    repo_path = getattr(values.suite.target_repo, 'location', None)
+                    if repo_path is not None and cwd.startswith(repo_path):
                         values.target_repo = values.suite.target_repo
         if values.target_repo is None:
             # We have no target repo (not explicitly passed, not from
@@ -202,8 +202,8 @@ class OptionParser(commandline.OptionParser):
                 cwd = os.getcwd()
             candidates = {}
             for name, repo in values.config.repo.iteritems():
-                repo_base = getattr(repo, 'base', None)
-                if repo_base is not None and cwd.startswith(repo_base):
+                repo_path = getattr(repo, 'location', None)
+                if repo_path is not None and cwd.startswith(repo_path):
                     candidates[repo] = name
             if not candidates:
                 self.error(
@@ -258,26 +258,26 @@ class OptionParser(commandline.OptionParser):
         # TODO improve this to deal with a multiplex repo.
         for repo in set((values.src_repo, values.target_repo)):
             if isinstance(repo, repository.UnconfiguredTree):
-                values.repo_bases.append(abspath(repo.base))
+                values.repo_paths.append(abspath(repo.location))
 
         if args:
             values.limiters = lists.stable_unique(
                 map(parserestrict.parse_match, args))
         else:
-            repo_base = getattr(values.target_repo, 'base', None)
-            if not repo_base:
+            repo_path = getattr(values.target_repo, 'location', None)
+            if not repo_path:
                 self.error(
                     'Either specify a target repo that is not multi-tree or '
                     'one or more extended atoms to scan '
                     '("*" for the entire repo).')
             cwd = abspath(os.getcwd())
-            repo_base = abspath(repo_base)
-            if not cwd.startswith(repo_base):
+            repo_path = abspath(repo_path)
+            if not cwd.startswith(repo_path):
                 self.error(
                     'Working dir (%s) is not inside target repo (%s). Fix '
                     'that or specify one or more extended atoms to scan.' % (
-                        cwd, repo_base))
-            bits = list(p for p in cwd[len(repo_base):].split(os.sep) if p)
+                        cwd, repo_path))
+            bits = list(p for p in cwd[len(repo_path):].split(os.sep) if p)
             if not bits:
                 values.limiters = [packages.AlwaysTrue]
             elif len(bits) == 1:
@@ -436,7 +436,7 @@ def main(options, out, err):
             list(get_plugins('reporter', plugins)))
         return 0
 
-    if not options.repo_bases:
+    if not options.repo_paths:
         err.write(
             'Warning: could not determine repository base for profiles. '
             'Some checks will not work. Either specify a plain target repo '
@@ -485,7 +485,7 @@ def main(options, out, err):
     if options.debug:
         err.write('target repo: ', repr(options.target_repo))
         err.write('source repo: ', repr(options.src_repo))
-        err.write('base dirs: ', repr(options.repo_bases))
+        err.write('repo paths: ', repr(options.repo_paths))
         for filterer in options.limiters:
             err.write('limiter: ', repr(filterer))
         debug = logging.debug

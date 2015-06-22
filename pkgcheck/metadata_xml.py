@@ -149,7 +149,7 @@ class base_check(base.Template):
 
     def __init__(self, options):
         base.Template.__init__(self, options)
-        self.base = getattr(options.src_repo, "base", None)
+        self.location = getattr(options.src_repo, "location", None)
         self.dtd_file = None
 
     def start(self):
@@ -157,7 +157,7 @@ class base_check(base.Template):
         refetch = False
         write_path = read_path = self.options.metadata_dtd
         if write_path is None:
-            read_path = pjoin(self.base, 'metadata', 'dtd', 'metadata.dtd')
+            read_path = pjoin(self.location, 'metadata', 'dtd', 'metadata.dtd')
         refetch = not os.path.isfile(read_path)
 
         if refetch:
@@ -251,7 +251,7 @@ class CategoryMetadataXmlCheck(base_check):
         if self.last_seen == pkg.category:
             return
         self.last_seen = pkg.category
-        loc = os.path.join(self.base, pkg.category, "metadata.xml")
+        loc = os.path.join(self.location, pkg.category, "metadata.xml")
         ret = self.check_file(loc)
         if ret is not None:
             reporter.add_report(ret(loc, pkg.category))
