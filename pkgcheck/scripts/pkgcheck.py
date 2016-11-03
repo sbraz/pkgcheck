@@ -65,6 +65,9 @@ list_options.add_argument(
 
 check_options = argparser.add_argument_group('check selection')
 check_options.add_argument(
+    '-k', '--keywords', action='extend_comma_toggle', dest='keywords_to_check',
+    help='limit scanning to specific warning/error keywords')
+check_options.add_argument(
     '-c', '--check', action='append', dest='checks_to_run',
     help='limit checks to regex or package/class matching')
 check_options.add_argument(
