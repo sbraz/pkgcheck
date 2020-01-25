@@ -108,7 +108,7 @@ where stdout is not a tty.</p>
 </div>
 <div class="section" id="id1">
 <h3>Synopsis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--glsa-dir GLSA_LOCATION] [--source-arches ARCH] [-p PROFILE] [--reset-caching-per {version,package,category}] [--timeout TIMEOUT] [-a ARCH] [--commits [COMMIT]] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--source-arches ARCH] [--reset-caching-per {version,package,category}] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h3>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h3>
@@ -259,13 +259,20 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h3>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h3>
 <dl class="option-list">
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
+</dd>
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="query-caching">
+<h3>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h3>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
 </dd>
 </dl>
 </div>
@@ -291,13 +298,6 @@ experimental, and deprecated profiles, respectively. Therefore,
 to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
 to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
 scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="query-caching">
-<h3>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h3>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
 </dd>
 </dl>
 </div>
@@ -355,7 +355,7 @@ determines any commits have been made to eclasses.</p>
 </div>
 <div class="section" id="id3">
 <h3>Synopsis<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [--commits [COMMIT]] [-a ARCH] [-p PROFILE]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [--commits [COMMIT]] [-p PROFILE]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h3>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h3>
@@ -401,7 +401,22 @@ where stdout is not a tty.</p>
 </dl>
 </div>
 <div class="section" id="id5">
-<h3>Git<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>Arches<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id6">
+<h3>Git<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>Git repo support for various checks.</p>
 <p>Pkgcheck can create virtual package repos from a given git repo's history
 in order to provide more info for checks relating to stable requests,
@@ -423,21 +438,6 @@ the current branch compared to the branch named 'old' use
 named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
 <p>Note that will also enable eclass-specific checks if it
 determines any commits have been made to eclasses.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="id6">
-<h3>Arches<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -3217,8 +3217,8 @@ compatible with earlier versions of Python.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#query-caching">Query Caching</a></li>
+<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
@@ -3226,8 +3226,8 @@ compatible with earlier versions of Python.</p>
 <li><a class="reference internal" href="#id3">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#id4">Base Options</a></li>
-<li><a class="reference internal" href="#id5">Git</a></li>
-<li><a class="reference internal" href="#id6">Arches</a></li>
+<li><a class="reference internal" href="#id5">Arches</a></li>
+<li><a class="reference internal" href="#id6">Git</a></li>
 <li><a class="reference internal" href="#id7">Profiles</a></li>
 <li><a class="reference internal" href="#pkgcheck-replay-replay-result-streams">pkgcheck replay - replay result streams</a></li>
 <li><a class="reference internal" href="#id8">Synopsis</a></li>
