@@ -162,12 +162,6 @@ Plugin Options
 --glsa-dir GLSA_LOCATION  
                           source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
 
-Query Caching
--------------
-
---reset-caching-per {version,package,category}  
-                                                control how often the cache is cleared (version, package or category)
-
 Profiles
 --------
 
@@ -244,3 +238,9 @@ origin master`` or similar will also create the reference.
                     
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
+
+Query Caching
+-------------
+
+--reset-caching-per {version,package,category}  
+                                                control how often the cache is cleared (version, package or category)
