@@ -1,0 +1,38 @@
+pkgcheck package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+
+   pkgcheck.checks
+   pkgcheck.plugins
+
+Submodules
+----------
+
+.. toctree::
+
+   pkgcheck.addons
+   pkgcheck.base
+   pkgcheck.cli
+   pkgcheck.const
+   pkgcheck.feeds
+   pkgcheck.git
+   pkgcheck.log
+   pkgcheck.net
+   pkgcheck.packages
+   pkgcheck.pipeline
+   pkgcheck.reporters
+   pkgcheck.results
+   pkgcheck.sources
+   pkgcheck.utils
+
+Module contents
+---------------
+
+.. automodule:: pkgcheck
+   :members:
+   :undoc-members:
+   :show-inheritance:

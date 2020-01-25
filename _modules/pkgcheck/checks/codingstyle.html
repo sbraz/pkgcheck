@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pkgcheck.checks.codingstyle &#8212; pkgcheck master documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pkgcheck.checks.codingstyle</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Various line-based checks.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">pkgcore.ebuild.eapi</span> <span class="kn">import</span> <span class="n">EAPI</span>
+<span class="kn">from</span> <span class="nn">snakeoil.klass</span> <span class="kn">import</span> <span class="n">jit_attr</span>
+<span class="kn">from</span> <span class="nn">snakeoil.mappings</span> <span class="kn">import</span> <span class="n">ImmutableDict</span>
+<span class="kn">from</span> <span class="nn">snakeoil.sequences</span> <span class="kn">import</span> <span class="n">stable_unique</span>
+<span class="kn">from</span> <span class="nn">snakeoil.strings</span> <span class="kn">import</span> <span class="n">pluralism</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">results</span><span class="p">,</span> <span class="n">sources</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Check</span>
+
+<span class="n">PREFIX_VARIABLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;EROOT&#39;</span><span class="p">,</span> <span class="s1">&#39;ED&#39;</span><span class="p">,</span> <span class="s1">&#39;EPREFIX&#39;</span><span class="p">)</span>
+<span class="n">PATH_VARIABLES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;BROOT&#39;</span><span class="p">,</span> <span class="s1">&#39;ROOT&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">PREFIX_VARIABLES</span>
+
+
+<span class="k">class</span> <span class="nc">_CommandResult</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">LineResult</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic command result.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">command</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">usage_desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.command!r}</span><span class="s1">&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.usage_desc}</span><span class="s1">, used on line </span><span class="si">{self.lineno}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;: </span><span class="si">{self.line!r}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+
+<span class="k">class</span> <span class="nc">_EapiCommandResult</span><span class="p">(</span><span class="n">_CommandResult</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generic EAPI command result.&quot;&quot;&quot;</span>
+
+    <span class="n">_status</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">eapi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eapi</span> <span class="o">=</span> <span class="n">eapi</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">usage_desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.command!r}</span><span class="s1"> </span><span class="si">{self._status}</span><span class="s1"> in EAPI </span><span class="si">{self.eapi}</span><span class="s1">&#39;</span>
+
+
+<div class="viewcode-block" id="DeprecatedEapiCommand"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.DeprecatedEapiCommand">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedEapiCommand</span><span class="p">(</span><span class="n">_EapiCommandResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses a deprecated EAPI command.&quot;&quot;&quot;</span>
+
+    <span class="n">_status</span> <span class="o">=</span> <span class="s1">&#39;deprecated&#39;</span></div>
+
+
+<div class="viewcode-block" id="BannedEapiCommand"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.BannedEapiCommand">[docs]</a><span class="k">class</span> <span class="nc">BannedEapiCommand</span><span class="p">(</span><span class="n">_EapiCommandResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses a banned EAPI command.&quot;&quot;&quot;</span>
+
+    <span class="n">_status</span> <span class="o">=</span> <span class="s1">&#39;banned&#39;</span></div>
+
+
+<div class="viewcode-block" id="BadCommandsCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.BadCommandsCheck">[docs]</a><span class="k">class</span> <span class="nc">BadCommandsCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for various deprecated and banned command usage.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">DeprecatedEapiCommand</span><span class="p">,</span> <span class="n">BannedEapiCommand</span><span class="p">])</span>
+
+    <span class="n">CMD_USAGE_REGEX</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;^(\s*|.*[|&amp;{{(]+\s*)\b(?P&lt;cmd&gt;</span><span class="si">{}</span><span class="s1">)(?!\.)\b&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_cmds_regex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmds</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CMD_USAGE_REGEX</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmds</span><span class="p">)))</span>
+
+    <span class="nd">@jit_attr</span>
+    <span class="k">def</span> <span class="nf">regexes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">eapi_str</span><span class="p">,</span> <span class="n">eapi</span> <span class="ow">in</span> <span class="n">EAPI</span><span class="o">.</span><span class="n">known_eapis</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">regexes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">eapi</span><span class="o">.</span><span class="n">bash_cmds_banned</span><span class="p">:</span>
+                <span class="n">regexes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cmds_regex</span><span class="p">(</span><span class="n">eapi</span><span class="o">.</span><span class="n">bash_cmds_banned</span><span class="p">),</span>
+                    <span class="n">BannedEapiCommand</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s1">&#39;eapi&#39;</span><span class="p">:</span> <span class="n">eapi_str</span><span class="p">},</span>
+                <span class="p">))</span>
+            <span class="k">if</span> <span class="n">eapi</span><span class="o">.</span><span class="n">bash_cmds_deprecated</span><span class="p">:</span>
+                <span class="n">regexes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cmds_regex</span><span class="p">(</span><span class="n">eapi</span><span class="o">.</span><span class="n">bash_cmds_deprecated</span><span class="p">),</span>
+                    <span class="n">DeprecatedEapiCommand</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s1">&#39;eapi&#39;</span><span class="p">:</span> <span class="n">eapi_str</span><span class="p">},</span>
+                <span class="p">))</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">eapi_str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">regexes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ImmutableDict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BadCommandsCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.BadCommandsCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="n">regexes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regexes</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">regex</span><span class="p">,</span> <span class="n">result_cls</span><span class="p">,</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">regexes</span><span class="p">:</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">yield</span> <span class="n">result_cls</span><span class="p">(</span>
+                            <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">),</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="MissingSlash"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.MissingSlash">[docs]</a><span class="k">class</span> <span class="nc">MissingSlash</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses a path variable missing a trailing slash.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.match}</span><span class="s1"> missing trailing slash on line</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{lines}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="UnnecessarySlashStrip"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.UnnecessarySlashStrip">[docs]</a><span class="k">class</span> <span class="nc">UnnecessarySlashStrip</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses a path variable that strips a nonexistent slash.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.match}</span><span class="s1"> unnecessary slash strip on line</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{lines}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="DoublePrefixInPath"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.DoublePrefixInPath">[docs]</a><span class="k">class</span> <span class="nc">DoublePrefixInPath</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses two consecutive paths including EPREFIX.</span>
+
+<span class="sd">    Ebuild combines two path variables (or a variable and a getter), both</span>
+<span class="sd">    of which include EPREFIX, resulting in double prefixing. This is the case</span>
+<span class="sd">    when combining many pkg-config-based or alike getters with ED or EROOT.</span>
+
+<span class="sd">    For example, ``${ED}$(python_get_sitedir)`` should be replaced</span>
+<span class="sd">    with ``${D}$(python_get_sitedir)``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">match</span> <span class="o">=</span> <span class="n">match</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.match}</span><span class="s1">: concatenates two paths containing EPREFIX on line</span><span class="si">{s}</span><span class="s1"> </span><span class="si">{lines}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="PathVariablesCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.PathVariablesCheck">[docs]</a><span class="k">class</span> <span class="nc">PathVariablesCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for path variables with various issues.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">MissingSlash</span><span class="p">,</span> <span class="n">UnnecessarySlashStrip</span><span class="p">,</span> <span class="n">DoublePrefixInPath</span><span class="p">])</span>
+    <span class="n">prefixed_dir_functions</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">&#39;insinto&#39;</span><span class="p">,</span> <span class="s1">&#39;exeinto&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;dodir&#39;</span><span class="p">,</span> <span class="s1">&#39;keepdir&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;fowners&#39;</span><span class="p">,</span> <span class="s1">&#39;fperms&#39;</span><span class="p">,</span>
+        <span class="c1"># java-pkg-2</span>
+        <span class="s1">&#39;java-pkg_jarinto&#39;</span><span class="p">,</span> <span class="s1">&#39;java-pkg_sointo&#39;</span><span class="p">,</span>
+        <span class="c1"># python-utils-r1</span>
+        <span class="s1">&#39;python_scriptinto&#39;</span><span class="p">,</span> <span class="s1">&#39;python_moduleinto&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># TODO: add variables to mark this status in the eclasses in order to pull</span>
+    <span class="c1"># this data from parsed eclass docs</span>
+    <span class="n">prefixed_getters</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1"># bash-completion-r1.eclass</span>
+        <span class="s1">&#39;get_bashcompdir&#39;</span><span class="p">,</span> <span class="s1">&#39;get_bashhelpersdir&#39;</span><span class="p">,</span>
+        <span class="c1"># db-use.eclass</span>
+        <span class="s1">&#39;db_includedir&#39;</span><span class="p">,</span>
+        <span class="c1"># golang-base.eclass</span>
+        <span class="s1">&#39;get_golibdir_gopath&#39;</span><span class="p">,</span>
+        <span class="c1"># llvm.eclass</span>
+        <span class="s1">&#39;get_llvm_prefix&#39;</span><span class="p">,</span>
+        <span class="c1"># python-utils-r1.eclass</span>
+        <span class="s1">&#39;python_get_sitedir&#39;</span><span class="p">,</span> <span class="s1">&#39;python_get_includedir&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;python_get_library_path&#39;</span><span class="p">,</span> <span class="s1">&#39;python_get_scriptdir&#39;</span><span class="p">,</span>
+        <span class="c1"># qmake-utils.eclass</span>
+        <span class="s1">&#39;qt4_get_bindir&#39;</span><span class="p">,</span> <span class="s1">&#39;qt5_get_bindir&#39;</span><span class="p">,</span>
+        <span class="c1"># s6.eclass</span>
+        <span class="s1">&#39;s6_get_servicedir&#39;</span><span class="p">,</span>
+        <span class="c1"># systemd.eclass</span>
+        <span class="s1">&#39;systemd_get_systemunitdir&#39;</span><span class="p">,</span> <span class="s1">&#39;systemd_get_userunitdir&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;systemd_get_utildir&#39;</span><span class="p">,</span> <span class="s1">&#39;systemd_get_systemgeneratordir&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">prefixed_rhs_variables</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1"># catch silly ${ED}${EPREFIX} mistake ;-)</span>
+        <span class="s1">&#39;EPREFIX&#39;</span><span class="p">,</span>
+        <span class="c1"># python-utils-r1.eclass</span>
+        <span class="s1">&#39;PYTHON&#39;</span><span class="p">,</span> <span class="s1">&#39;PYTHON_SITEDIR&#39;</span><span class="p">,</span> <span class="s1">&#39;PYTHON_INCLUDEDIR&#39;</span><span class="p">,</span> <span class="s1">&#39;PYTHON_LIBPATH&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PYTHON_CONFIG&#39;</span><span class="p">,</span> <span class="s1">&#39;PYTHON_SCRIPTDIR&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">missing_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\${(</span><span class="si">%s</span><span class="s1">)})&quot;?\w+/&#39;</span> <span class="o">%</span> <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_VARIABLES</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unnecessary_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\${(</span><span class="si">%s</span><span class="s1">)</span><span class="si">%%</span><span class="s1">/})&#39;</span> <span class="o">%</span> <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_VARIABLES</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s1">&#39;(\${(</span><span class="si">%s</span><span class="s1">)(</span><span class="si">%%</span><span class="s1">/)?}/?\$(\((</span><span class="si">%s</span><span class="s1">)\)|{(</span><span class="si">%s</span><span class="s1">)}))&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PREFIX_VARIABLES</span><span class="p">),</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_getters</span><span class="p">),</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_rhs_variables</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_func_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s1">&#39;\b(</span><span class="si">%s</span><span class="s1">)\s[^&amp;|;]*\$(\((</span><span class="si">%s</span><span class="s1">)\)|{(</span><span class="si">%s</span><span class="s1">)})&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_dir_functions</span><span class="p">),</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_getters</span><span class="p">),</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_rhs_variables</span><span class="p">)))</span>
+        <span class="c1"># do not catch ${foo#${EPREFIX}} and similar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_func_false_positive_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s1">&#39;.*?[#][&quot;]?\$(\((</span><span class="si">%s</span><span class="s1">)\)|{(</span><span class="si">%s</span><span class="s1">)})&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_getters</span><span class="p">),</span>
+                <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefixed_rhs_variables</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="PathVariablesCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.PathVariablesCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">unnecessary</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">double_prefix</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># flag double path prefix usage on uncommented lines only</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">double_prefix</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_func_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">double_prefix_func_false_positive_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+                            <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">double_prefix</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span>
+
+            <span class="c1"># skip EAPIs that don&#39;t require trailing slashes</span>
+            <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">trailing_slash</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">missing</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unnecessary_regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">unnecessary</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lineno</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">missing</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">MissingSlash</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">unnecessary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">UnnecessarySlashStrip</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">match</span><span class="p">,</span> <span class="n">lines</span> <span class="ow">in</span> <span class="n">double_prefix</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">DoublePrefixInPath</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AbsoluteSymlink"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.AbsoluteSymlink">[docs]</a><span class="k">class</span> <span class="nc">AbsoluteSymlink</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">LineResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses dosym with absolute paths instead of relative.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;dosym called with absolute path on line </span><span class="si">{self.lineno}</span><span class="s2">: </span><span class="si">{self.cmd}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="AbsoluteSymlinkCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.AbsoluteSymlinkCheck">[docs]</a><span class="k">class</span> <span class="nc">AbsoluteSymlinkCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for dosym absolute path usage instead of relative.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">AbsoluteSymlink</span><span class="p">])</span>
+
+    <span class="n">DIRS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;etc&#39;</span><span class="p">,</span> <span class="s1">&#39;lib&#39;</span><span class="p">,</span> <span class="s1">&#39;opt&#39;</span><span class="p">,</span> <span class="s1">&#39;sbin&#39;</span><span class="p">,</span> <span class="s1">&#39;srv&#39;</span><span class="p">,</span> <span class="s1">&#39;usr&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DIRS</span><span class="p">)</span>
+        <span class="n">path_vars</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PATH_VARIABLES</span><span class="p">)</span>
+        <span class="n">prefixed_regex</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;&quot;\${{(</span><span class="si">{path_vars}</span><span class="s1">)(%/)?}}(?P&lt;cp&gt;&quot;)?(?(cp)\S*|.*?&quot;)&#39;</span>
+        <span class="n">non_prefixed_regex</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;(?P&lt;op&gt;[&quot;</span><span class="se">\&#39;</span><span class="s1">])?/(</span><span class="si">{dirs}</span><span class="s1">)(?(op).*?(?P=op)|\S*)&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;^\s*(?P&lt;cmd&gt;dosym\s+(</span><span class="si">{prefixed_regex}</span><span class="s1">|</span><span class="si">{non_prefixed_regex}</span><span class="s1">))&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AbsoluteSymlinkCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.AbsoluteSymlinkCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">AbsoluteSymlink</span><span class="p">(</span><span class="n">matches</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">),</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DeprecatedInsinto"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.DeprecatedInsinto">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedInsinto</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">LineResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild uses insinto where more compact commands exist.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;deprecated insinto usage (use </span><span class="si">{self.cmd}</span><span class="s1"> instead), &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;line </span><span class="si">{self.lineno}</span><span class="s1">: </span><span class="si">{self.line}</span><span class="s1">&#39;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="InsintoCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.InsintoCheck">[docs]</a><span class="k">class</span> <span class="nc">InsintoCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for deprecated insinto usage.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">DeprecatedInsinto</span><span class="p">])</span>
+
+    <span class="n">path_mapping</span> <span class="o">=</span> <span class="n">ImmutableDict</span><span class="p">({</span>
+        <span class="s1">&#39;/etc/conf.d&#39;</span><span class="p">:</span> <span class="s1">&#39;doconfd or newconfd&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;/etc/env.d&#39;</span><span class="p">:</span> <span class="s1">&#39;doenvd or newenvd&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;/etc/init.d&#39;</span><span class="p">:</span> <span class="s1">&#39;doinitd or newinitd&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;/etc/pam.d&#39;</span><span class="p">:</span> <span class="s1">&#39;dopamd or newpamd from pam.eclass&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;/usr/share/applications&#39;</span><span class="p">:</span> <span class="s1">&#39;domenu or newmenu from desktop.eclass&#39;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;/+&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/?&#39;</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mapping</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insinto_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">rf</span><span class="s1">&#39;(?P&lt;insinto&gt;insinto[ \t]+(?P&lt;path&gt;</span><span class="si">{paths}</span><span class="s1">)(?!/\w+))(?:$|[/ \t])&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insinto_doc_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s1">&#39;(?P&lt;insinto&gt;insinto[ \t]+/usr/share/doc/(&quot;)?\$\{PF?\}(?(2)\2)(/\w+)*)(?:$|[/ \t])&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InsintoCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.InsintoCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">continue</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insinto_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;//+&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">matches</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">))</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mapping</span><span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)]</span>
+                <span class="k">yield</span> <span class="n">DeprecatedInsinto</span><span class="p">(</span>
+                    <span class="n">cmd</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">matches</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;insinto&#39;</span><span class="p">),</span> <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="c1"># Check for insinto usage that should be replaced with</span>
+            <span class="c1"># docinto/dodoc [-r] under supported EAPIs.</span>
+            <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">dodoc_allow_recursive</span><span class="p">:</span>
+                <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insinto_doc_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">matches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">DeprecatedInsinto</span><span class="p">(</span>
+                        <span class="s1">&#39;docinto/dodoc&#39;</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">matches</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;insinto&#39;</span><span class="p">),</span>
+                        <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ObsoleteUri"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.ObsoleteUri">[docs]</a><span class="k">class</span> <span class="nc">ObsoleteUri</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;URI used is obsolete.</span>
+
+<span class="sd">    The URI used to fetch distfile is obsolete and can be replaced</span>
+<span class="sd">    by something more modern. Note that the modern replacement usually</span>
+<span class="sd">    results in different file contents, so you need to rename it (to</span>
+<span class="sd">    avoid mirror collisions with the old file) and update the ebuild</span>
+<span class="sd">    (for example, by removing no longer necessary vcs-snapshot.eclass).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">replacement</span> <span class="o">=</span> <span class="n">replacement</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;obsolete fetch URI: </span><span class="si">{self.uri}</span><span class="s2"> on line &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{self.line}</span><span class="s2">, should be replaced by: </span><span class="si">{self.replacement}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ObsoleteUriCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.ObsoleteUriCheck">[docs]</a><span class="k">class</span> <span class="nc">ObsoleteUriCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for obsolete URIs.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">ObsoleteUri</span><span class="p">])</span>
+
+    <span class="n">REGEXPS</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*\b(?P&lt;uri&gt;(?P&lt;prefix&gt;https?://github\.com/.*?/.*?/)&#39;</span>
+         <span class="sa">r</span><span class="s1">&#39;(?:tar|zip)ball(?P&lt;ref&gt;\S*))&#39;</span><span class="p">,</span>
+         <span class="sa">r</span><span class="s1">&#39;\g&lt;prefix&gt;archive\g&lt;ref&gt;.tar.gz&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*\b(?P&lt;uri&gt;(?P&lt;prefix&gt;https?://gitlab\.com/.*?/(?P&lt;pkg&gt;.*?)/)&#39;</span>
+         <span class="sa">r</span><span class="s1">&#39;repository/archive\.(?P&lt;format&gt;tar|tar\.gz|tar\.bz2|zip)&#39;</span>
+         <span class="sa">r</span><span class="s1">&#39;\?ref=(?P&lt;ref&gt;\S*))&#39;</span><span class="p">,</span>
+         <span class="sa">r</span><span class="s1">&#39;\g&lt;prefix&gt;-/archive/\g&lt;ref&gt;/\g&lt;pkg&gt;-\g&lt;ref&gt;.\g&lt;format&gt;&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regexes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">regexp</span><span class="p">,</span> <span class="n">repl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">REGEXPS</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regexes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">regexp</span><span class="p">),</span> <span class="n">repl</span><span class="p">))</span>
+
+<div class="viewcode-block" id="ObsoleteUriCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.ObsoleteUriCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="c1"># searching for multiple matches on a single line is too slow</span>
+            <span class="k">for</span> <span class="n">regexp</span><span class="p">,</span> <span class="n">repl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">regexes</span><span class="p">:</span>
+                <span class="n">matches</span> <span class="o">=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">matches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">uri</span> <span class="o">=</span> <span class="n">matches</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">ObsoleteUri</span><span class="p">(</span><span class="n">lineno</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">regexp</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">repl</span><span class="p">,</span> <span class="n">uri</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HomepageInSrcUri"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.HomepageInSrcUri">[docs]</a><span class="k">class</span> <span class="nc">HomepageInSrcUri</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;${HOMEPAGE} is referenced in SRC_URI.</span>
+
+<span class="sd">    SRC_URI is built on top of ${HOMEPAGE}. This is discouraged since HOMEPAGE</span>
+<span class="sd">    is multi-valued by design, and is subject to potential changes that should</span>
+<span class="sd">    not accidentally affect SRC_URI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;$</span><span class="si">{HOMEPAGE}</span><span class="s1"> in SRC_URI&#39;</span></div>
+
+
+<div class="viewcode-block" id="StaticSrcUri"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.StaticSrcUri">[docs]</a><span class="k">class</span> <span class="nc">StaticSrcUri</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;SRC_URI contains static value instead of the dynamic equivalent.</span>
+
+<span class="sd">    For example, using static text to relate to the package version in SRC_URI</span>
+<span class="sd">    instead of ${P} or ${PV} where relevant.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">static_str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">static_str</span> <span class="o">=</span> <span class="n">static_str</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.static_str!r}</span><span class="s1"> in SRC_URI&#39;</span></div>
+
+
+<div class="viewcode-block" id="VariableInHomepage"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.VariableInHomepage">[docs]</a><span class="k">class</span> <span class="nc">VariableInHomepage</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;HOMEPAGE includes a variable.</span>
+
+<span class="sd">    The HOMEPAGE ebuild variable entry in the devmanual [#]_ states only raw</span>
+<span class="sd">    text should be used.</span>
+
+<span class="sd">    .. [#] https://devmanual.gentoo.org/ebuild-writing/variables/#ebuild-defined-variables</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;HOMEPAGE includes variable</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{variables}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="RawEbuildCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RawEbuildCheck">[docs]</a><span class="k">class</span> <span class="nc">RawEbuildCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan raw ebuild content for various issues.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">HomepageInSrcUri</span><span class="p">,</span> <span class="n">StaticSrcUri</span><span class="p">,</span> <span class="n">VariableInHomepage</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">attr_vars</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;HOMEPAGE&#39;</span><span class="p">,</span> <span class="s1">&#39;SRC_URI&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attr_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">rf</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;^\s*(?P&lt;{x.lower()}&gt;</span><span class="si">{x}</span><span class="s1">=&quot;[^&quot;]*&quot;)&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">attr_vars</span><span class="p">),</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\${?\w+}?&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RawEbuildCheck.check_homepage"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RawEbuildCheck.check_homepage">[docs]</a>    <span class="k">def</span> <span class="nf">check_homepage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_regex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">VariableInHomepage</span><span class="p">(</span><span class="n">stable_unique</span><span class="p">(</span><span class="n">matches</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RawEbuildCheck.check_src_uri"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RawEbuildCheck.check_src_uri">[docs]</a>    <span class="k">def</span> <span class="nf">check_src_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;$</span><span class="si">{HOMEPAGE}</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">HomepageInSrcUri</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+
+        <span class="n">exts</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">archive_exts_regex_pattern</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">P</span><span class="p">)</span>
+        <span class="n">PV</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">PV</span><span class="p">)</span>
+        <span class="n">static_src_uri_re</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;/(?P&lt;static_str&gt;(</span><span class="si">{P}{exts}</span><span class="s1">(?=&quot;|\n)|</span><span class="si">{PV}</span><span class="s1">(?=/)))&#39;</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">static_src_uri_re</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+            <span class="n">static_str</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;static_str&#39;</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">StaticSrcUri</span><span class="p">(</span><span class="n">static_str</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RawEbuildCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RawEbuildCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attr_regex</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">)):</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">lastgroup</span>
+            <span class="n">func</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;check_</span><span class="si">{attr}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="n">func</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="RedundantDodir"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RedundantDodir">[docs]</a><span class="k">class</span> <span class="nc">RedundantDodir</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">LineResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ebuild using a redundant dodir call.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;dodir called before </span><span class="si">{self.cmd}</span><span class="s2">, line </span><span class="si">{self.lineno}</span><span class="s2">: </span><span class="si">{self.line}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="RedundantDodirCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RedundantDodirCheck">[docs]</a><span class="k">class</span> <span class="nc">RedundantDodirCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan ebuild for redundant dodir usage.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">RedundantDodir</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">cmds</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s1">&#39;insinto&#39;</span><span class="p">,</span> <span class="s1">&#39;exeinto&#39;</span><span class="p">,</span> <span class="s1">&#39;docinto&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmds_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;^\s*(?P&lt;cmd&gt;(</span><span class="si">{cmds}</span><span class="s1">))\s+(?P&lt;path&gt;\S+)&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dodir_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;^\s*(?P&lt;call&gt;dodir\s+(?P&lt;path&gt;\S+))&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RedundantDodirCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.codingstyle.html#pkgcheck.checks.codingstyle.RedundantDodirCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span> <span class="ow">or</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">dodir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dodir_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dodir</span><span class="p">:</span>
+                <span class="n">lineno</span><span class="p">,</span> <span class="n">line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmds_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cmd</span> <span class="ow">and</span> <span class="n">dodir</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">cmd</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">):</span>
+                    <span class="k">yield</span> <span class="n">RedundantDodir</span><span class="p">(</span>
+                        <span class="n">cmd</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;cmd&#39;</span><span class="p">),</span> <span class="n">line</span><span class="o">=</span><span class="n">dodir</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;call&#39;</span><span class="p">),</span>
+                        <span class="n">lineno</span><span class="o">=</span><span class="n">lineno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, pkgcheck contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
+  </body>
+</html>

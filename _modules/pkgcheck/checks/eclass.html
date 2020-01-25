@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>pkgcheck.checks.eclass &#8212; pkgcheck master documentation</title>
+    <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pkgcheck.checks.eclass</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">snakeoil.mappings</span> <span class="kn">import</span> <span class="n">ImmutableDict</span>
+<span class="kn">from</span> <span class="nn">snakeoil.process.spawn</span> <span class="kn">import</span> <span class="n">spawn_get_output</span>
+<span class="kn">from</span> <span class="nn">snakeoil.strings</span> <span class="kn">import</span> <span class="n">pluralism</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">sources</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Check</span>
+
+
+<div class="viewcode-block" id="DeprecatedEclass"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.DeprecatedEclass">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedEclass</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Package uses an eclass that is deprecated/abandoned.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eclasses</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">eclasses</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">eclass_migration</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">old_eclass</span><span class="p">,</span> <span class="n">new_eclass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_eclass</span><span class="p">:</span>
+                <span class="n">update_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;migrate to </span><span class="si">{new_eclass}</span><span class="s1">&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">update_path</span> <span class="o">=</span> <span class="s1">&#39;no replacement&#39;</span>
+            <span class="n">eclass_migration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{old_eclass}</span><span class="s1"> (</span><span class="si">{update_path}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+        <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="n">eclass_migration</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
+        <span class="n">eclasses</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">eclass_migration</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;uses deprecated eclass</span><span class="si">{es}</span><span class="s1">: [ </span><span class="si">{eclasses}</span><span class="s1"> ]&#39;</span></div>
+
+
+<div class="viewcode-block" id="DuplicateEclassInherits"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.DuplicateEclassInherits">[docs]</a><span class="k">class</span> <span class="nc">DuplicateEclassInherits</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An ebuild directly inherits the same eclass multiple times.</span>
+
+<span class="sd">    Note that this will flag ebuilds that conditionalize global metadata by</span>
+<span class="sd">    package version (or some other fashion) while inheriting the same eclass</span>
+<span class="sd">    under both branches, e.g. conditional live ebuilds. In this case, shared</span>
+<span class="sd">    eclasses should be loaded in a separate, unconditional inherit call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eclasses</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">eclasses</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">eclasses</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">)</span>
+        <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;duplicate inherits for eclass</span><span class="si">{es}</span><span class="s1">: </span><span class="si">{eclasses}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="EclassUsageCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassUsageCheck">[docs]</a><span class="k">class</span> <span class="nc">EclassUsageCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan packages for various eclass-related issues.&quot;&quot;&quot;</span>
+
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">DeprecatedEclass</span><span class="p">,</span> <span class="n">DuplicateEclassInherits</span><span class="p">])</span>
+
+    <span class="n">blacklist</span> <span class="o">=</span> <span class="n">ImmutableDict</span><span class="p">({</span>
+        <span class="s1">&#39;64-bit&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;autotools-multilib&#39;</span><span class="p">:</span> <span class="s1">&#39;multilib-minimal&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;autotools-utils&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;bash-completion&#39;</span><span class="p">:</span> <span class="s1">&#39;bash-completion-r1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;boost-utils&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;clutter&#39;</span><span class="p">:</span> <span class="s1">&#39;gnome2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;confutils&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;darcs&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;distutils&#39;</span><span class="p">:</span> <span class="s1">&#39;distutils-r1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;db4-fix&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;debian&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;embassy-2.10&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;embassy-2.9&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;epatch&#39;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s1">&#39;eapply from EAPI 6&#39;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">pkg</span><span class="p">:</span> <span class="s1">&#39;eapply&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">bash_funcs</span><span class="p">),</span>
+        <span class="s1">&#39;fdo-mime&#39;</span><span class="p">:</span> <span class="s1">&#39;xdg-utils&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;games&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;gems&#39;</span><span class="p">:</span> <span class="s1">&#39;ruby-fakegem&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;git&#39;</span><span class="p">:</span> <span class="s1">&#39;git-r3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;git-2&#39;</span><span class="p">:</span> <span class="s1">&#39;git-r3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gcc&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;gnustep-old&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;gpe&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;gst-plugins-bad&#39;</span><span class="p">:</span> <span class="s1">&#39;gstreamer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gst-plugins-base&#39;</span><span class="p">:</span> <span class="s1">&#39;gstreamer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gst-plugins-good&#39;</span><span class="p">:</span> <span class="s1">&#39;gstreamer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gst-plugins-ugly&#39;</span><span class="p">:</span> <span class="s1">&#39;gstreamer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gst-plugins10&#39;</span><span class="p">:</span> <span class="s1">&#39;gstreamer&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;gtk-engines&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;gtk-engines2&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;inherit&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;jakarta-commons&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;java-pkg&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;java-utils&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;kde-base&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;kde-i18n&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;kde4-meta-pkg&#39;</span><span class="p">:</span> <span class="s1">&#39;kde5-meta-pkg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;kde-source&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;kmod&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;koffice-i18n&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;mono&#39;</span><span class="p">:</span> <span class="s1">&#39;mono-env&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;mozconfig&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;mozconfig-2&#39;</span><span class="p">:</span> <span class="s1">&#39;mozconfig-3&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;mozcoreconf&#39;</span><span class="p">:</span> <span class="s1">&#39;mozcoreconf-2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;motif&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;mozilla&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;myth&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;pcmcia&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;perl-post&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-2&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext-base&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext-pecl&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext-pecl-r1&#39;</span><span class="p">:</span> <span class="s1">&#39;php-ext-pecl-r2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext-source&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-ext-source-r1&#39;</span><span class="p">:</span> <span class="s1">&#39;php-ext-source-r2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;php-lib&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php-pear&#39;</span><span class="p">:</span> <span class="s1">&#39;php-pear-r1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;php-sapi&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php5-sapi&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php5-sapi-r1&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php5-sapi-r2&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;php5-sapi-r3&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;python&#39;</span><span class="p">:</span> <span class="s1">&#39;python-r1 / python-single-r1 / python-any-r1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;python-distutils-ng&#39;</span><span class="p">:</span> <span class="s1">&#39;python-r1 + distutils-r1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;qt3&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;qt4&#39;</span><span class="p">:</span> <span class="s1">&#39;qt4-r2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ruby&#39;</span><span class="p">:</span> <span class="s1">&#39;ruby-ng&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ruby-gnome2&#39;</span><span class="p">:</span> <span class="s1">&#39;ruby-ng-gnome2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;tla&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;ltprune&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;acct-user/acct-group packages&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;versionator&#39;</span><span class="p">:</span> <span class="p">(</span>
+            <span class="s1">&#39;ver_* functions from EAPI 7&#39;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">pkg</span><span class="p">:</span> <span class="s1">&#39;ver_cut&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">bash_funcs</span><span class="p">),</span>
+        <span class="s1">&#39;vim&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;webapp-apache&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;x-modular&#39;</span><span class="p">:</span> <span class="s1">&#39;xorg-2&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;xfconf&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s1">&#39;xfree&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">})</span>
+
+<div class="viewcode-block" id="EclassUsageCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassUsageCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="n">deprecated</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">duplicates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">inherited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">eclass</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">inherit</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eclass</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inherited</span><span class="p">:</span>
+                <span class="n">inherited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">eclass</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">duplicates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">eclass</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">eclass</span> <span class="ow">in</span> <span class="n">inherited</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="p">):</span>
+            <span class="n">replacement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blacklist</span><span class="p">[</span><span class="n">eclass</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">replacement</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">replacement</span><span class="p">,</span> <span class="n">conditional</span> <span class="o">=</span> <span class="n">replacement</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">conditional</span><span class="p">(</span><span class="n">pkg</span><span class="p">):</span>
+                    <span class="k">continue</span>
+            <span class="n">deprecated</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">eclass</span><span class="p">,</span> <span class="n">replacement</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">duplicates</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DuplicateEclassInherits</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">duplicates</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">deprecated</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">DeprecatedEclass</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">deprecated</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="EclassBashSyntaxError"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassBashSyntaxError">[docs]</a><span class="k">class</span> <span class="nc">EclassBashSyntaxError</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">EclassResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Bash syntax error in the related eclass.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="n">lineno</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">error</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: bash syntax error, line </span><span class="si">{self.lineno}</span><span class="s1">: </span><span class="si">{self.error}</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="EclassCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassCheck">[docs]</a><span class="k">class</span> <span class="nc">EclassCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scan eclasses for various issues.&quot;&quot;&quot;</span>
+
+    <span class="n">scope</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">eclass_scope</span>
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EclassRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">EclassBashSyntaxError</span><span class="p">])</span>
+
+<div class="viewcode-block" id="EclassCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eclass</span><span class="p">):</span>
+        <span class="n">ret</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">spawn_get_output</span><span class="p">([</span><span class="s1">&#39;bash&#39;</span><span class="p">,</span> <span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="n">eclass</span><span class="o">.</span><span class="n">path</span><span class="p">],</span> <span class="n">collect_fds</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">lineno</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">path</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">lineno</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+                <span class="n">error</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">EclassBashSyntaxError</span><span class="p">(</span><span class="n">lineno</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">eclass</span><span class="o">=</span><span class="n">eclass</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, pkgcheck contributors.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
+  </body>
+</html>
