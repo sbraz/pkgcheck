@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [--timeout TIMEOUT] [-a ARCH] [--source-arches ARCH] [--reset-caching-per {version,package,category}] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--commits [COMMIT]] [--reset-caching-per {version,package,category}] [--glsa-dir GLSA_LOCATION] [-p PROFILE] [--source-arches ARCH] [--timeout TIMEOUT] [-a ARCH] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -201,31 +201,6 @@ lagging stabilization.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="profiles">
-<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="git">
 <h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
 <p>Git repo support for various checks.</p>
@@ -252,6 +227,38 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="profiles">
+<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="network">
 <h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
@@ -275,19 +282,12 @@ arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="pkgcheck-cache-update-remove-pkgcheck-caches">
 <h1>pkgcheck cache - update/remove pkgcheck caches<a class="headerlink" href="#pkgcheck-cache-update-remove-pkgcheck-caches" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="id1">
 <h1>Synopsis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [-p PROFILE] [--commits [COMMIT]]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [--commits [COMMIT]] [-p PROFILE]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h1>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -348,32 +348,7 @@ arches having stable profiles in the target repo.</p>
 </dl>
 </div>
 <div class="section" id="id4">
-<h1>Profiles<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="id5">
-<h1>Git<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+<h1>Git<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
 <p>Git repo support for various checks.</p>
 <p>Pkgcheck can create virtual package repos from a given git repo's history
 in order to provide more info for checks relating to stable requests,
@@ -395,6 +370,31 @@ the current branch compared to the branch named 'old' use
 named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
 <p>Note that will also enable eclass-specific checks if it
 determines any commits have been made to eclasses.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id5">
+<h1>Profiles<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -529,18 +529,18 @@ each check.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
+<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#pkgcheck-cache-update-remove-pkgcheck-caches">pkgcheck cache - update/remove pkgcheck caches</a></li>
 <li><a class="reference internal" href="#id1">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#id2">Base Options</a></li>
 <li><a class="reference internal" href="#id3">Arches</a></li>
-<li><a class="reference internal" href="#id4">Profiles</a></li>
-<li><a class="reference internal" href="#id5">Git</a></li>
+<li><a class="reference internal" href="#id4">Git</a></li>
+<li><a class="reference internal" href="#id5">Profiles</a></li>
 <li><a class="reference internal" href="#pkgcheck-replay-replay-result-streams">pkgcheck replay - replay result streams</a></li>
 <li><a class="reference internal" href="#id6">Synopsis</a></li>
 <li><a class="reference internal" href="#id7">Positional Arguments</a></li>
