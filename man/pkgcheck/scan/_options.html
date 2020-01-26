@@ -194,6 +194,36 @@ lagging stabilization.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="network">
+<h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">--timeout <var>TIMEOUT</var></span></kbd></dt>
+<dd><p>timeout used for network checks</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="arches">
+<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="profiles">
 <h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
@@ -216,36 +246,6 @@ experimental, and deprecated profiles, respectively. Therefore,
 to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
 to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
 scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="network">
-<h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">--timeout <var>TIMEOUT</var></span></kbd></dt>
-<dd><p>timeout used for network checks</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="arches">
-<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -290,10 +290,10 @@ determines any commits have been made to eclasses.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#profiles">Profiles</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
+<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
 </ul>
 
