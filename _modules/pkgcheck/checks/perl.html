@@ -74,6 +74,12 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dist_version_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;DIST_VERSION=(?P&lt;dist_version&gt;\d+(\.\d+)*)\s*</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Initialize perl script the check is going to communicate with. This</span>
+        <span class="c1"># is done during __init__() since we only want one running version of</span>
+        <span class="c1"># the script that is shared between however many scanning processes</span>
+        <span class="c1"># will be run. Also, it makes it easier to disable this check if the</span>
+        <span class="c1"># required perl deps are missing.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">process_lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -122,10 +128,11 @@
                         <span class="k">yield</span> <span class="n">MismatchedPerlVersion</span><span class="p">(</span><span class="n">dist_version</span><span class="p">,</span> <span class="n">normalized</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Clean up perl cruft if it exists, we don&#39;t care about being nice to</span>
+        <span class="c1"># the perl side at this point.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">socket_dir</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
-        <span class="c1"># at this point, we don&#39;t care about being nice to the perl side</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></div>
 </pre></div>
