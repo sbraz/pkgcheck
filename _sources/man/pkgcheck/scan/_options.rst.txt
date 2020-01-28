@@ -208,12 +208,6 @@ Arches
                         stable-related checks (e.g. UnstableOnly) default to the set of
                         arches having stable profiles in the target repo.
 
-Query Caching
--------------
-
---reset-caching-per {version,package,category}  
-                                                control how often the cache is cleared (version, package or category)
-
 Git
 ---
 
@@ -244,3 +238,9 @@ origin master`` or similar will also create the reference.
                     
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
+
+Query Caching
+-------------
+
+--reset-caching-per {version,package,category}  
+                                                control how often the cache is cleared (version, package or category)

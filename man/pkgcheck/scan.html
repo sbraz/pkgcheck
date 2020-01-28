@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--reset-caching-per {version,package,category}] [--glsa-dir GLSA_LOCATION] [--source-arches ARCH] [--commits [COMMIT]] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [--reset-caching-per {version,package,category}] [--source-arches ARCH] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -249,13 +249,6 @@ arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="git">
 <h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
 <p>Git repo support for various checks.</p>
@@ -282,6 +275,13 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
 
 
           </div>
@@ -302,8 +302,8 @@ determines any commits have been made to eclasses.</p>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 </ul>
 
   <div role="note" aria-label="source link">
