@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [--commits [COMMIT]] [-a ARCH] [-p PROFILE]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [--commits [COMMIT]] [-a ARCH]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h1>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -85,6 +85,31 @@ where stdout is not a tty.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="profiles">
+<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="git">
 <h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
 <p>Git repo support for various checks.</p>
@@ -126,31 +151,6 @@ arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="profiles">
-<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
 
 
           </div>
@@ -164,9 +164,9 @@ scan all defined profiles in the target repo.</p>
 <li><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#base-options">Base Options</a></li>
+<li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
-<li><a class="reference internal" href="#profiles">Profiles</a></li>
 </ul>
 
   <div role="note" aria-label="source link">
