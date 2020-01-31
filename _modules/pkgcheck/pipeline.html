@@ -215,8 +215,8 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_error_cb</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="c1"># traceback objects can&#39;t be pickled so fake it</span>
-                    <span class="n">e</span><span class="o">.</span><span class="n">__traceback_list__</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                    <span class="k">yield</span> <span class="n">e</span>
+                    <span class="n">tb</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
+                    <span class="k">yield</span> <span class="n">e</span><span class="p">,</span> <span class="n">tb</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_running_check</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_errors</span><span class="p">:</span>

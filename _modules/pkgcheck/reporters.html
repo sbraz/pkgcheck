@@ -75,11 +75,11 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">results</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">__traceback_list__</span><span class="p">)</span>
-                        <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
-                        <span class="k">return</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                    <span class="n">exc</span><span class="p">,</span> <span class="n">tb</span> <span class="o">=</span> <span class="n">results</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">tb</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+                    <span class="k">return</span>
                 <span class="k">break</span>
         <span class="k">return</span> <span class="n">results</span>
 
