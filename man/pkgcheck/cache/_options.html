@@ -78,32 +78,6 @@ where stdout is not a tty.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="git">
-<h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
-<p>Git repo support for various checks.</p>
-<p>Pkgcheck can create virtual package repos from a given git repo's history
-in order to provide more info for checks relating to stable requests,
-outdated blockers, or local commits. These virtual repos are cached and
-updated every run if new commits are detected.</p>
-<p>Git repos must have a supported config in order to work properly.
-Specifically, pkgcheck assumes that both origin and master branches exist
-and relate to the upstream and local development states, respectively.</p>
-<p>Additionally, the origin/HEAD ref must exist. If it doesn't, running <code class="docutils literal notranslate"><span class="pre">git</span>
-<span class="pre">fetch</span> <span class="pre">origin</span></code> should create it. Otherwise, using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-head</span>
-<span class="pre">origin</span> <span class="pre">master</span></code> or similar will also create the reference.</p>
-<dl>
-<dt>--commits [COMMIT]</dt><dd><p>For a local git repo, pkgcheck will determine targets to scan
-from the committed changes compared to a given reference that
-defaults to the repo's origin.</p>
-<p>For example, to scan all the packages that have been changed in
-the current branch compared to the branch named 'old' use
-<code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old</span></code>. For two separate branches
-named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
-<p>Note that will also enable eclass-specific checks if it
-determines any commits have been made to eclasses.</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="arches">
 <h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
@@ -144,6 +118,32 @@ scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="git">
+<h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
+<p>Git repo support for various checks.</p>
+<p>Pkgcheck can create virtual package repos from a given git repo's history
+in order to provide more info for checks relating to stable requests,
+outdated blockers, or local commits. These virtual repos are cached and
+updated every run if new commits are detected.</p>
+<p>Git repos must have a supported config in order to work properly.
+Specifically, pkgcheck assumes that both origin and master branches exist
+and relate to the upstream and local development states, respectively.</p>
+<p>Additionally, the origin/HEAD ref must exist. If it doesn't, running <code class="docutils literal notranslate"><span class="pre">git</span>
+<span class="pre">fetch</span> <span class="pre">origin</span></code> should create it. Otherwise, using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-head</span>
+<span class="pre">origin</span> <span class="pre">master</span></code> or similar will also create the reference.</p>
+<dl>
+<dt>--commits [COMMIT]</dt><dd><p>For a local git repo, pkgcheck will determine targets to scan
+from the committed changes compared to a given reference that
+defaults to the repo's origin.</p>
+<p>For example, to scan all the packages that have been changed in
+the current branch compared to the branch named 'old' use
+<code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old</span></code>. For two separate branches
+named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
+<p>Note that will also enable eclass-specific checks if it
+determines any commits have been made to eclasses.</p>
+</dd>
+</dl>
+</div>
 
 
           </div>
@@ -155,9 +155,9 @@ scan all defined profiles in the target repo.</p>
   <ul>
 <li><a class="reference internal" href="#">Optional Arguments</a></li>
 <li><a class="reference internal" href="#base-options">Base Options</a></li>
-<li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
+<li><a class="reference internal" href="#git">Git</a></li>
 </ul>
 
   <div role="note" aria-label="source link">

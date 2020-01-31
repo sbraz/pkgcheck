@@ -208,7 +208,7 @@
         <span class="sd">&quot;&quot;&quot;Determine the result of a given URL verification task.&quot;&quot;&quot;</span>
         <span class="n">exc</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="n">exception</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">exc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># traceback objects can&#39;t be pickled so serialize it</span>
+            <span class="c1"># traceback can&#39;t be pickled so serialize it</span>
             <span class="n">tb</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()</span>
             <span class="c1"># return exceptions that occurred in threads</span>
             <span class="n">results_q</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">exc</span><span class="p">,</span> <span class="n">tb</span><span class="p">))</span>
