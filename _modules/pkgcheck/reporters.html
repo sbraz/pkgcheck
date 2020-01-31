@@ -59,9 +59,10 @@
     <span class="sd">&quot;&quot;&quot;Iterator handling exceptions within queued results.</span>
 
 <span class="sd">    Due to the parallelism of check running, all results are pushed into the</span>
-<span class="sd">    results queue as lists of result or exception objects. This iterator forces</span>
-<span class="sd">    exceptions to be handled explicitly, by outputting the serialized traceback</span>
-<span class="sd">    and signaling scanning processes to end when an exception object is found.</span>
+<span class="sd">    results queue as lists of result objects or exception tuples. This iterator</span>
+<span class="sd">    forces exceptions to be handled explicitly, by outputting the serialized</span>
+<span class="sd">    traceback and signaling scanning processes to end when an exception object</span>
+<span class="sd">    is found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results_q</span><span class="p">):</span>
@@ -75,6 +76,8 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">results</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+                <span class="c1"># Catch propagated exceptions, output their traceback, and</span>
+                <span class="c1"># signal the scanning process to end.</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
                     <span class="n">exc</span><span class="p">,</span> <span class="n">tb</span> <span class="o">=</span> <span class="n">results</span>
                     <span class="nb">print</span><span class="p">(</span><span class="n">tb</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
@@ -110,11 +113,20 @@
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">orig_sigint_handler</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">pipe</span><span class="o">.</span><span class="n">pkg_scan</span> <span class="ow">or</span> <span class="n">sort</span><span class="p">:</span>
-            <span class="c1"># sort all generated results, removing duplicate MetadataError results</span>
+            <span class="c1"># Running on a package scope level, i.e. running within a package</span>
+            <span class="c1"># directory in an ebuild repo. This sorts all generated results,</span>
+            <span class="c1"># removing duplicate MetadataError results.</span>
             <span class="n">results</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">results_iter</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Running at a category scope level or higher. This outputs</span>
+            <span class="c1"># version/package/category results in a stream sorted per package</span>
+            <span class="c1"># while caching any repo, commit, and specific location (e.g.</span>
+            <span class="c1"># profiles or eclass) results. Those are then outputted in sorted</span>
+            <span class="c1"># fashion in order of their scope level from greatest to least</span>
+            <span class="c1"># (displaying repo results first) after all</span>
+            <span class="c1"># version/package/category results have been output.</span>
             <span class="n">ordered_results</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="n">scope</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
                 <span class="k">if</span> <span class="n">scope</span><span class="o">.</span><span class="n">level</span> <span class="o">&lt;=</span> <span class="n">base</span><span class="o">.</span><span class="n">repo_scope</span>
@@ -125,7 +137,6 @@
                         <span class="n">ordered_results</span><span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-            <span class="c1"># output repo and commit results after package-related results</span>
             <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">ordered_results</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
