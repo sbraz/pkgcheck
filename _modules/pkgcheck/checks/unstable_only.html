@@ -103,7 +103,7 @@
 
         <span class="c1"># collapse reports by available versions</span>
         <span class="k">for</span> <span class="n">pkgs</span> <span class="ow">in</span> <span class="n">unstable_arches</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="n">versions</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">fullver</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkgs</span><span class="p">)</span>
+            <span class="n">versions</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">fullver</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pkgs</span><span class="p">))</span>
             <span class="k">yield</span> <span class="n">UnstableOnly</span><span class="p">(</span><span class="n">versions</span><span class="p">,</span> <span class="n">sort_keywords</span><span class="p">(</span><span class="n">unstable_arches</span><span class="p">[</span><span class="n">pkgs</span><span class="p">]),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkgs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
 </pre></div>
 
