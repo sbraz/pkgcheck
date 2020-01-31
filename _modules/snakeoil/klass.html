@@ -166,7 +166,7 @@
         <span class="n">use_singleton</span><span class="o">=</span><span class="n">use_singleton</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">_raw_native_internal_jit_attr</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_raw_native_internal_jit_attr</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;See _native_internal_jit_attr; this is an implementation detail of that&quot;&quot;&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;storage_attr&quot;</span><span class="p">,</span> <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="s2">&quot;_setter&quot;</span><span class="p">,</span> <span class="s2">&quot;singleton&quot;</span><span class="p">,</span> <span class="s2">&quot;use_singleton&quot;</span><span class="p">)</span>
@@ -244,7 +244,7 @@
 <span class="sd">    :raise: TypeError if __attr_comparison__ is incorrectly defined</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import generic_equality</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object, metaclass=generic_equality):</span>
+<span class="sd">    &gt;&gt;&gt; class foo(metaclass=generic_equality):</span>
 <span class="sd">    ...   __attr_comparison__ = (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)</span>
 <span class="sd">    ...   def __init__(self, a=1, b=2, c=3):</span>
 <span class="sd">    ...     self.a, self.b, self.c = a, b, c</span>
@@ -315,7 +315,7 @@
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import inject_richcmp_methods_from_cmp</span>
 <span class="sd">    &gt;&gt;&gt; from snakeoil.compatibility import cmp</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...   # note that for this example, we inject always since we&#39;re</span>
 <span class="sd">    ...   # explicitly accessing __ge__ methods- under py2k, they wouldn&#39;t</span>
@@ -349,7 +349,7 @@
         <span class="n">scope</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">chained_getter</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">metaclass</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">generic_equality</span><span class="p">,</span> <span class="n">real_type</span><span class="o">=</span><span class="n">caching</span><span class="o">.</span><span class="n">WeakInstMeta</span><span class="p">)):</span>
+<span class="k">class</span> <span class="nc">chained_getter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">generic_equality</span><span class="p">,</span> <span class="n">real_type</span><span class="o">=</span><span class="n">caching</span><span class="o">.</span><span class="n">WeakInstMeta</span><span class="p">)):</span>
 
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    object that will do multi part lookup, regardless of if it&#39;s in the context</span>
@@ -368,7 +368,7 @@
 <span class="sd">    &gt;&gt;&gt; print(chained_getter(&quot;extend&quot;)(list).__name__)</span>
 <span class="sd">    extend</span>
 <span class="sd">    &gt;&gt;&gt;</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...   seq = (1,2,3)</span>
 <span class="sd">    ...</span>
@@ -418,7 +418,7 @@
 <span class="c1"># we suppress the repr since if it&#39;s unmodified, it&#39;ll expose the id;</span>
 <span class="c1"># this annoyingly means our docs have to be recommited every change,</span>
 <span class="c1"># even if no real code changed (since the id() continually moves)...</span>
-<span class="k">class</span> <span class="nc">_singleton_kls</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_singleton_kls</span><span class="p">:</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;uncached singleton instance&quot;</span>
@@ -493,7 +493,7 @@
 <span class="sd">    Example Usage:</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import cached_property</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...   @cached_property</span>
 <span class="sd">    ...   def attr(self):</span>
@@ -519,7 +519,7 @@
 <span class="sd">    Example Usage:</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import cached_property_named</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...   @cached_property_named(&quot;attr&quot;)</span>
 <span class="sd">    ...   def attr(self):</span>
@@ -544,7 +544,7 @@
 <span class="sd">    Example Usage:</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import alias_attr</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...</span>
 <span class="sd">    ...   seq = (1,2,3)</span>
 <span class="sd">    ...</span>
@@ -574,7 +574,7 @@
 <span class="sd">    if you know it cannot change.</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import cached_hash</span>
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...   def __init__(self):</span>
 <span class="sd">    ...     self.hash_invocations = 0</span>
 <span class="sd">    ...</span>
@@ -733,7 +733,7 @@
     <span class="n">scope</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;__delattr__&quot;</span><span class="p">,</span> <span class="n">_immutable_delattr</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ImmutableInstance</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ImmutableInstance</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Class that disables surface-level attribute modifications.&quot;&quot;&quot;</span>
 
     <span class="fm">__setattr__</span> <span class="o">=</span> <span class="n">_immutable_setattr</span>
@@ -759,7 +759,7 @@
 <span class="sd">    :param doc: ``__doc__`` to force for the new method if desired</span>
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import alias_method</span>
-<span class="sd">    &gt;&gt;&gt; class foon(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foon:</span>
 <span class="sd">    ...   def orig(self):</span>
 <span class="sd">    ...     return 1</span>
 <span class="sd">    ...   alias = alias_method(&quot;orig&quot;)</span>
@@ -781,7 +781,7 @@
     <span class="k">return</span> <span class="n">_asecond_level_call</span>
 
 
-<span class="k">class</span> <span class="nc">alias</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">alias</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Decorator for making methods callable through aliases.</span>
 
 <span class="sd">    This decorator must be used inside a class decorated with @aliased.</span>
@@ -790,7 +790,7 @@
 
 <span class="sd">    &gt;&gt;&gt; from snakeoil.klass import aliased, alias</span>
 <span class="sd">    &gt;&gt;&gt; @aliased</span>
-<span class="sd">    &gt;&gt;&gt; class Speak(object):</span>
+<span class="sd">    &gt;&gt;&gt; class Speak:</span>
 <span class="sd">    ...     @alias(&#39;yell&#39;, &#39;scream&#39;)</span>
 <span class="sd">    ...     def shout(message):</span>
 <span class="sd">    ...         return message.upper()</span>
@@ -823,7 +823,7 @@
     <span class="k">return</span> <span class="bp">cls</span>
 
 
-<span class="k">class</span> <span class="nc">SlotsPicklingMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">SlotsPicklingMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Default pickling support for classes that use __slots__.&quot;&quot;&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>

@@ -57,7 +57,7 @@
 <span class="kn">from</span> <span class="nn">.klass</span> <span class="kn">import</span> <span class="n">get</span><span class="p">,</span> <span class="n">contains</span><span class="p">,</span> <span class="n">steal_docs</span><span class="p">,</span> <span class="n">_sentinel</span>
 
 
-<span class="k">class</span> <span class="nc">DictMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DictMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    new style class replacement for :py:func:`UserDict.DictMixin`</span>
 <span class="sd">    designed around iter* methods rather then forcing lists as DictMixin does</span>
@@ -385,7 +385,7 @@
         <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))))</span>
 
 
-<span class="k">class</span> <span class="nc">IndeterminantDict</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">IndeterminantDict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;A wrapped dict with constant defaults, and a function for other keys.</span>
 
 <span class="sd">    The primary use for this class is to make a JIT loaded mapping- for instance, a</span>
@@ -644,7 +644,7 @@
 
 <span class="sd">    Example usage:</span>
 
-<span class="sd">    &gt;&gt;&gt; class foo(object):</span>
+<span class="sd">    &gt;&gt;&gt; class foo:</span>
 <span class="sd">    ...     pass</span>
 <span class="sd">    &gt;&gt;&gt; obj = foo()</span>
 <span class="sd">    &gt;&gt;&gt; obj.x, obj.y = 1, 2</span>
@@ -704,7 +704,7 @@
 <span class="c1"># python issue 7604; depending on the python version, delattr&#39;ing an empty slot</span>
 <span class="c1"># doesn&#39;t throw AttributeError; we vary our implementation for efficiency</span>
 <span class="c1"># dependent on a onetime runtime test of that.</span>
-<span class="k">class</span> <span class="nc">foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">foo</span><span class="p">:</span>
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;slot&quot;</span><span class="p">,)</span>
 
 <span class="c1"># track which is required since if we can use extensions, we&#39;ll have</span>
