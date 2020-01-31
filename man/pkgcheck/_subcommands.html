@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [--reset-caching-per {version,package,category}] [--source-arches ARCH] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--reset-caching-per {version,package,category}] [--glsa-dir GLSA_LOCATION] [--source-arches ARCH] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--commits [COMMIT]] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -204,6 +204,13 @@ lagging stabilization.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="profiles">
 <h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
@@ -278,19 +285,12 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="pkgcheck-cache-update-remove-pkgcheck-caches">
 <h1>pkgcheck cache - update/remove pkgcheck caches<a class="headerlink" href="#pkgcheck-cache-update-remove-pkgcheck-caches" title="Permalink to this headline">¶</a></h1>
 </div>
 <div class="section" id="id1">
 <h1>Synopsis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [-p PROFILE] [--commits [COMMIT]]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [--commits [COMMIT]] [-a ARCH]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h1>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -336,22 +336,7 @@ where stdout is not a tty.</p>
 </dl>
 </div>
 <div class="section" id="id3">
-<h1>Arches<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="id4">
-<h1>Profiles<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<h1>Profiles<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
 <dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
 <dd><p>Comma separated list of profiles to enable and disable for
@@ -375,8 +360,8 @@ scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="id5">
-<h1>Git<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id4">
+<h1>Git<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
 <p>Git repo support for various checks.</p>
 <p>Pkgcheck can create virtual package repos from a given git repo's history
 in order to provide more info for checks relating to stable requests,
@@ -398,6 +383,21 @@ the current branch compared to the branch named 'old' use
 named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
 <p>Note that will also enable eclass-specific checks if it
 determines any commits have been made to eclasses.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="id5">
+<h1>Arches<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -532,18 +532,18 @@ each check.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#pkgcheck-cache-update-remove-pkgcheck-caches">pkgcheck cache - update/remove pkgcheck caches</a></li>
 <li><a class="reference internal" href="#id1">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#id2">Base Options</a></li>
-<li><a class="reference internal" href="#id3">Arches</a></li>
-<li><a class="reference internal" href="#id4">Profiles</a></li>
-<li><a class="reference internal" href="#id5">Git</a></li>
+<li><a class="reference internal" href="#id3">Profiles</a></li>
+<li><a class="reference internal" href="#id4">Git</a></li>
+<li><a class="reference internal" href="#id5">Arches</a></li>
 <li><a class="reference internal" href="#pkgcheck-replay-replay-result-streams">pkgcheck replay - replay result streams</a></li>
 <li><a class="reference internal" href="#id6">Synopsis</a></li>
 <li><a class="reference internal" href="#id7">Positional Arguments</a></li>
