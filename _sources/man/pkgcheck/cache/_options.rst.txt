@@ -37,6 +37,21 @@ Base Options
                  enable color support when piping output or other sitations
                  where stdout is not a tty.
 
+Arches
+------
+
+-a ARCH, --arches ARCH  
+                        Comma separated list of arches to enable and disable.
+                        
+                        To specify disabled arches prefix them with '-'. Note that when
+                        starting the argument list with a disabled arch an equals sign
+                        must be used, e.g. -a=-arch, otherwise the disabled arch
+                        argument is treated as an option.
+                        
+                        By default all repo defined arches are used; however,
+                        stable-related checks (e.g. UnstableOnly) default to the set of
+                        arches having stable profiles in the target repo.
+
 Profiles
 --------
 
@@ -92,18 +107,3 @@ origin master`` or similar will also create the reference.
                     
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
-
-Arches
-------
-
--a ARCH, --arches ARCH  
-                        Comma separated list of arches to enable and disable.
-                        
-                        To specify disabled arches prefix them with '-'. Note that when
-                        starting the argument list with a disabled arch an equals sign
-                        must be used, e.g. -a=-arch, otherwise the disabled arch
-                        argument is treated as an option.
-                        
-                        By default all repo defined arches are used; however,
-                        stable-related checks (e.g. UnstableOnly) default to the set of
-                        arches having stable profiles in the target repo.

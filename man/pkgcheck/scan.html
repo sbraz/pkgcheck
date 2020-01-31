@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--glsa-dir GLSA_LOCATION] [--commits [COMMIT]] [--source-arches ARCH] [--reset-caching-per {version,package,category}] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [-a ARCH] [--reset-caching-per {version,package,category}] [--source-arches ARCH] [--glsa-dir GLSA_LOCATION] [--commits [COMMIT]] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -98,6 +98,9 @@ where stdout is not a tty.</p>
 <div class="section" id="main-options">
 <h1>Main Options<a class="headerlink" href="#main-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
+<dt><kbd><span class="option">--config <var>CONFIG_FILE</var></span></kbd></dt>
+<dd><p>config file to load scan settings from</p>
+</dd>
 <dt><kbd><span class="option">-r <var>REPO</var></span>, <span class="option">--repo <var>REPO</var></span></kbd></dt>
 <dd><p>repo to pull packages from</p>
 </dd>
@@ -191,46 +194,13 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h1>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
 </dd>
-</dl>
-</div>
-<div class="section" id="git">
-<h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
-<p>Git repo support for various checks.</p>
-<p>Pkgcheck can create virtual package repos from a given git repo's history
-in order to provide more info for checks relating to stable requests,
-outdated blockers, or local commits. These virtual repos are cached and
-updated every run if new commits are detected.</p>
-<p>Git repos must have a supported config in order to work properly.
-Specifically, pkgcheck assumes that both origin and master branches exist
-and relate to the upstream and local development states, respectively.</p>
-<p>Additionally, the origin/HEAD ref must exist. If it doesn't, running <code class="docutils literal notranslate"><span class="pre">git</span>
-<span class="pre">fetch</span> <span class="pre">origin</span></code> should create it. Otherwise, using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-head</span>
-<span class="pre">origin</span> <span class="pre">master</span></code> or similar will also create the reference.</p>
-<dl>
-<dt>--commits [COMMIT]</dt><dd><p>For a local git repo, pkgcheck will determine targets to scan
-from the committed changes compared to a given reference that
-defaults to the repo's origin.</p>
-<p>For example, to scan all the packages that have been changed in
-the current branch compared to the branch named 'old' use
-<code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old</span></code>. For two separate branches
-named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
-<p>Note that will also enable eclass-specific checks if it
-determines any commits have been made to eclasses.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
 </dd>
 </dl>
 </div>
@@ -282,6 +252,39 @@ arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="git">
+<h1>Git<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
+<p>Git repo support for various checks.</p>
+<p>Pkgcheck can create virtual package repos from a given git repo's history
+in order to provide more info for checks relating to stable requests,
+outdated blockers, or local commits. These virtual repos are cached and
+updated every run if new commits are detected.</p>
+<p>Git repos must have a supported config in order to work properly.
+Specifically, pkgcheck assumes that both origin and master branches exist
+and relate to the upstream and local development states, respectively.</p>
+<p>Additionally, the origin/HEAD ref must exist. If it doesn't, running <code class="docutils literal notranslate"><span class="pre">git</span>
+<span class="pre">fetch</span> <span class="pre">origin</span></code> should create it. Otherwise, using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">set-head</span>
+<span class="pre">origin</span> <span class="pre">master</span></code> or similar will also create the reference.</p>
+<dl>
+<dt>--commits [COMMIT]</dt><dd><p>For a local git repo, pkgcheck will determine targets to scan
+from the committed changes compared to a given reference that
+defaults to the repo's origin.</p>
+<p>For example, to scan all the packages that have been changed in
+the current branch compared to the branch named 'old' use
+<code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old</span></code>. For two separate branches
+named 'old' and 'new' use <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span> <span class="pre">--commits</span> <span class="pre">old..new</span></code>.</p>
+<p>Note that will also enable eclass-specific checks if it
+determines any commits have been made to eclasses.</p>
+</dd>
+</dl>
+</div>
 
 
           </div>
@@ -299,11 +302,11 @@ arches having stable profiles in the target repo.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#git">Git</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
+<li><a class="reference internal" href="#git">Git</a></li>
 </ul>
 
   <div role="note" aria-label="source link">

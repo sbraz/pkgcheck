@@ -52,6 +52,9 @@ Base Options
 Main Options
 ------------
 
+--config CONFIG_FILE                      
+                                          config file to load scan settings from
+
 -r REPO, --repo REPO                      
                                           repo to pull packages from
 
@@ -153,51 +156,14 @@ Check Selection
 Plugin Options
 --------------
 
---glsa-dir GLSA_LOCATION  
-                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
-
 --source-arches ARCH      
                           Comma separated list of arches to compare against for
                           lagging stabilization.
                           
                           The default arches are all stable arches (unless --arches is specified).
 
-Git
----
-
-Git repo support for various checks.
-
-Pkgcheck can create virtual package repos from a given git repo's history
-in order to provide more info for checks relating to stable requests,
-outdated blockers, or local commits. These virtual repos are cached and
-updated every run if new commits are detected.
-
-Git repos must have a supported config in order to work properly.
-Specifically, pkgcheck assumes that both origin and master branches exist
-and relate to the upstream and local development states, respectively.
-
-Additionally, the origin/HEAD ref must exist. If it doesn't, running ``git
-fetch origin`` should create it. Otherwise, using ``git remote set-head
-origin master`` or similar will also create the reference.
-
---commits [COMMIT]  
-                    For a local git repo, pkgcheck will determine targets to scan
-                    from the committed changes compared to a given reference that
-                    defaults to the repo's origin.
-                    
-                    For example, to scan all the packages that have been changed in
-                    the current branch compared to the branch named 'old' use
-                    ``pkgcheck scan --commits old``. For two separate branches
-                    named 'old' and 'new' use ``pkgcheck scan --commits old..new``.
-                    
-                    Note that will also enable eclass-specific checks if it
-                    determines any commits have been made to eclasses.
-
-Query Caching
--------------
-
---reset-caching-per {version,package,category}  
-                                                control how often the cache is cleared (version, package or category)
+--glsa-dir GLSA_LOCATION  
+                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
 
 Profiles
 --------
@@ -244,3 +210,40 @@ Arches
                         By default all repo defined arches are used; however,
                         stable-related checks (e.g. UnstableOnly) default to the set of
                         arches having stable profiles in the target repo.
+
+Query Caching
+-------------
+
+--reset-caching-per {version,package,category}  
+                                                control how often the cache is cleared (version, package or category)
+
+Git
+---
+
+Git repo support for various checks.
+
+Pkgcheck can create virtual package repos from a given git repo's history
+in order to provide more info for checks relating to stable requests,
+outdated blockers, or local commits. These virtual repos are cached and
+updated every run if new commits are detected.
+
+Git repos must have a supported config in order to work properly.
+Specifically, pkgcheck assumes that both origin and master branches exist
+and relate to the upstream and local development states, respectively.
+
+Additionally, the origin/HEAD ref must exist. If it doesn't, running ``git
+fetch origin`` should create it. Otherwise, using ``git remote set-head
+origin master`` or similar will also create the reference.
+
+--commits [COMMIT]  
+                    For a local git repo, pkgcheck will determine targets to scan
+                    from the committed changes compared to a given reference that
+                    defaults to the repo's origin.
+                    
+                    For example, to scan all the packages that have been changed in
+                    the current branch compared to the branch named 'old' use
+                    ``pkgcheck scan --commits old``. For two separate branches
+                    named 'old' and 'new' use ``pkgcheck scan --commits old..new``.
+                    
+                    Note that will also enable eclass-specific checks if it
+                    determines any commits have been made to eclasses.

@@ -39,7 +39,12 @@
   <h1>Source code for pkgcheck.cli</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Various command-line specific support.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+
 <span class="kn">from</span> <span class="nn">pkgcore.util</span> <span class="kn">import</span> <span class="n">commandline</span>
+<span class="kn">from</span> <span class="nn">snakeoil.cli</span> <span class="kn">import</span> <span class="n">arghparse</span>
+<span class="kn">from</span> <span class="nn">snakeoil.klass</span> <span class="kn">import</span> <span class="n">jit_attr</span>
 <span class="kn">from</span> <span class="nn">snakeoil.log</span> <span class="kn">import</span> <span class="n">suppress_logging</span>
 
 
@@ -49,6 +54,22 @@
 <div class="viewcode-block" id="Tool.main"><a class="viewcode-back" href="../../api/pkgcheck.cli.html#pkgcheck.cli.Tool.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">suppress_logging</span><span class="p">():</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">main</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ArgumentParser"><a class="viewcode-back" href="../../api/pkgcheck.cli.html#pkgcheck.cli.ArgumentParser">[docs]</a><span class="k">class</span> <span class="nc">ArgumentParser</span><span class="p">(</span><span class="n">arghparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Argument parser that supports loading default settings from specified config files.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="nd">@jit_attr</span>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Config file object related to a given parser.&quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config</span></div>
 </pre></div>
 
           </div>
