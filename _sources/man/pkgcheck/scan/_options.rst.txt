@@ -94,8 +94,8 @@ Main Options
                                           sign must be used, e.g. ``--cache=-git``, otherwise the disabled
                                           argument is treated as an option.
                                           
-                                          In order to disable all cache usage, it's easiest to use ``--cache
-                                          false`` instead of explicitly listing all disabled cache types.
+                                          In order to disable all cache usage, it's easiest to use ``--cache no``
+                                          instead of explicitly listing all disabled cache types.
                                           
                                           When disabled, no caches will be saved to disk and results requiring
                                           caches (e.g. git-related checks) will be skipped.
@@ -196,27 +196,6 @@ Profiles
                                 to --profiles. Additionally the keyword ``all`` can be used to
                                 scan all defined profiles in the target repo.
 
-Network
--------
-
---timeout TIMEOUT  
-                   timeout used for network checks
-
-Arches
-------
-
--a ARCH, --arches ARCH  
-                        Comma separated list of arches to enable and disable.
-                        
-                        To specify disabled arches prefix them with '-'. Note that when
-                        starting the argument list with a disabled arch an equals sign
-                        must be used, e.g. -a=-arch, otherwise the disabled arch
-                        argument is treated as an option.
-                        
-                        By default all repo defined arches are used; however,
-                        stable-related checks (e.g. UnstableOnly) default to the set of
-                        arches having stable profiles in the target repo.
-
 Git
 ---
 
@@ -247,3 +226,24 @@ origin master`` or similar will also create the reference.
                     
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
+
+Network
+-------
+
+--timeout TIMEOUT  
+                   timeout used for network checks
+
+Arches
+------
+
+-a ARCH, --arches ARCH  
+                        Comma separated list of arches to enable and disable.
+                        
+                        To specify disabled arches prefix them with '-'. Note that when
+                        starting the argument list with a disabled arch an equals sign
+                        must be used, e.g. -a=-arch, otherwise the disabled arch
+                        argument is treated as an option.
+                        
+                        By default all repo defined arches are used; however,
+                        stable-related checks (e.g. UnstableOnly) default to the set of
+                        arches having stable profiles in the target repo.
