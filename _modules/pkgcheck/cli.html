@@ -45,6 +45,7 @@
 <span class="kn">from</span> <span class="nn">pkgcore.util</span> <span class="kn">import</span> <span class="n">commandline</span>
 <span class="kn">from</span> <span class="nn">snakeoil.cli</span> <span class="kn">import</span> <span class="n">arghparse</span>
 <span class="kn">from</span> <span class="nn">snakeoil.cli.exceptions</span> <span class="kn">import</span> <span class="n">UserException</span>
+<span class="kn">from</span> <span class="nn">snakeoil.contexts</span> <span class="kn">import</span> <span class="n">patch</span>
 <span class="kn">from</span> <span class="nn">snakeoil.klass</span> <span class="kn">import</span> <span class="n">jit_attr</span>
 <span class="kn">from</span> <span class="nn">snakeoil.log</span> <span class="kn">import</span> <span class="n">suppress_logging</span>
 
@@ -79,8 +80,13 @@
         <span class="sd">&quot;&quot;&quot;Parse options from config if they exist.&quot;&quot;&quot;</span>
         <span class="n">config_args</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;--</span><span class="si">{k}</span><span class="s1">=</span><span class="si">{v}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="n">v</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;--</span><span class="si">{k}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">section</span><span class="p">)]</span>
         <span class="k">if</span> <span class="n">config_args</span><span class="p">:</span>
-            <span class="n">namespace</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_known_optionals</span><span class="p">(</span><span class="n">config_args</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">namespace</span></div></div>
+            <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;snakeoil.cli.arghparse.ArgumentParser.error&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_error</span><span class="p">):</span>
+                <span class="n">namespace</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_known_optionals</span><span class="p">(</span><span class="n">config_args</span><span class="p">,</span> <span class="n">namespace</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">namespace</span></div>
+
+    <span class="k">def</span> <span class="nf">_config_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stub to replace error method that notes config failure.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.prog}</span><span class="s1">: failed loading config: </span><span class="si">{message}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
