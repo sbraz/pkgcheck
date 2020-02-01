@@ -187,64 +187,13 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h1>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
+</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
-</dd>
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="profiles">
-<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="network">
-<h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">--timeout <var>TIMEOUT</var></span></kbd></dt>
-<dd><p>timeout used for network checks</p>
-</dd>
-<dt><kbd><span class="option">--user-agent <var>USER_AGENT</var></span></kbd></dt>
-<dd><p>custom user agent spoofing</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="arches">
-<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -281,6 +230,57 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="network">
+<h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">--timeout <var>TIMEOUT</var></span></kbd></dt>
+<dd><p>timeout used for network checks</p>
+</dd>
+<dt><kbd><span class="option">--user-agent <var>USER_AGENT</var></span></kbd></dt>
+<dd><p>custom user agent spoofing</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="profiles">
+<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="arches">
+<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
 
 
           </div>
@@ -296,11 +296,11 @@ determines any commits have been made to eclasses.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#profiles">Profiles</a></li>
-<li><a class="reference internal" href="#network">Network</a></li>
-<li><a class="reference internal" href="#arches">Arches</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#query-caching">Query Caching</a></li>
+<li><a class="reference internal" href="#network">Network</a></li>
+<li><a class="reference internal" href="#profiles">Profiles</a></li>
+<li><a class="reference internal" href="#arches">Arches</a></li>
 </ul>
 
   <div role="note" aria-label="source link">

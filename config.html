@@ -51,58 +51,48 @@ override both user and system settings.</p>
 creating a default section for system-wide settings or repo-specific sections.
 The INI key-value pairs directly relate to the available long-options supported
 by <code class="docutils literal notranslate"><span class="pre">pkgcheck</span> <span class="pre">scan</span></code> and their related values. See the following examples for
-how certain config settings affect scanning runs.</p>
-<div class="section" id="example-1">
-<h2>Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h2>
-<p>Disable selected checks by default for all scanning runs:</p>
+how certain config settings affect scanning runs:</p>
+<ul>
+<li><p>Disable selected checks by default for all scanning runs:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
 <span class="n">checks</span> <span class="o">=</span> <span class="o">-</span><span class="n">UnstableOnlyCheck</span><span class="p">,</span><span class="o">-</span><span class="n">RedundantVersionCheck</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-2">
-<h2>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h2>
-<p>Disable showing info level results for the gentoo repo:</p>
+</li>
+<li><p>Disable showing info level results for the gentoo repo:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">gentoo</span><span class="p">]</span>
 <span class="n">keywords</span> <span class="o">=</span> <span class="o">-</span><span class="n">info</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-3">
-<h2>Example 3<a class="headerlink" href="#example-3" title="Permalink to this headline">¶</a></h2>
-<p>Restrict scanning to the amd64 and x86 arches/profiles for the gentoo repo:</p>
+</li>
+<li><p>Restrict scanning to the amd64 and x86 arches/profiles for the gentoo repo:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">gentoo</span><span class="p">]</span>
 <span class="n">arches</span> <span class="o">=</span> <span class="n">amd64</span><span class="p">,</span><span class="n">x86</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-4">
-<h2>Example 4<a class="headerlink" href="#example-4" title="Permalink to this headline">¶</a></h2>
-<p>Enable network checks that require Internet access for the gentoo repo using
+</li>
+<li><p>Enable network checks that require Internet access for the gentoo repo using
 a custom timeout of 15 seconds:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">gentoo</span><span class="p">]</span>
 <span class="n">net</span> <span class="o">=</span>
 <span class="n">timeout</span> <span class="o">=</span> <span class="mi">15</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-5">
-<h2>Example 5<a class="headerlink" href="#example-5" title="Permalink to this headline">¶</a></h2>
-<p>Use the JSON reporter by default for scanning output and disable all cache usage:</p>
+</li>
+<li><p>Use the JSON reporter by default for scanning output and disable all cache usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
 <span class="n">reporter</span> <span class="o">=</span> <span class="n">JsonReporter</span>
 <span class="n">cache</span> <span class="o">=</span> <span class="n">no</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example-6">
-<h2>Example 6<a class="headerlink" href="#example-6" title="Permalink to this headline">¶</a></h2>
-<p>Set the default repo to target when scanning:</p>
+</li>
+<li><p>Set the default repo to target when scanning:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
 <span class="n">repo</span> <span class="o">=</span> <span class="n">my_overlay</span>
 </pre></div>
 </div>
-</div>
+</li>
+</ul>
 </div>
 
 
@@ -111,19 +101,6 @@ a custom timeout of 15 seconds:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Config file support</a><ul>
-<li><a class="reference internal" href="#example-1">Example 1</a></li>
-<li><a class="reference internal" href="#example-2">Example 2</a></li>
-<li><a class="reference internal" href="#example-3">Example 3</a></li>
-<li><a class="reference internal" href="#example-4">Example 4</a></li>
-<li><a class="reference internal" href="#example-5">Example 5</a></li>
-<li><a class="reference internal" href="#example-6">Example 6</a></li>
-</ul>
-</li>
-</ul>
-
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
