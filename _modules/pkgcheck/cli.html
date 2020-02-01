@@ -39,11 +39,12 @@
   <h1>Source code for pkgcheck.cli</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Various command-line specific support.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 
 <span class="kn">from</span> <span class="nn">pkgcore.util</span> <span class="kn">import</span> <span class="n">commandline</span>
 <span class="kn">from</span> <span class="nn">snakeoil.cli</span> <span class="kn">import</span> <span class="n">arghparse</span>
+<span class="kn">from</span> <span class="nn">snakeoil.cli.exceptions</span> <span class="kn">import</span> <span class="n">UserException</span>
 <span class="kn">from</span> <span class="nn">snakeoil.klass</span> <span class="kn">import</span> <span class="n">jit_attr</span>
 <span class="kn">from</span> <span class="nn">snakeoil.log</span> <span class="kn">import</span> <span class="n">suppress_logging</span>
 
@@ -66,9 +67,12 @@
     <span class="nd">@jit_attr</span>
     <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Config file object related to a given parser.&quot;&quot;&quot;</span>
-        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
-            <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">:</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ParsingError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UserException</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;parsing config file failed: </span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">config</span></div>
 </pre></div>
 
