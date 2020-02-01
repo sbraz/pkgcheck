@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--glsa-dir GLSA_LOCATION] [-p PROFILE] [--reset-caching-per {version,package,category}] [--timeout TIMEOUT] [--user-agent USER_AGENT] [--commits [COMMIT]] [-a ARCH] [--source-arches ARCH] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [--user-agent USER_AGENT] [-a ARCH] [--commits [COMMIT]] [--source-arches ARCH] [--reset-caching-per {version,package,category}] [--glsa-dir GLSA_LOCATION] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -194,13 +194,13 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h1>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
+</dd>
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
 </dd>
 </dl>
 </div>
@@ -229,13 +229,6 @@ scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="query-caching">
-<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
-</dd>
-</dl>
-</div>
 <div class="section" id="network">
 <h1>Network<a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
@@ -244,6 +237,21 @@ scan all defined profiles in the target repo.</p>
 </dd>
 <dt><kbd><span class="option">--user-agent <var>USER_AGENT</var></span></kbd></dt>
 <dd><p>custom user agent spoofing</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="arches">
+<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -273,18 +281,10 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="arches">
-<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
+<div class="section" id="query-caching">
+<h1>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h1>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
 </dd>
 </dl>
 </div>
@@ -293,7 +293,7 @@ arches having stable profiles in the target repo.</p>
 </div>
 <div class="section" id="id1">
 <h1>Synopsis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [--commits [COMMIT]] [-a ARCH]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [--commits [COMMIT]] [-p PROFILE]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h1>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -339,27 +339,17 @@ where stdout is not a tty.</p>
 </dl>
 </div>
 <div class="section" id="id3">
-<h1>Profiles<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<h1>Arches<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -390,17 +380,27 @@ determines any commits have been made to eclasses.</p>
 </dl>
 </div>
 <div class="section" id="id5">
-<h1>Arches<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
+<h1>Profiles<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -536,17 +536,17 @@ each check.</p>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
-<li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
+<li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#pkgcheck-cache-update-remove-pkgcheck-caches">pkgcheck cache - update/remove pkgcheck caches</a></li>
 <li><a class="reference internal" href="#id1">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#id2">Base Options</a></li>
-<li><a class="reference internal" href="#id3">Profiles</a></li>
+<li><a class="reference internal" href="#id3">Arches</a></li>
 <li><a class="reference internal" href="#id4">Git</a></li>
-<li><a class="reference internal" href="#id5">Arches</a></li>
+<li><a class="reference internal" href="#id5">Profiles</a></li>
 <li><a class="reference internal" href="#pkgcheck-replay-replay-result-streams">pkgcheck replay - replay result streams</a></li>
 <li><a class="reference internal" href="#id6">Synopsis</a></li>
 <li><a class="reference internal" href="#id7">Positional Arguments</a></li>
