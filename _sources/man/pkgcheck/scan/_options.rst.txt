@@ -165,30 +165,6 @@ Plugin Options
 --glsa-dir GLSA_LOCATION  
                           source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
 
-Network
--------
-
---timeout TIMEOUT        
-                         timeout used for network checks
-
---user-agent USER_AGENT  
-                         custom user agent spoofing
-
-Arches
-------
-
--a ARCH, --arches ARCH  
-                        Comma separated list of arches to enable and disable.
-                        
-                        To specify disabled arches prefix them with '-'. Note that when
-                        starting the argument list with a disabled arch an equals sign
-                        must be used, e.g. -a=-arch, otherwise the disabled arch
-                        argument is treated as an option.
-                        
-                        By default all repo defined arches are used; however,
-                        stable-related checks (e.g. UnstableOnly) default to the set of
-                        arches having stable profiles in the target repo.
-
 Git
 ---
 
@@ -250,3 +226,27 @@ Profiles
                                 to only scan all stable profiles pass the ``stable`` argument
                                 to --profiles. Additionally the keyword ``all`` can be used to
                                 scan all defined profiles in the target repo.
+
+Network
+-------
+
+--timeout TIMEOUT        
+                         timeout used for network checks
+
+--user-agent USER_AGENT  
+                         custom user agent spoofing
+
+Arches
+------
+
+-a ARCH, --arches ARCH  
+                        Comma separated list of arches to enable and disable.
+                        
+                        To specify disabled arches prefix them with '-'. Note that when
+                        starting the argument list with a disabled arch an equals sign
+                        must be used, e.g. -a=-arch, otherwise the disabled arch
+                        argument is treated as an option.
+                        
+                        By default all repo defined arches are used; however,
+                        stable-related checks (e.g. UnstableOnly) default to the set of
+                        arches having stable profiles in the target repo.
