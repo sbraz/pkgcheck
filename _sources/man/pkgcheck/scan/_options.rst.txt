@@ -156,14 +156,14 @@ Check Selection
 Plugin Options
 --------------
 
+--glsa-dir GLSA_LOCATION  
+                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
+
 --source-arches ARCH      
                           Comma separated list of arches to compare against for
                           lagging stabilization.
                           
                           The default arches are all stable arches (unless --arches is specified).
-
---glsa-dir GLSA_LOCATION  
-                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
 
 Git
 ---
