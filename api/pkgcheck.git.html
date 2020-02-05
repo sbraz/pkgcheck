@@ -48,7 +48,7 @@
 <dl class="class">
 <dt id="pkgcheck.git.GitAddon">
 <em class="property">class </em><code class="sig-prename descclassname">pkgcheck.git.</code><code class="sig-name descname">GitAddon</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/git.html#GitAddon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.git.GitAddon" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pkgcheck.base.html#pkgcheck.base.Addon" title="pkgcheck.base.Addon"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.base.Addon</span></code></a>, <a class="reference internal" href="pkgcheck.base.html#pkgcheck.base.CachedAddon" title="pkgcheck.base.CachedAddon"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.base.CachedAddon</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pkgcheck.base.html#pkgcheck.base.Addon" title="pkgcheck.base.Addon"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.base.Addon</span></code></a>, <a class="reference internal" href="pkgcheck.caches.html#pkgcheck.caches.CachedAddon" title="pkgcheck.caches.CachedAddon"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.caches.CachedAddon</span></code></a></p>
 <p>Git repo support for various checks.</p>
 <p>Pkgcheck can create virtual package repos from a given git repo’s history
 in order to provide more info for checks relating to stable requests,
@@ -166,7 +166,7 @@ activated (because it runs before the commandline is parsed).</p>
 <dl class="class">
 <dt id="pkgcheck.git.ParsedGitRepo">
 <em class="property">class </em><code class="sig-prename descclassname">pkgcheck.git.</code><code class="sig-name descname">ParsedGitRepo</code><span class="sig-paren">(</span><em class="sig-param">repo</em>, <em class="sig-param">commit=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/git.html#ParsedGitRepo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.git.ParsedGitRepo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code>, <a class="reference internal" href="pkgcheck.base.html#pkgcheck.base.Cache" title="pkgcheck.base.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.base.Cache</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.UserDict</span></code>, <a class="reference internal" href="pkgcheck.caches.html#pkgcheck.caches.Cache" title="pkgcheck.caches.Cache"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.caches.Cache</span></code></a></p>
 <p>Parse repository git logs.</p>
 <dl class="method">
 <dt id="pkgcheck.git.ParsedGitRepo.parse_git_log">

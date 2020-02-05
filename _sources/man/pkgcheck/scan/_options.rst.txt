@@ -156,14 +156,14 @@ Check Selection
 Plugin Options
 --------------
 
---glsa-dir GLSA_LOCATION  
-                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
-
 --source-arches ARCH      
                           Comma separated list of arches to compare against for
                           lagging stabilization.
                           
                           The default arches are all stable arches (unless --arches is specified).
+
+--glsa-dir GLSA_LOCATION  
+                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
 
 Git
 ---
@@ -196,6 +196,15 @@ origin master`` or similar will also create the reference.
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
 
+Network
+-------
+
+--timeout TIMEOUT        
+                         timeout used for network checks
+
+--user-agent USER_AGENT  
+                         custom user agent spoofing
+
 Query Caching
 -------------
 
@@ -226,15 +235,6 @@ Profiles
                                 to only scan all stable profiles pass the ``stable`` argument
                                 to --profiles. Additionally the keyword ``all`` can be used to
                                 scan all defined profiles in the target repo.
-
-Network
--------
-
---timeout TIMEOUT        
-                         timeout used for network checks
-
---user-agent USER_AGENT  
-                         custom user agent spoofing
 
 Arches
 ------

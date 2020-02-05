@@ -52,7 +52,7 @@
 <span class="kn">from</span> <span class="nn">snakeoil</span> <span class="kn">import</span> <span class="n">pickling</span>
 <span class="kn">from</span> <span class="nn">snakeoil.decorators</span> <span class="kn">import</span> <span class="n">coroutine</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">const</span><span class="p">,</span> <span class="n">results</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">results</span>
 
 
 <span class="k">class</span> <span class="nc">_ResultsIter</span><span class="p">:</span>
@@ -425,8 +425,10 @@
         <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed loading: </span><span class="si">{data!r}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
+        <span class="c1"># avoid cyclic imports</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">objects</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">cls</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">KEYWORDS</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__class__&#39;</span><span class="p">)]</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="n">objects</span><span class="o">.</span><span class="n">KEYWORDS</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__class__&#39;</span><span class="p">)]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;missing result class: </span><span class="si">{data!r}</span><span class="s1">&#39;</span><span class="p">)</span>
 

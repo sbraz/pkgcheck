@@ -59,7 +59,7 @@
 <span class="kn">from</span> <span class="nn">snakeoil.sequences</span> <span class="kn">import</span> <span class="n">iflatten_instance</span>
 <span class="kn">from</span> <span class="nn">snakeoil.strings</span> <span class="kn">import</span> <span class="n">pluralism</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">results</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">caches</span><span class="p">,</span> <span class="n">results</span>
 <span class="kn">from</span> <span class="nn">.log</span> <span class="kn">import</span> <span class="n">logger</span>
 
 
@@ -146,7 +146,7 @@
         <span class="k">return</span> <span class="n">immutable</span><span class="p">,</span> <span class="n">enabled</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">_ProfilesCache</span><span class="p">(</span><span class="n">UserDict</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">Cache</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_ProfilesCache</span><span class="p">(</span><span class="n">UserDict</span><span class="p">,</span> <span class="n">caches</span><span class="o">.</span><span class="n">Cache</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class used to encapsulate cached profile data.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -154,7 +154,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">ProfileAddon</span><span class="o">.</span><span class="n">cache</span>
 
 
-<div class="viewcode-block" id="ProfileAddon"><a class="viewcode-back" href="../../api/pkgcheck.addons.html#pkgcheck.addons.ProfileAddon">[docs]</a><span class="k">class</span> <span class="nc">ProfileAddon</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Addon</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">CachedAddon</span><span class="p">):</span>
+<div class="viewcode-block" id="ProfileAddon"><a class="viewcode-back" href="../../api/pkgcheck.addons.html#pkgcheck.addons.ProfileAddon">[docs]</a><span class="k">class</span> <span class="nc">ProfileAddon</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Addon</span><span class="p">,</span> <span class="n">caches</span><span class="o">.</span><span class="n">CachedAddon</span><span class="p">):</span>
 
     <span class="n">required_addons</span> <span class="o">=</span> <span class="p">(</span><span class="n">ArchesAddon</span><span class="p">,)</span>
 
@@ -163,7 +163,7 @@
     <span class="n">non_profile_dirs</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;updates&#39;</span><span class="p">])</span>
 
     <span class="c1"># cache registry</span>
-    <span class="n">cache</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">CacheData</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;profiles&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;profiles.pickle&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">caches</span><span class="o">.</span><span class="n">CacheData</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;profiles&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;profiles.pickle&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ProfileAddon.mangle_argparser"><a class="viewcode-back" href="../../api/pkgcheck.addons.html#pkgcheck.addons.ProfileAddon.mangle_argparser">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">mangle_argparser</span><span class="p">(</span><span class="n">parser</span><span class="p">):</span>

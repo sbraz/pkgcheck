@@ -16,12 +16,14 @@ Submodules
 
    pkgcheck.addons
    pkgcheck.base
+   pkgcheck.caches
    pkgcheck.cli
    pkgcheck.const
    pkgcheck.feeds
    pkgcheck.git
    pkgcheck.log
    pkgcheck.net
+   pkgcheck.objects
    pkgcheck.packages
    pkgcheck.pipeline
    pkgcheck.reporters
