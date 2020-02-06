@@ -108,7 +108,7 @@ where stdout is not a tty.</p>
 </div>
 <div class="section" id="id1">
 <h3>Synopsis<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [--user-agent USER_AGENT] [-a ARCH] [--reset-caching-per {version,package,category}] [--source-arches ARCH] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--reset-caching-per {version,package,category}] [-p PROFILE] [--source-arches ARCH] [--timeout TIMEOUT] [--user-agent USER_AGENT] [-a ARCH] [--glsa-dir GLSA_LOCATION] [--commits [COMMIT]] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h3>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h3>
@@ -272,6 +272,13 @@ lagging stabilization.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="query-caching">
+<h3>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h3>
+<dl class="simple">
+<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
+</dd>
+</dl>
+</div>
 <div class="section" id="profiles">
 <h3>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h3>
 <dl class="option-list">
@@ -320,13 +327,6 @@ argument is treated as an option.</p>
 <p>By default all repo defined arches are used; however,
 stable-related checks (e.g. UnstableOnly) default to the set of
 arches having stable profiles in the target repo.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="query-caching">
-<h3>Query Caching<a class="headerlink" href="#query-caching" title="Permalink to this headline">¶</a></h3>
-<dl class="simple">
-<dt>--reset-caching-per {version,package,category}</dt><dd><p>control how often the cache is cleared (version, package or category)</p>
 </dd>
 </dl>
 </div>
@@ -3282,10 +3282,10 @@ a custom timeout of 15 seconds:</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
+<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
 <li><a class="reference internal" href="#arches">Arches</a></li>
-<li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#pkgcheck-cache-update-remove-pkgcheck-caches">pkgcheck cache - update/remove pkgcheck caches</a></li>
 <li><a class="reference internal" href="#id3">Synopsis</a></li>
