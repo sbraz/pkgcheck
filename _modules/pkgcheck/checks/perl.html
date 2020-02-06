@@ -68,7 +68,7 @@
 <span class="k">class</span> <span class="nc">_PerlConnection</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Connection to perl script the check is going to communicate with.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">process_lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -99,7 +99,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">_address</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
             <span class="n">err_msg</span> <span class="o">=</span> <span class="s1">&#39;failed to connect to perl client&#39;</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="n">err_msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;: </span><span class="si">{stderr}</span><span class="s1">&#39;</span>
             <span class="k">raise</span> <span class="n">SkipOptionalCheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">)</span>
@@ -134,7 +134,7 @@
         <span class="c1"># __init__() since only one running version of the script is shared</span>
         <span class="c1"># between however many scanning processes will be run. Also, it makes</span>
         <span class="c1"># it easier to disable this check if required perl deps are missing.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">perl</span> <span class="o">=</span> <span class="n">_PerlConnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perl</span> <span class="o">=</span> <span class="n">_PerlConnection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PerlCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.perl.html#pkgcheck.checks.perl.PerlCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;perl-module&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">inherited</span><span class="p">:</span>
