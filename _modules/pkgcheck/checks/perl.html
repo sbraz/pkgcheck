@@ -65,21 +65,10 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;DIST_VERSION=</span><span class="si">{self.dist_version}</span><span class="s1"> normalizes to </span><span class="si">{self.normalized}</span><span class="s1">&#39;</span></div>
 
 
-<div class="viewcode-block" id="PerlCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.perl.html#pkgcheck.checks.perl.PerlCheck">[docs]</a><span class="k">class</span> <span class="nc">PerlCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Perl ebuild related checks.&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">_PerlConnection</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Connection to perl script the check is going to communicate with.&quot;&quot;&quot;</span>
 
-    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
-    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">MismatchedPerlVersion</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dist_version_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;DIST_VERSION=(?P&lt;dist_version&gt;\d+(\.\d+)*)\s*</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-        <span class="c1"># Initialize perl script the check is going to communicate with. This</span>
-        <span class="c1"># is done during __init__() since we only want one running version of</span>
-        <span class="c1"># the script that is shared between however many scanning processes</span>
-        <span class="c1"># will be run. Also, it makes it easier to disable this check if the</span>
-        <span class="c1"># required perl deps are missing.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">process_lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -115,17 +104,12 @@
                 <span class="n">err_msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;: </span><span class="si">{stderr}</span><span class="s1">&#39;</span>
             <span class="k">raise</span> <span class="n">SkipOptionalCheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err_msg</span><span class="p">)</span>
 
-<div class="viewcode-block" id="PerlCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.perl.html#pkgcheck.checks.perl.PerlCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;perl-module&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">inherited</span><span class="p">:</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_version_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">dist_version</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;dist_version&#39;</span><span class="p">)</span>
-                <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_lock</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dist_version</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-                    <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-                    <span class="n">normalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">normalized</span> <span class="o">!=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
-                        <span class="k">yield</span> <span class="n">MismatchedPerlVersion</span><span class="p">(</span><span class="n">dist_version</span><span class="p">,</span> <span class="n">normalized</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Normalize a given version number to its perl equivalent.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">version</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Clean up perl cruft if it exists, we don&#39;t care about being nice to</span>
@@ -134,7 +118,32 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">socket_dir</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">perl_client</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="PerlCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.perl.html#pkgcheck.checks.perl.PerlCheck">[docs]</a><span class="k">class</span> <span class="nc">PerlCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Perl ebuild related checks.&quot;&quot;&quot;</span>
+
+    <span class="n">_source</span> <span class="o">=</span> <span class="n">sources</span><span class="o">.</span><span class="n">EbuildFileRepoSource</span>
+    <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">MismatchedPerlVersion</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist_version_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;DIST_VERSION=(?P&lt;dist_version&gt;\d+(\.\d+)*)\s*</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1"># Initialize connection with perl script. This is done during</span>
+        <span class="c1"># __init__() since only one running version of the script is shared</span>
+        <span class="c1"># between however many scanning processes will be run. Also, it makes</span>
+        <span class="c1"># it easier to disable this check if required perl deps are missing.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perl</span> <span class="o">=</span> <span class="n">_PerlConnection</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PerlCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.perl.html#pkgcheck.checks.perl.PerlCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;perl-module&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">inherited</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_version_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dist_version</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;dist_version&#39;</span><span class="p">)</span>
+                <span class="n">normalized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perl</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="n">dist_version</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">normalized</span> <span class="o">!=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">MismatchedPerlVersion</span><span class="p">(</span><span class="n">dist_version</span><span class="p">,</span> <span class="n">normalized</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
