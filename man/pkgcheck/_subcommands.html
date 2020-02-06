@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--glsa-dir GLSA_LOCATION] [--timeout TIMEOUT] [--user-agent USER_AGENT] [-a ARCH] [--reset-caching-per {version,package,category}] [--commits [COMMIT]] [--source-arches ARCH] [TARGET [TARGET ...]]</p>
+<p>pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--timeout TIMEOUT] [--user-agent USER_AGENT] [-a ARCH] [--reset-caching-per {version,package,category}] [--source-arches ARCH] [--commits [COMMIT]] [--glsa-dir GLSA_LOCATION] [TARGET [TARGET ...]]</p>
 </div>
 <div class="section" id="positional-arguments">
 <h1>Positional Arguments<a class="headerlink" href="#positional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -194,13 +194,13 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h1>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
+</dd>
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
 </dd>
 </dl>
 </div>

@@ -44,7 +44,8 @@
 <span class="kn">from</span> <span class="nn">snakeoil</span> <span class="kn">import</span> <span class="n">klass</span>
 <span class="kn">from</span> <span class="nn">snakeoil.cli.exceptions</span> <span class="kn">import</span> <span class="n">UserException</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">addons</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">feeds</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">sources</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">addons</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">feeds</span><span class="p">,</span> <span class="n">sources</span>
+<span class="kn">from</span> <span class="nn">..results</span> <span class="kn">import</span> <span class="n">FilteredVersionResult</span><span class="p">,</span> <span class="n">MetadataError</span>
 <span class="kn">from</span> <span class="nn">..caches</span> <span class="kn">import</span> <span class="n">CachedAddon</span>
 <span class="kn">from</span> <span class="nn">..log</span> <span class="kn">import</span> <span class="n">logger</span>
 
@@ -66,7 +67,7 @@
     <span class="nd">@klass</span><span class="o">.</span><span class="n">jit_attr</span>
     <span class="k">def</span> <span class="nf">priority</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># raise priority for checks that scan for metadata errors</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_priority</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="o">&amp;</span> <span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_priority</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="o">&amp;</span> <span class="n">MetadataError</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_priority</span>
 
@@ -75,7 +76,7 @@
         <span class="c1"># replace versioned pkg feeds with filtered ones as required</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filtering</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="n">base</span><span class="o">.</span><span class="n">version_scope</span><span class="p">:</span>
             <span class="n">filtered_results</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">FilteredVersionResult</span><span class="p">)]</span>
+                <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">FilteredVersionResult</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">filtered_results</span><span class="p">:</span>
                 <span class="n">partial_filtered</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_results</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">known_results</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">(</span>
