@@ -276,6 +276,8 @@
 <div class="viewcode-block" id="FetchablesUrlCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.network.html#pkgcheck.checks.network.FetchablesUrlCheck">[docs]</a><span class="k">class</span> <span class="nc">FetchablesUrlCheck</span><span class="p">(</span><span class="n">_UrlCheck</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Verify SRC_URI URLs.&quot;&quot;&quot;</span>
 
+    <span class="c1"># disable package feed filtering so all defined URLs are scanned</span>
+    <span class="n">_filtering</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">required_addons</span> <span class="o">=</span> <span class="p">(</span><span class="n">addons</span><span class="o">.</span><span class="n">UseAddon</span><span class="p">,)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">use_addon</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

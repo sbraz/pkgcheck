@@ -57,20 +57,23 @@
 <span class="sd">    :cvar known_results: result keywords the check can possibly yield</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">__priority</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># check priority that affects runtime ordering</span>
+    <span class="n">_priority</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># flag to allow package feed filtering</span>
+    <span class="n">_filtering</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">()</span>
 
     <span class="nd">@klass</span><span class="o">.</span><span class="n">jit_attr</span>
     <span class="k">def</span> <span class="nf">priority</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># raise priority for checks that scan for metadata errors</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__priority</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="o">&amp;</span> <span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_priority</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="o">&amp;</span> <span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__priority</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_priority</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># replace versioned pkg feeds with filtered ones as required</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="n">base</span><span class="o">.</span><span class="n">version_scope</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filtering</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="n">base</span><span class="o">.</span><span class="n">version_scope</span><span class="p">:</span>
             <span class="n">filtered_results</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_results</span> <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">FilteredVersionResult</span><span class="p">)]</span>
             <span class="k">if</span> <span class="n">filtered_results</span><span class="p">:</span>
