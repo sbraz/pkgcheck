@@ -1924,24 +1924,12 @@ should be removed.</p>
 <li><p>related check: <a href="#id457"><span class="problematic" id="id458">`PythonCheck`_</span></a></p></li>
 </ul>
 </div>
-<div class="section" id="pythonsingleusemismatch">
-<h3>PythonSingleUseMismatch<a class="headerlink" href="#pythonsingleusemismatch" title="Permalink to this headline">¶</a></h3>
-<p>Package has mismatched PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags.</p>
-<p>The package declares both PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags but
-each includes a different set of supported Python implementations. This
-either indicates a bug in the eclasses or the package is manually changing
-the flags.</p>
-<ul class="simple">
-<li><p>level: warning</p></li>
-<li><p>related check: <a href="#id459"><span class="problematic" id="id460">`PythonCheck`_</span></a></p></li>
-</ul>
-</div>
 <div class="section" id="conflictingchksums">
 <h3>ConflictingChksums<a class="headerlink" href="#conflictingchksums" title="Permalink to this headline">¶</a></h3>
 <p>Checksum conflict detected between two files.</p>
 <ul class="simple">
 <li><p>level: error</p></li>
-<li><p>related check: <a href="#id461"><span class="problematic" id="id462">`ManifestCollisionCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id459"><span class="problematic" id="id460">`ManifestCollisionCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="deprecatedchksum">
@@ -1949,7 +1937,7 @@ the flags.</p>
 <p>A file in the chksum data does not use modern checksum set.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id463"><span class="problematic" id="id464">`ManifestCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id461"><span class="problematic" id="id462">`ManifestCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="matchingchksums">
@@ -1957,7 +1945,7 @@ the flags.</p>
 <p>Two distfiles share the same checksums but use different names.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id465"><span class="problematic" id="id466">`ManifestCollisionCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id463"><span class="problematic" id="id464">`ManifestCollisionCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="missingchksum">
@@ -1965,7 +1953,7 @@ the flags.</p>
 <p>A file in the chksum data lacks required checksums.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id467"><span class="problematic" id="id468">`ManifestCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id465"><span class="problematic" id="id466">`ManifestCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="missingmanifest">
@@ -1973,7 +1961,7 @@ the flags.</p>
 <p>SRC_URI targets missing from Manifest file.</p>
 <ul class="simple">
 <li><p>level: error</p></li>
-<li><p>related check: <a href="#id469"><span class="problematic" id="id470">`ManifestCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id467"><span class="problematic" id="id468">`ManifestCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="stablerequest">
@@ -1982,7 +1970,7 @@ the flags.</p>
 - Gentoo repo specific</p>
 <ul class="simple">
 <li><p>level: info</p></li>
-<li><p>related check: <a href="#id471"><span class="problematic" id="id472">`StableRequestCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id469"><span class="problematic" id="id470">`StableRequestCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="nonexistentdeps">
@@ -1990,7 +1978,7 @@ the flags.</p>
 <p>No matches exist for a package dependency.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id473"><span class="problematic" id="id474">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id471"><span class="problematic" id="id472">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="nonsolvabledepsindev">
@@ -1998,7 +1986,7 @@ the flags.</p>
 <p>No potential solution for dependency on dev profile.</p>
 <ul class="simple">
 <li><p>level: error</p></li>
-<li><p>related check: <a href="#id475"><span class="problematic" id="id476">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id473"><span class="problematic" id="id474">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="nonsolvabledepsinexp">
@@ -2006,7 +1994,7 @@ the flags.</p>
 <p>No potential solution for dependency on exp profile.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id477"><span class="problematic" id="id478">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id475"><span class="problematic" id="id476">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="nonsolvabledepsinstable">
@@ -2014,7 +2002,7 @@ the flags.</p>
 <p>No potential solution for dependency on stable profile.</p>
 <ul class="simple">
 <li><p>level: error</p></li>
-<li><p>related check: <a href="#id479"><span class="problematic" id="id480">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id477"><span class="problematic" id="id478">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="uncheckabledep">
@@ -2022,7 +2010,7 @@ the flags.</p>
 <p>Given dependency cannot be checked due to the number of transitive use deps in it.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id481"><span class="problematic" id="id482">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id479"><span class="problematic" id="id480">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="visiblevcspkg">
@@ -2030,7 +2018,7 @@ the flags.</p>
 <p>Package is VCS-based, but visible.</p>
 <ul class="simple">
 <li><p>level: error</p></li>
-<li><p>related check: <a href="#id483"><span class="problematic" id="id484">`VisibilityCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id481"><span class="problematic" id="id482">`VisibilityCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="badwhitespacecharacter">
@@ -2042,7 +2030,7 @@ string. This usually causes execution errors if the characters are used for
 separation purposes outside of comments or regular strings.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id485"><span class="problematic" id="id486">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id483"><span class="problematic" id="id484">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="doubleemptyline">
@@ -2050,7 +2038,7 @@ separation purposes outside of comments or regular strings.</p>
 <p>Unneeded blank lines found.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id487"><span class="problematic" id="id488">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id485"><span class="problematic" id="id486">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="nofinalnewline">
@@ -2058,7 +2046,7 @@ separation purposes outside of comments or regular strings.</p>
 <p>Ebuild's last line does not have a final newline.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id489"><span class="problematic" id="id490">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id487"><span class="problematic" id="id488">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="trailingemptyline">
@@ -2066,7 +2054,7 @@ separation purposes outside of comments or regular strings.</p>
 <p>Unneeded trailing blank lines found.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id491"><span class="problematic" id="id492">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id489"><span class="problematic" id="id490">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="whitespacefound">
@@ -2074,7 +2062,7 @@ separation purposes outside of comments or regular strings.</p>
 <p>Leading or trailing whitespace found.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id493"><span class="problematic" id="id494">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id491"><span class="problematic" id="id492">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="wrongindentfound">
@@ -2082,7 +2070,7 @@ separation purposes outside of comments or regular strings.</p>
 <p>Incorrect indentation whitespace found.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
-<li><p>related check: <a href="#id495"><span class="problematic" id="id496">`WhitespaceCheck`_</span></a></p></li>
+<li><p>related check: <a href="#id493"><span class="problematic" id="id494">`WhitespaceCheck`_</span></a></p></li>
 </ul>
 </div>
 </div>
@@ -2311,7 +2299,6 @@ separation purposes outside of comments or regular strings.</p>
 <li><a class="reference internal" href="#pythonmissingdeps">PythonMissingDeps</a></li>
 <li><a class="reference internal" href="#pythonmissingrequireduse">PythonMissingRequiredUse</a></li>
 <li><a class="reference internal" href="#pythonruntimedepinanyr1">PythonRuntimeDepInAnyR1</a></li>
-<li><a class="reference internal" href="#pythonsingleusemismatch">PythonSingleUseMismatch</a></li>
 <li><a class="reference internal" href="#conflictingchksums">ConflictingChksums</a></li>
 <li><a class="reference internal" href="#deprecatedchksum">DeprecatedChksum</a></li>
 <li><a class="reference internal" href="#matchingchksums">MatchingChksums</a></li>

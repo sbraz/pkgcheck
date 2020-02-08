@@ -2476,18 +2476,6 @@ should be removed.</p>
 <li><p>related check: <a class="reference internal" href="#pythoncheck">PythonCheck</a></p></li>
 </ul>
 </div>
-<div class="section" id="pythonsingleusemismatch">
-<h4>PythonSingleUseMismatch<a class="headerlink" href="#pythonsingleusemismatch" title="Permalink to this headline">¶</a></h4>
-<p>Package has mismatched PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags.</p>
-<p>The package declares both PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags but
-each includes a different set of supported Python implementations. This
-either indicates a bug in the eclasses or the package is manually changing
-the flags.</p>
-<ul class="simple">
-<li><p>level: warning</p></li>
-<li><p>related check: <a class="reference internal" href="#pythoncheck">PythonCheck</a></p></li>
-</ul>
-</div>
 <div class="section" id="conflictingchksums">
 <h4>ConflictingChksums<a class="headerlink" href="#conflictingchksums" title="Permalink to this headline">¶</a></h4>
 <p>Checksum conflict detected between two files.</p>
@@ -3093,7 +3081,7 @@ don't use unspecific filenames.</p>
 <p>Check whether Python eclasses are used for Python packages, and whether
 they don't suffer from common mistakes.</p>
 <p>(known results: <a class="reference internal" href="#missingpythoneclass">MissingPythonEclass</a>, <a class="reference internal" href="#pythoneclasserror">PythonEclassError</a>, <a class="reference internal" href="#pythonmissingdeps">PythonMissingDeps</a>,
-<a class="reference internal" href="#pythonmissingrequireduse">PythonMissingRequiredUse</a>, <a class="reference internal" href="#pythonruntimedepinanyr1">PythonRuntimeDepInAnyR1</a>, <a class="reference internal" href="#pythonsingleusemismatch">PythonSingleUseMismatch</a>)</p>
+<a class="reference internal" href="#pythonmissingrequireduse">PythonMissingRequiredUse</a>, <a class="reference internal" href="#pythonruntimedepinanyr1">PythonRuntimeDepInAnyR1</a>)</p>
 </div>
 <div class="section" id="visibilitycheck">
 <h4>VisibilityCheck<a class="headerlink" href="#visibilitycheck" title="Permalink to this headline">¶</a></h4>
@@ -3520,7 +3508,6 @@ a custom timeout of 15 seconds:</p>
 <li><a class="reference internal" href="#pythonmissingdeps">PythonMissingDeps</a></li>
 <li><a class="reference internal" href="#pythonmissingrequireduse">PythonMissingRequiredUse</a></li>
 <li><a class="reference internal" href="#pythonruntimedepinanyr1">PythonRuntimeDepInAnyR1</a></li>
-<li><a class="reference internal" href="#pythonsingleusemismatch">PythonSingleUseMismatch</a></li>
 <li><a class="reference internal" href="#conflictingchksums">ConflictingChksums</a></li>
 <li><a class="reference internal" href="#deprecatedchksum">DeprecatedChksum</a></li>
 <li><a class="reference internal" href="#matchingchksums">MatchingChksums</a></li>

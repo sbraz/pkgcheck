@@ -589,7 +589,7 @@ Check whether Python eclasses are used for Python packages, and whether
 they don't suffer from common mistakes.
 
 (known results: `MissingPythonEclass`_, `PythonEclassError`_, `PythonMissingDeps`_,
-`PythonMissingRequiredUse`_, `PythonRuntimeDepInAnyR1`_, `PythonSingleUseMismatch`_)
+`PythonMissingRequiredUse`_, `PythonRuntimeDepInAnyR1`_)
 
 VisibilityCheck
 ^^^^^^^^^^^^^^^

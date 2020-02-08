@@ -1926,19 +1926,6 @@ should be removed.
 - level: warning
 - related check: `PythonCheck`_
 
-PythonSingleUseMismatch
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Package has mismatched PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags.
-
-The package declares both PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags but
-each includes a different set of supported Python implementations. This
-either indicates a bug in the eclasses or the package is manually changing
-the flags.
-
-- level: warning
-- related check: `PythonCheck`_
-
 ConflictingChksums
 ^^^^^^^^^^^^^^^^^^
 

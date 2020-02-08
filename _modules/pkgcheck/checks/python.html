@@ -88,31 +88,6 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{self.eclass}</span><span class="s1"> eclass usage for </span><span class="si">{self.dep_type}</span><span class="s1">=&quot;</span><span class="si">{self.dep}</span><span class="s1">&quot;&#39;</span></div>
 
 
-<div class="viewcode-block" id="PythonSingleUseMismatch"><a class="viewcode-back" href="../../../api/pkgcheck.checks.python.html#pkgcheck.checks.python.PythonSingleUseMismatch">[docs]</a><span class="k">class</span> <span class="nc">PythonSingleUseMismatch</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Package has mismatched PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags.</span>
-
-<span class="sd">    The package declares both PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags but</span>
-<span class="sd">    each includes a different set of supported Python implementations. This</span>
-<span class="sd">    either indicates a bug in the eclasses or the package is manually changing</span>
-<span class="sd">    the flags.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">single_flags</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">single_flags</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">single_flags</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
-        <span class="n">single_flags</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">single_flags</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="s2">&quot;mismatched flags in IUSE: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;PYTHON_TARGETS=( </span><span class="si">{flags}</span><span class="s2"> ) but &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;PYTHON_SINGLE_TARGET=( </span><span class="si">{single_flags}</span><span class="s2"> )&quot;</span>
-        <span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="PythonMissingRequiredUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.python.html#pkgcheck.checks.python.PythonMissingRequiredUse">[docs]</a><span class="k">class</span> <span class="nc">PythonMissingRequiredUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Package is missing PYTHON_REQUIRED_USE.</span>
 
@@ -189,7 +164,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span>
-        <span class="n">MissingPythonEclass</span><span class="p">,</span> <span class="n">PythonSingleUseMismatch</span><span class="p">,</span> <span class="n">PythonMissingRequiredUse</span><span class="p">,</span>
+        <span class="n">MissingPythonEclass</span><span class="p">,</span> <span class="n">PythonMissingRequiredUse</span><span class="p">,</span>
         <span class="n">PythonMissingDeps</span><span class="p">,</span> <span class="n">PythonRuntimeDepInAnyR1</span><span class="p">,</span> <span class="n">PythonEclassError</span><span class="p">,</span>
     <span class="p">])</span>
 
@@ -282,18 +257,12 @@
                 <span class="k">yield</span> <span class="n">MissingPythonEclass</span><span class="p">(</span><span class="n">recomm</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">eclass</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;python-r1&#39;</span><span class="p">,</span> <span class="s1">&#39;python-single-r1&#39;</span><span class="p">):</span>
             <span class="c1"># grab Python implementations from IUSE</span>
-            <span class="n">flags</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IUSE_PREFIX</span><span class="p">):]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IUSE_PREFIX</span><span class="p">)}</span>
+            <span class="n">iuse</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;+-&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse</span><span class="p">]</span>
+            <span class="n">flags</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IUSE_PREFIX</span><span class="p">):]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iuse</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IUSE_PREFIX</span><span class="p">)}</span>
             <span class="n">s_flags</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IUSE_PREFIX_S</span><span class="p">):]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IUSE_PREFIX_S</span><span class="p">)}</span>
+                <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">IUSE_PREFIX_S</span><span class="p">):]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iuse</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">IUSE_PREFIX_S</span><span class="p">)}</span>
 
-            <span class="c1"># python-single-r1 should have matching PT and PST</span>
-            <span class="c1"># (except when there is only one impl, whereas PST is not generated)</span>
-            <span class="n">got_single_impl</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">flags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s_flags</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">eclass</span> <span class="o">==</span> <span class="s1">&#39;python-single-r1&#39;</span> <span class="ow">and</span> <span class="n">flags</span> <span class="o">!=</span> <span class="n">s_flags</span>
-                    <span class="ow">and</span> <span class="ow">not</span> <span class="n">got_single_impl</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">PythonSingleUseMismatch</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">flags</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">s_flags</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">eclass</span> <span class="o">==</span> <span class="s1">&#39;python-r1&#39;</span> <span class="ow">or</span> <span class="n">got_single_impl</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">eclass</span> <span class="o">==</span> <span class="s1">&#39;python-r1&#39;</span><span class="p">:</span>
                 <span class="n">req_use_args</span> <span class="o">=</span> <span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">IUSE_PREFIX</span><span class="p">,</span> <span class="n">OrRestriction</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">req_use_args</span> <span class="o">=</span> <span class="p">(</span><span class="n">s_flags</span><span class="p">,</span> <span class="n">IUSE_PREFIX_S</span><span class="p">,</span> <span class="n">JustOneRestriction</span><span class="p">)</span>

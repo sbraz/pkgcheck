@@ -89,7 +89,7 @@ they don’t suffer from common mistakes.</p>
 
 <dl class="attribute">
 <dt id="pkgcheck.checks.python.PythonCheck.known_results">
-<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.python.MissingPythonEclass'&gt;, &lt;class 'pkgcheck.checks.python.PythonEclassError'&gt;, &lt;class 'pkgcheck.checks.python.PythonRuntimeDepInAnyR1'&gt;, &lt;class 'pkgcheck.checks.python.PythonMissingDeps'&gt;, &lt;class 'pkgcheck.checks.python.PythonMissingRequiredUse'&gt;, &lt;class 'pkgcheck.checks.python.PythonSingleUseMismatch'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.python.PythonCheck.known_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.python.PythonEclassError'&gt;, &lt;class 'pkgcheck.checks.python.PythonRuntimeDepInAnyR1'&gt;, &lt;class 'pkgcheck.checks.python.PythonMissingDeps'&gt;, &lt;class 'pkgcheck.checks.python.MissingPythonEclass'&gt;, &lt;class 'pkgcheck.checks.python.PythonMissingRequiredUse'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.python.PythonCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -159,23 +159,6 @@ should be removed.</p>
 <dl class="method">
 <dt id="pkgcheck.checks.python.PythonRuntimeDepInAnyR1.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.python.PythonRuntimeDepInAnyR1.desc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Result description.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pkgcheck.checks.python.PythonSingleUseMismatch">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.python.</code><code class="sig-name descname">PythonSingleUseMismatch</code><span class="sig-paren">(</span><em class="sig-param">flags</em>, <em class="sig-param">single_flags</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/python.html#PythonSingleUseMismatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.python.PythonSingleUseMismatch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.VersionResult" title="pkgcheck.results.VersionResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.VersionResult</span></code></a>, <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.Warning" title="pkgcheck.results.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.Warning</span></code></a></p>
-<p>Package has mismatched PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags.</p>
-<p>The package declares both PYTHON_SINGLE_TARGET and PYTHON_TARGETS flags but
-each includes a different set of supported Python implementations. This
-either indicates a bug in the eclasses or the package is manually changing
-the flags.</p>
-<dl class="method">
-<dt id="pkgcheck.checks.python.PythonSingleUseMismatch.desc">
-<em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.python.PythonSingleUseMismatch.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
 </dd></dl>
 
