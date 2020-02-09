@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -45,6 +45,27 @@
             
   <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pkgcheck-0-7-6-2020-02-09">
+<h2>pkgcheck 0.7.6 (2020-02-09)<a class="headerlink" href="#pkgcheck-0-7-6-2020-02-09" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>VariableInHomepage: Include parameter expansion chars in flagged variable and
+drop flagging for unbracketed variables until bash parsing support exists.</p></li>
+<li><p>Drop PythonSingleUseMismatch result since python-single-r1.eclass will no
+longer generate PYTHON_TARGETS.</p></li>
+<li><p>FetchablesUrlCheck: Disable package feed filtering so all defined SRC_URI
+URLs are scanned by default.</p></li>
+<li><p>Output create/update git repo cache message to stderr by default to help tell
+the user what's happening during possibly long scan delays.</p></li>
+<li><p>Add config file support at /etc/pkgcheck/pkgcheck.conf,
+~/.config/pkgcheck/pkgcheck.conf, and metadata/pkgcheck.conf for system-wide,
+user, and repo-specific default settings respectively. Any settings found in
+those config files will be overridden by matching command line arguments.
+Almost all command line arguments can be set in config files, see the man
+page or online docs for config examples.</p></li>
+<li><p>For network checks, add fallback to GET requests if HEAD requests fail with
+501 or 405 HTTP errors (#208).</p></li>
+</ul>
+</div>
 <div class="section" id="pkgcheck-0-7-5-2020-01-26">
 <h2>pkgcheck 0.7.5 (2020-01-26)<a class="headerlink" href="#pkgcheck-0-7-5-2020-01-26" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -783,6 +804,7 @@ to run via pcheck.  See README for details.</p></li>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#pkgcheck-0-7-6-2020-02-09">pkgcheck 0.7.6 (2020-02-09)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-5-2020-01-26">pkgcheck 0.7.5 (2020-01-26)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-4-2020-01-11">pkgcheck 0.7.4 (2020-01-11)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-3-2019-12-29">pkgcheck 0.7.3 (2019-12-29)</a></li>
@@ -857,7 +879,7 @@ to run via pcheck.  See README for details.</p></li>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -882,7 +904,7 @@ to run via pcheck.  See README for details.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
     </div>
   </body>
 </html>

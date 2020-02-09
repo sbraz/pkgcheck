@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -187,28 +187,13 @@ reported.</p>
 <div class="section" id="plugin-options">
 <h1>Plugin Options<a class="headerlink" href="#plugin-options" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
+<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
+<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
+</dd>
 <dt><kbd><span class="option">--source-arches <var>ARCH</var></span></kbd></dt>
 <dd><p>Comma separated list of arches to compare against for
 lagging stabilization.</p>
 <p>The default arches are all stable arches (unless --arches is specified).</p>
-</dd>
-<dt><kbd><span class="option">--glsa-dir <var>GLSA_LOCATION</var></span></kbd></dt>
-<dd><p>source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="arches">
-<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
-<dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -281,6 +266,21 @@ scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
+<div class="section" id="arches">
+<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
+<dl class="option-list">
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
+</dd>
+</dl>
+</div>
 
 
           </div>
@@ -296,11 +296,11 @@ scan all defined profiles in the target repo.</p>
 <li><a class="reference internal" href="#main-options">Main Options</a></li>
 <li><a class="reference internal" href="#check-selection">Check Selection</a></li>
 <li><a class="reference internal" href="#plugin-options">Plugin Options</a></li>
-<li><a class="reference internal" href="#arches">Arches</a></li>
 <li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#query-caching">Query Caching</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
 <li><a class="reference internal" href="#network">Network</a></li>
+<li><a class="reference internal" href="#arches">Arches</a></li>
 </ul>
 
   <div role="note" aria-label="source link">
@@ -319,7 +319,7 @@ scan all defined profiles in the target repo.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -338,7 +338,7 @@ scan all defined profiles in the target repo.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
     </div>
   </body>
 </html>

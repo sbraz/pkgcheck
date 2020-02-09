@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -40,7 +40,7 @@
 </div>
 <div class="section" id="synopsis">
 <h1>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h1>
-<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-a ARCH] [--commits [COMMIT]] [-p PROFILE]</p>
+<p>pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [--commits [COMMIT]] [-a ARCH]</p>
 </div>
 <div class="section" id="optional-arguments">
 <h1>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h1>
@@ -85,18 +85,28 @@ where stdout is not a tty.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="arches">
-<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="profiles">
+<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
-<dd><p>Comma separated list of arches to enable and disable.</p>
-<p>To specify disabled arches prefix them with '-'. Note that when
-starting the argument list with a disabled arch an equals sign
-must be used, e.g. -a=-arch, otherwise the disabled arch
-argument is treated as an option.</p>
-<p>By default all repo defined arches are used; however,
-stable-related checks (e.g. UnstableOnly) default to the set of
-arches having stable profiles in the target repo.</p>
+<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
+<dd><p>Comma separated list of profiles to enable and disable for
+scanning. Any profiles specified in this fashion will be the
+only profiles that get scanned, skipping any disabled profiles.
+In addition, if no profiles are explicitly enabled, all
+profiles defined in the target repo's profiles.desc file will be
+scanned except those marked as experimental (exp).</p>
+<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
+removes the from the list of profiles to be considered. Note
+that when starting the argument list with a disabled profile an
+equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
+otherwise the disabled profile argument is treated as an
+option.</p>
+<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
+experimental, and deprecated profiles, respectively. Therefore,
+to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
+to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
+scan all defined profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -126,28 +136,18 @@ determines any commits have been made to eclasses.</p>
 </dd>
 </dl>
 </div>
-<div class="section" id="profiles">
-<h1>Profiles<a class="headerlink" href="#profiles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="arches">
+<h1>Arches<a class="headerlink" href="#arches" title="Permalink to this headline">¶</a></h1>
 <dl class="option-list">
-<dt><kbd><span class="option">-p <var>PROFILE</var></span>, <span class="option">--profiles <var>PROFILE</var></span></kbd></dt>
-<dd><p>Comma separated list of profiles to enable and disable for
-scanning. Any profiles specified in this fashion will be the
-only profiles that get scanned, skipping any disabled profiles.
-In addition, if no profiles are explicitly enabled, all
-profiles defined in the target repo's profiles.desc file will be
-scanned except those marked as experimental (exp).</p>
-<p>To specify disabled profiles prefix them with <code class="docutils literal notranslate"><span class="pre">-</span></code> which
-removes the from the list of profiles to be considered. Note
-that when starting the argument list with a disabled profile an
-equals sign must be used, e.g.  <code class="docutils literal notranslate"><span class="pre">-p=-path/to/profile</span></code>,
-otherwise the disabled profile argument is treated as an
-option.</p>
-<p>The special keywords of <code class="docutils literal notranslate"><span class="pre">stable</span></code>, <code class="docutils literal notranslate"><span class="pre">dev</span></code>, <code class="docutils literal notranslate"><span class="pre">exp</span></code>, and
-<code class="docutils literal notranslate"><span class="pre">deprecated</span></code> correspond to the lists of stable, development,
-experimental, and deprecated profiles, respectively. Therefore,
-to only scan all stable profiles pass the <code class="docutils literal notranslate"><span class="pre">stable</span></code> argument
-to --profiles. Additionally the keyword <code class="docutils literal notranslate"><span class="pre">all</span></code> can be used to
-scan all defined profiles in the target repo.</p>
+<dt><kbd><span class="option">-a <var>ARCH</var></span>, <span class="option">--arches <var>ARCH</var></span></kbd></dt>
+<dd><p>Comma separated list of arches to enable and disable.</p>
+<p>To specify disabled arches prefix them with '-'. Note that when
+starting the argument list with a disabled arch an equals sign
+must be used, e.g. -a=-arch, otherwise the disabled arch
+argument is treated as an option.</p>
+<p>By default all repo defined arches are used; however,
+stable-related checks (e.g. UnstableOnly) default to the set of
+arches having stable profiles in the target repo.</p>
 </dd>
 </dl>
 </div>
@@ -164,9 +164,9 @@ scan all defined profiles in the target repo.</p>
 <li><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li><a class="reference internal" href="#optional-arguments">Optional Arguments</a></li>
 <li><a class="reference internal" href="#base-options">Base Options</a></li>
-<li><a class="reference internal" href="#arches">Arches</a></li>
-<li><a class="reference internal" href="#git">Git</a></li>
 <li><a class="reference internal" href="#profiles">Profiles</a></li>
+<li><a class="reference internal" href="#git">Git</a></li>
+<li><a class="reference internal" href="#arches">Arches</a></li>
 </ul>
 
   <div role="note" aria-label="source link">
@@ -185,7 +185,7 @@ scan all defined profiles in the target repo.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -204,7 +204,7 @@ scan all defined profiles in the target repo.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
     </div>
   </body>
 </html>
