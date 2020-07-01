@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.python &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.python</a></li> 
       </ul>
     </div>  
 
@@ -85,7 +87,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{self.eclass}</span><span class="s1"> eclass usage for </span><span class="si">{self.dep_type}</span><span class="s1">=&quot;</span><span class="si">{self.dep}</span><span class="s1">&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1"> eclass usage for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep_type</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="PythonMissingRequiredUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.python.html#pkgcheck.checks.python.PythonMissingRequiredUse">[docs]</a><span class="k">class</span> <span class="nc">PythonMissingRequiredUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -118,7 +120,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{self.dep_type}</span><span class="s1">=&quot;${{PYTHON_DEPS}}&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep_type</span><span class="si">}</span><span class="s1">=&quot;$</span><span class="se">{{</span><span class="s1">PYTHON_DEPS</span><span class="se">}}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="PythonRuntimeDepInAnyR1"><a class="viewcode-back" href="../../../api/pkgcheck.checks.python.html#pkgcheck.checks.python.PythonRuntimeDepInAnyR1">[docs]</a><span class="k">class</span> <span class="nc">PythonRuntimeDepInAnyR1</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -139,7 +141,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;inherits python-any-r1 with </span><span class="si">{self.dep_type}</span><span class="s1">=&quot;</span><span class="si">{self.dep}</span><span class="s1">&quot; -- &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;inherits python-any-r1 with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep_type</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="si">}</span><span class="s1">&quot; -- &#39;</span>
             <span class="s2">&quot;use python-r1 or python-single-r1 instead&quot;</span>
         <span class="p">)</span></div>
 
@@ -175,7 +177,7 @@
         <span class="c1"># just in case it isn&#39;t caught when sourcing the ebuild.</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eclasses</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;python eclasses are mutually exclusive: [ {&#39;, &#39;.join(eclasses)} ]&quot;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;python eclasses are mutually exclusive: [ </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">eclasses</span><span class="p">)</span><span class="si">}</span><span class="s2"> ]&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">eclasses</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="k">if</span> <span class="n">eclasses</span> <span class="k">else</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="PythonCheck.scan_tree_recursively"><a class="viewcode-back" href="../../../api/pkgcheck.checks.python.html#pkgcheck.checks.python.PythonCheck.scan_tree_recursively">[docs]</a>    <span class="k">def</span> <span class="nf">scan_tree_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deptree</span><span class="p">,</span> <span class="n">expected_cls</span><span class="p">):</span>
@@ -287,6 +289,7 @@
                 <span class="k">yield</span> <span class="n">PythonMissingDeps</span><span class="p">(</span><span class="s1">&#39;DEPEND&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -317,12 +320,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.python</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

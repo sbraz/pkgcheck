@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.eclass module &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +27,8 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.eclass module</a></li> 
       </ul>
     </div>  
 
@@ -37,12 +39,12 @@
             
   <div class="section" id="module-pkgcheck.checks.eclass">
 <span id="pkgcheck-checks-eclass-module"></span><h1>pkgcheck.checks.eclass module<a class="headerlink" href="#module-pkgcheck.checks.eclass" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.eclass.DeprecatedEclass">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">DeprecatedEclass</code><span class="sig-paren">(</span><em class="sig-param">eclasses</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#DeprecatedEclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.DeprecatedEclass" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">DeprecatedEclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eclasses</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#DeprecatedEclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.DeprecatedEclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.VersionResult" title="pkgcheck.results.VersionResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.VersionResult</span></code></a>, <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.Warning" title="pkgcheck.results.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.Warning</span></code></a></p>
 <p>Package uses an eclass that is deprecated/abandoned.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.eclass.DeprecatedEclass.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.eclass.DeprecatedEclass.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
@@ -50,16 +52,16 @@
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.eclass.DuplicateEclassInherits">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">DuplicateEclassInherits</code><span class="sig-paren">(</span><em class="sig-param">eclasses</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#DuplicateEclassInherits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.DuplicateEclassInherits" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">DuplicateEclassInherits</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eclasses</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#DuplicateEclassInherits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.DuplicateEclassInherits" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.VersionResult" title="pkgcheck.results.VersionResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.VersionResult</span></code></a>, <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.Warning" title="pkgcheck.results.Warning"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.Warning</span></code></a></p>
 <p>An ebuild directly inherits the same eclass multiple times.</p>
 <p>Note that this will flag ebuilds that conditionalize global metadata by
 package version (or some other fashion) while inheriting the same eclass
 under both branches, e.g. conditional live ebuilds. In this case, shared
 eclasses should be loaded in a separate, unconditional inherit call.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.eclass.DuplicateEclassInherits.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.eclass.DuplicateEclassInherits.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
@@ -67,12 +69,12 @@ eclasses should be loaded in a separate, unconditional inherit call.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.eclass.EclassBashSyntaxError">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassBashSyntaxError</code><span class="sig-paren">(</span><em class="sig-param">lineno</em>, <em class="sig-param">error</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassBashSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassBashSyntaxError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassBashSyntaxError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lineno</span></em>, <em class="sig-param"><span class="n">error</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassBashSyntaxError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassBashSyntaxError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.EclassResult" title="pkgcheck.results.EclassResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.EclassResult</span></code></a>, <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.Error" title="pkgcheck.results.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.Error</span></code></a></p>
 <p>Bash syntax error in the related eclass.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.eclass.EclassBashSyntaxError.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.eclass.EclassBashSyntaxError.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
@@ -80,48 +82,48 @@ eclasses should be loaded in a separate, unconditional inherit call.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.eclass.EclassCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassCheck</code><span class="sig-paren">(</span><em class="sig-param">options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.checks.html#pkgcheck.checks.Check" title="pkgcheck.checks.Check"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.Check</span></code></a></p>
 <p>Scan eclasses for various issues.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.eclass.EclassCheck.feed">
-<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param">eclass</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck.feed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">eclass</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck.feed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle functionality against the passed in item.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.eclass.EclassCheck.known_results">
 <code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.eclass.EclassBashSyntaxError'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.eclass.EclassCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='eclass' &#64;0x7f1597afce48&gt;</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='eclass' &#64;0x7ffa9e9af1d0&gt;</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.eclass.EclassUsageCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassUsageCheck</code><span class="sig-paren">(</span><em class="sig-param">options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassUsageCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.eclass.</code><code class="sig-name descname">EclassUsageCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassUsageCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.checks.html#pkgcheck.checks.Check" title="pkgcheck.checks.Check"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.Check</span></code></a></p>
 <p>Scan packages for various eclass-related issues.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.eclass.EclassUsageCheck.blacklist">
 <code class="sig-name descname">blacklist</code><em class="property"> = {'64-bit': None, 'autotools-multilib': 'multilib-minimal', 'autotools-utils': None, 'base': None, 'bash-completion': 'bash-completion-r1', 'boost-utils': None, 'clutter': 'gnome2', 'confutils': None, 'darcs': None, 'distutils': 'distutils-r1', 'db4-fix': None, 'debian': None, 'embassy-2.10': None, 'embassy-2.9': None, 'epatch': ('eapply from EAPI 6', &lt;function EclassUsageCheck.&lt;lambda&gt;&gt;), 'fdo-mime': 'xdg-utils', 'games': None, 'gems': 'ruby-fakegem', 'git': 'git-r3', 'git-2': 'git-r3', 'gcc': None, 'gnustep-old': None, 'gpe': None, 'gst-plugins-bad': 'gstreamer', 'gst-plugins-base': 'gstreamer', 'gst-plugins-good': 'gstreamer', 'gst-plugins-ugly': 'gstreamer', 'gst-plugins10': 'gstreamer', 'gtk-engines': None, 'gtk-engines2': None, 'inherit': None, 'jakarta-commons': None, 'java-pkg': None, 'java-utils': None, 'kde-base': None, 'kde-i18n': None, 'kde4-meta-pkg': 'kde5-meta-pkg', 'kde-source': None, 'kmod': None, 'koffice-i18n': None, 'mono': 'mono-env', 'mozconfig': None, 'mozconfig-2': 'mozconfig-3', 'mozcoreconf': 'mozcoreconf-2', 'motif': None, 'mozilla': None, 'myth': None, 'pcmcia': None, 'perl-post': None, 'php': None, 'php-2': None, 'php-ext': None, 'php-ext-base': None, 'php-ext-pecl': None, 'php-ext-pecl-r1': 'php-ext-pecl-r2', 'php-ext-source': None, 'php-ext-source-r1': 'php-ext-source-r2', 'php-lib': None, 'php-pear': 'php-pear-r1', 'php-sapi': None, 'php5-sapi': None, 'php5-sapi-r1': None, 'php5-sapi-r2': None, 'php5-sapi-r3': None, 'python': 'python-r1 / python-single-r1 / python-any-r1', 'python-distutils-ng': 'python-r1 + distutils-r1', 'qt3': None, 'qt4': 'qt4-r2', 'ruby': 'ruby-ng', 'ruby-gnome2': 'ruby-ng-gnome2', 'tla': None, 'ltprune': None, 'user': 'acct-user/acct-group packages', 'versionator': ('ver_* functions from EAPI 7', &lt;function EclassUsageCheck.&lt;lambda&gt;&gt;), 'vim': None, 'webapp-apache': None, 'x-modular': 'xorg-2', 'xfconf': None, 'xfree': None}</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck.blacklist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.eclass.EclassUsageCheck.feed">
-<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param">pkg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassUsageCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck.feed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pkg</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/eclass.html#EclassUsageCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck.feed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle functionality against the passed in item.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.eclass.EclassUsageCheck.known_results">
-<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.eclass.DeprecatedEclass'&gt;, &lt;class 'pkgcheck.checks.eclass.DuplicateEclassInherits'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck.known_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.eclass.DuplicateEclassInherits'&gt;, &lt;class 'pkgcheck.checks.eclass.DeprecatedEclass'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.eclass.EclassUsageCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -129,6 +131,7 @@ eclasses should be loaded in a separate, unconditional inherit call.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -164,12 +167,13 @@ eclasses should be loaded in a separate, unconditional inherit call.</p>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.eclass module</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

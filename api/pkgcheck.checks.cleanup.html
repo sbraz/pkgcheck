@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.cleanup module &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +27,8 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.cleanup module</a></li> 
       </ul>
     </div>  
 
@@ -37,12 +39,12 @@
             
   <div class="section" id="module-pkgcheck.checks.cleanup">
 <span id="pkgcheck-checks-cleanup-module"></span><h1>pkgcheck.checks.cleanup module<a class="headerlink" href="#module-pkgcheck.checks.cleanup" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.cleanup.RedundantVersion">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.cleanup.</code><code class="sig-name descname">RedundantVersion</code><span class="sig-paren">(</span><em class="sig-param">slot</em>, <em class="sig-param">later_versions</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersion" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.cleanup.</code><code class="sig-name descname">RedundantVersion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">slot</span></em>, <em class="sig-param"><span class="n">later_versions</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.VersionResult" title="pkgcheck.results.VersionResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.VersionResult</span></code></a>, <a class="reference internal" href="pkgcheck.results.html#pkgcheck.results.Info" title="pkgcheck.results.Info"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.results.Info</span></code></a></p>
 <p>Redundant version(s) of a package in a specific slot.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.cleanup.RedundantVersion.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersion.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
@@ -50,9 +52,9 @@
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.cleanup.RedundantVersionCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.cleanup.</code><code class="sig-name descname">RedundantVersionCheck</code><span class="sig-paren">(</span><em class="sig-param">options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersionCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.cleanup.</code><code class="sig-name descname">RedundantVersionCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">options</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersionCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pkgcheck.checks.html#pkgcheck.checks.Check" title="pkgcheck.checks.Check"><code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.Check</span></code></a></p>
 <p>Scan for overshadowed package versions.</p>
 <p>Scan for versions that are likely shadowed by later versions from a
@@ -60,20 +62,20 @@ keywords standpoint (ignoring live packages that erroneously have
 keywords).</p>
 <p>Example: pkga-1 is keyworded amd64, pkga-2 is amd64.
 pkga-1 can potentially be removed.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.cleanup.RedundantVersionCheck.feed">
-<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param">pkgset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersionCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck.feed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">feed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pkgset</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/cleanup.html#RedundantVersionCheck.feed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck.feed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Handle functionality against the passed in item.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.cleanup.RedundantVersionCheck.known_results">
 <code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.cleanup.RedundantVersion'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.cleanup.RedundantVersionCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7f1597afcd68&gt;</em><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7ffa9e9af0f0&gt;</em><a class="headerlink" href="#pkgcheck.checks.cleanup.RedundantVersionCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -81,6 +83,7 @@ pkga-1 can potentially be removed.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -116,12 +119,13 @@ pkga-1 can potentially be removed.</p>
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.cleanup module</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

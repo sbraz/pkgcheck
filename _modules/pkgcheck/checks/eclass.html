@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.eclass &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.eclass</a></li> 
       </ul>
     </div>  
 
@@ -58,14 +60,14 @@
         <span class="n">eclass_migration</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">old_eclass</span><span class="p">,</span> <span class="n">new_eclass</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">new_eclass</span><span class="p">:</span>
-                <span class="n">update_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;migrate to </span><span class="si">{new_eclass}</span><span class="s1">&#39;</span>
+                <span class="n">update_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;migrate to </span><span class="si">{</span><span class="n">new_eclass</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">update_path</span> <span class="o">=</span> <span class="s1">&#39;no replacement&#39;</span>
-            <span class="n">eclass_migration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{old_eclass}</span><span class="s1"> (</span><span class="si">{update_path}</span><span class="s1">)&#39;</span><span class="p">)</span>
+            <span class="n">eclass_migration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">old_eclass</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">update_path</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
 
         <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="n">eclass_migration</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
         <span class="n">eclasses</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">eclass_migration</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;uses deprecated eclass</span><span class="si">{es}</span><span class="s1">: [ </span><span class="si">{eclasses}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;uses deprecated eclass</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">eclasses</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="DuplicateEclassInherits"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.DuplicateEclassInherits">[docs]</a><span class="k">class</span> <span class="nc">DuplicateEclassInherits</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -85,7 +87,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eclasses</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">)</span>
         <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eclasses</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;duplicate inherits for eclass</span><span class="si">{es}</span><span class="s1">: </span><span class="si">{eclasses}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;duplicate inherits for eclass</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">eclasses</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassUsageCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassUsageCheck">[docs]</a><span class="k">class</span> <span class="nc">EclassUsageCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -214,7 +216,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: bash syntax error, line </span><span class="si">{self.lineno}</span><span class="s1">: </span><span class="si">{self.error}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1">: bash syntax error, line </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.eclass.html#pkgcheck.checks.eclass.EclassCheck">[docs]</a><span class="k">class</span> <span class="nc">EclassCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -237,6 +239,7 @@
             <span class="k">yield</span> <span class="n">EclassBashSyntaxError</span><span class="p">(</span><span class="n">lineno</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">eclass</span><span class="o">=</span><span class="n">eclass</span><span class="p">)</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -267,12 +270,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.eclass</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

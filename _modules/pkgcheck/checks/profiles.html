@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.profiles &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.profiles</a></li> 
       </ul>
     </div>  
 
@@ -67,7 +69,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packages</span><span class="p">)</span>
         <span class="n">packages</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">packages</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.path!r}</span><span class="s1">: unknown package</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{packages}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">: unknown package</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">packages</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnknownProfilePackageUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.UnknownProfilePackageUse">[docs]</a><span class="k">class</span> <span class="nc">UnknownProfilePackageUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -83,7 +85,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.path!r}</span><span class="s1">: unknown package USE flag</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{self.package}</span><span class="s1">[</span><span class="si">{flags}</span><span class="s1">] ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">: unknown package USE flag</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="si">}</span><span class="s1">[</span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s1">] ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnknownProfileUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.UnknownProfileUse">[docs]</a><span class="k">class</span> <span class="nc">UnknownProfileUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -98,7 +100,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.path!r}</span><span class="s1">: unknown USE flag</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{flags}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">: unknown USE flag</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnknownProfilePackageKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.UnknownProfilePackageKeywords">[docs]</a><span class="k">class</span> <span class="nc">UnknownProfilePackageKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -114,7 +116,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
         <span class="n">keywords</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.path!r}</span><span class="s1">: unknown package keyword</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{self.package}</span><span class="s1">: [ </span><span class="si">{keywords}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">: unknown package keyword</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">keywords</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="ProfileWarning"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.ProfileWarning">[docs]</a><span class="k">class</span> <span class="nc">ProfileWarning</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">LogWarning</span><span class="p">):</span>
@@ -225,8 +227,8 @@
                     <span class="n">_ProfileNode</span><span class="p">(</span><span class="n">pjoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiles_dir</span><span class="p">,</span> <span class="n">replacement</span><span class="p">))</span>
                 <span class="k">except</span> <span class="n">profiles_mod</span><span class="o">.</span><span class="n">ProfileError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">ProfileError</span><span class="p">(</span>
-                        <span class="sa">f</span><span class="s1">&#39;nonexistent replacement </span><span class="si">{replacement!r}</span><span class="s1"> &#39;</span>
-                        <span class="sa">f</span><span class="s1">&#39;for deprecated profile: </span><span class="si">{profile.name!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="sa">f</span><span class="s1">&#39;nonexistent replacement </span><span class="si">{</span><span class="n">replacement</span><span class="si">!r}</span><span class="s1"> &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;for deprecated profile: </span><span class="si">{</span><span class="n">profile</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">file_parse_map</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;packages&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;packages&#39;</span><span class="p">,</span> <span class="n">_pkg_atoms</span><span class="p">),</span>
@@ -308,7 +310,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirs</span><span class="p">)</span>
         <span class="n">dirs</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirs</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unused profile dir</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{dirs}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unused profile dir</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">dirs</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="ArchesWithoutProfiles"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.ArchesWithoutProfiles">[docs]</a><span class="k">class</span> <span class="nc">ArchesWithoutProfiles</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -322,7 +324,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
         <span class="n">arches</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;arch</span><span class="si">{es}</span><span class="s1"> without profiles: </span><span class="si">{arches}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;arch</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1"> without profiles: </span><span class="si">{</span><span class="n">arches</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="NonexistentProfilePath"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.NonexistentProfilePath">[docs]</a><span class="k">class</span> <span class="nc">NonexistentProfilePath</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -334,7 +336,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;nonexistent profile path: </span><span class="si">{self.path!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;nonexistent profile path: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="LaggingProfileEapi"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.LaggingProfileEapi">[docs]</a><span class="k">class</span> <span class="nc">LaggingProfileEapi</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">ProfilesResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -350,8 +352,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.profile!r}</span><span class="s1"> profile has EAPI </span><span class="si">{self.eapi}</span><span class="s1">, &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.parent!r}</span><span class="s1"> parent has EAPI </span><span class="si">{self.parent_eapi}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="si">!r}</span><span class="s1"> profile has EAPI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eapi</span><span class="si">}</span><span class="s1">, &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="si">!r}</span><span class="s1"> parent has EAPI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parent_eapi</span><span class="si">}</span><span class="s1">&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -369,7 +371,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">categories</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">,</span> <span class="n">singular</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;ies&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown categor</span><span class="si">{y}</span><span class="s1">: </span><span class="si">{categories}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown categor</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">categories</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="dir_parents"><a class="viewcode-back" href="../../../api/pkgcheck.checks.profiles.html#pkgcheck.checks.profiles.dir_parents">[docs]</a><span class="k">def</span> <span class="nf">dir_parents</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
@@ -476,6 +478,7 @@
             <span class="k">yield</span> <span class="n">UnusedProfileDirs</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">unused_profile_dirs</span><span class="p">))</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -506,12 +509,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.profiles</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

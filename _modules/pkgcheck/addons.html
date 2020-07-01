@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.addons &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -27,7 +28,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.addons</a></li> 
       </ul>
     </div>  
 
@@ -108,7 +110,7 @@
                 <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="n">unknown_arches</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
                 <span class="n">unknown</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unknown_arches</span><span class="p">)</span>
                 <span class="n">valid</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">all_arches</span><span class="p">))</span>
-                <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;unknown arch</span><span class="si">{es}</span><span class="s1">: </span><span class="si">{unknown}</span><span class="s1"> (valid arches: </span><span class="si">{valid}</span><span class="s1">)&#39;</span><span class="p">)</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;unknown arch</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">unknown</span><span class="si">}</span><span class="s1"> (valid arches: </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
 
         <span class="n">namespace</span><span class="o">.</span><span class="n">arches</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">arches</span><span class="p">))</span></div></div>
 
@@ -213,7 +215,7 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">target_repo</span><span class="o">.</span><span class="n">profiles</span><span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;nonexistent profile: </span><span class="si">{s!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;nonexistent profile: </span><span class="si">{</span><span class="n">s</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="n">disabled</span><span class="p">,</span> <span class="n">enabled</span> <span class="o">=</span> <span class="n">selected_profiles</span>
         <span class="n">disabled</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">disabled</span><span class="p">)</span>
@@ -248,13 +250,13 @@
                 <span class="c1"># Only throw errors if the profile was selected by the user, bad</span>
                 <span class="c1"># repo profiles will be caught during repo metadata scans.</span>
                 <span class="k">if</span> <span class="n">namespace</span><span class="o">.</span><span class="n">selected_profiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid profile: </span><span class="si">{e.path!r}</span><span class="s1">: </span><span class="si">{e.error}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid profile: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">arch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># throw error if profiles have been explicitly selected, otherwise skip it</span>
                 <span class="k">if</span> <span class="n">namespace</span><span class="o">.</span><span class="n">selected_profiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;profile make.defaults lacks ARCH setting: </span><span class="si">{p.path!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;profile make.defaults lacks ARCH setting: </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">path</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="k">continue</span>
 
             <span class="n">namespace</span><span class="o">.</span><span class="n">arch_profiles</span><span class="p">[</span><span class="n">profile</span><span class="o">.</span><span class="n">arch</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">profile</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span></div>
@@ -469,8 +471,8 @@
                             <span class="n">cached_profiles</span><span class="p">[</span><span class="n">repo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">profiles_base</span><span class="p">]),</span> <span class="n">f</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="sa">f</span><span class="s1">&#39;failed dumping </span><span class="si">{repo.repo_id}</span><span class="s1"> profiles cache: &#39;</span>
-                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{cache_file!r}</span><span class="s1">: </span><span class="si">{e.strerror}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="sa">f</span><span class="s1">&#39;failed dumping </span><span class="si">{</span><span class="n">repo</span><span class="o">.</span><span class="n">repo_id</span><span class="si">}</span><span class="s1"> profiles cache: &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cache_file</span><span class="si">!r}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">strerror</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
                     <span class="k">raise</span> <span class="n">UserException</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
         <span class="n">profile_evaluate_dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -497,7 +499,7 @@
         <span class="c1"># the use processing across each of &#39;em.</span>
         <span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">keywords</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span>
-        <span class="n">unstable_keywords</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{x}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">keywords</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;~&#39;</span><span class="p">)</span>
+        <span class="n">unstable_keywords</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">keywords</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;~&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keywords</span> <span class="o">+</span> <span class="n">unstable_keywords</span><span class="p">:</span>
             <span class="n">profile_grps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_evaluate_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">profile_grps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -558,16 +560,16 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;attr(</span><span class="si">{self.attr}</span><span class="s1">)&#39;</span><span class="p">]</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;attr(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_profiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">num_profiles</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{self.num_profiles}</span><span class="s1"> total)&#39;</span>
+                <span class="n">num_profiles</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_profiles</span><span class="si">}</span><span class="s1"> total)&#39;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">num_profiles</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;profile </span><span class="si">{self.profile!r}{num_profiles}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;profile </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="si">!r}{</span><span class="n">num_profiles</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
-        <span class="n">msg</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;unstated flag</span><span class="si">{s}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;[ </span><span class="si">{flags}</span><span class="s1"> ]&#39;</span><span class="p">])</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;unstated flag</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;[ </span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s1"> ]&#39;</span><span class="p">])</span>
         <span class="k">return</span> <span class="s1">&#39;: &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 
@@ -716,6 +718,7 @@
     <span class="k">return</span> <span class="n">res</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -745,12 +748,13 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.addons</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

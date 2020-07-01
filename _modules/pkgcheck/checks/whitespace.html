@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.whitespace &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.whitespace</a></li> 
       </ul>
     </div>  
 
@@ -57,7 +59,7 @@
     <span class="k">def</span> <span class="nf">lines_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;line</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{lines}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;line</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">lines</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <div class="viewcode-block" id="WhitespaceFound"><a class="viewcode-back" href="../../../api/pkgcheck.checks.whitespace.html#pkgcheck.checks.whitespace.WhitespaceFound">[docs]</a><span class="k">class</span> <span class="nc">WhitespaceFound</span><span class="p">(</span><span class="n">_Whitespace</span><span class="p">):</span>
@@ -70,7 +72,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has </span><span class="si">{self.leadtrail}</span><span class="s2"> whitespace on </span><span class="si">{self.lines_str}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">leadtrail</span><span class="si">}</span><span class="s2"> whitespace on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lines_str</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="WrongIndentFound"><a class="viewcode-back" href="../../../api/pkgcheck.checks.whitespace.html#pkgcheck.checks.whitespace.WrongIndentFound">[docs]</a><span class="k">class</span> <span class="nc">WrongIndentFound</span><span class="p">(</span><span class="n">_Whitespace</span><span class="p">):</span>
@@ -82,7 +84,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has whitespace in indentation on </span><span class="si">{self.lines_str}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has whitespace in indentation on </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lines_str</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="DoubleEmptyLine"><a class="viewcode-back" href="../../../api/pkgcheck.checks.whitespace.html#pkgcheck.checks.whitespace.DoubleEmptyLine">[docs]</a><span class="k">class</span> <span class="nc">DoubleEmptyLine</span><span class="p">(</span><span class="n">_Whitespace</span><span class="p">):</span>
@@ -94,7 +96,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has unneeded empty </span><span class="si">{self.lines_str}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ebuild has unneeded empty </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lines_str</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="TrailingEmptyLine"><a class="viewcode-back" href="../../../api/pkgcheck.checks.whitespace.html#pkgcheck.checks.whitespace.TrailingEmptyLine">[docs]</a><span class="k">class</span> <span class="nc">TrailingEmptyLine</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -126,8 +128,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;bad whitespace character </span><span class="si">{self.char}</span><span class="s1"> on line </span><span class="si">{self.lineno}</span><span class="s1">&#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;, char </span><span class="si">{self.position}</span><span class="s1">: </span><span class="si">{self.line}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;bad whitespace character </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">char</span><span class="si">}</span><span class="s1"> on line </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lineno</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;, char </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">}</span><span class="s1">&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -170,7 +172,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="n">bad_whitespace</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">whitespace_data</span><span class="o">.</span><span class="n">chars</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bad_whitespace_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;(?P&lt;char&gt;[</span><span class="si">{bad_whitespace}</span><span class="s1">])&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bad_whitespace_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;(?P&lt;char&gt;[</span><span class="si">{</span><span class="n">bad_whitespace</span><span class="si">}</span><span class="s1">])&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WhitespaceCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.whitespace.html#pkgcheck.checks.whitespace.WhitespaceCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
         <span class="n">lastlineempty</span> <span class="o">=</span> <span class="kc">False</span>
@@ -213,6 +215,7 @@
             <span class="k">yield</span> <span class="n">NoFinalNewline</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -243,12 +246,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.whitespace</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

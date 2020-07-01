@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.network module &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +27,8 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.network module</a></li> 
       </ul>
     </div>  
 
@@ -38,87 +40,87 @@
   <div class="section" id="module-pkgcheck.checks.network">
 <span id="pkgcheck-checks-network-module"></span><h1>pkgcheck.checks.network module<a class="headerlink" href="#module-pkgcheck.checks.network" title="Permalink to this headline">¶</a></h1>
 <p>Various checks that require network support.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.DeadUrl">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">DeadUrl</code><span class="sig-paren">(</span><em class="sig-param">attr</em>, <em class="sig-param">url</em>, <em class="sig-param">message</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#DeadUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.DeadUrl" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">DeadUrl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#DeadUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.DeadUrl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UrlResult</span></code></p>
 <p>Package with a dead URL of some type.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.FetchablesUrlCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">FetchablesUrlCheck</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">use_addon</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#FetchablesUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.FetchablesUrlCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">FetchablesUrlCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">use_addon</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#FetchablesUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.FetchablesUrlCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UrlCheck</span></code></p>
 <p>Verify SRC_URI URLs.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.network.FetchablesUrlCheck.required_addons">
 <code class="sig-name descname">required_addons</code><em class="property"> = (&lt;class 'pkgcheck.addons.UseAddon'&gt;,)</em><a class="headerlink" href="#pkgcheck.checks.network.FetchablesUrlCheck.required_addons" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.HomepageUrlCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">HomepageUrlCheck</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">net_addon</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#HomepageUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.HomepageUrlCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">HomepageUrlCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">net_addon</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#HomepageUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.HomepageUrlCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UrlCheck</span></code></p>
 <p>Verify HOMEPAGE URLs.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.HttpsUrlAvailable">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">HttpsUrlAvailable</code><span class="sig-paren">(</span><em class="sig-param">attr</em>, <em class="sig-param">url</em>, <em class="sig-param">new_url</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#HttpsUrlAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.HttpsUrlAvailable" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">HttpsUrlAvailable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">new_url</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#HttpsUrlAvailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.HttpsUrlAvailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UpdatedUrlResult</span></code></p>
 <p>URL uses <a class="reference external" href="http://">http://</a> when <a class="reference external" href="https://">https://</a> is available.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.network.HttpsUrlAvailable.message">
 <code class="sig-name descname">message</code><em class="property"> = 'HTTPS url available'</em><a class="headerlink" href="#pkgcheck.checks.network.HttpsUrlAvailable.message" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.MetadataUrlCheck">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">MetadataUrlCheck</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#MetadataUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">MetadataUrlCheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#MetadataUrlCheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UrlCheck</span></code></p>
 <p>Verify metadata.xml URLs.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.network.MetadataUrlCheck.schedule">
-<code class="sig-name descname">schedule</code><span class="sig-paren">(</span><em class="sig-param">pkgs</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#MetadataUrlCheck.schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck.schedule" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pkgs</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#MetadataUrlCheck.schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck.schedule" title="Permalink to this definition">¶</a></dt>
 <dd><p>Schedule verification methods to run in separate threads for all flagged URLs.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.network.MetadataUrlCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7f1597afcd68&gt;</em><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7ffa9e9af0f0&gt;</em><a class="headerlink" href="#pkgcheck.checks.network.MetadataUrlCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.RedirectedUrl">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">RedirectedUrl</code><span class="sig-paren">(</span><em class="sig-param">attr</em>, <em class="sig-param">url</em>, <em class="sig-param">new_url</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#RedirectedUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.RedirectedUrl" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">RedirectedUrl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">new_url</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#RedirectedUrl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.RedirectedUrl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UpdatedUrlResult</span></code></p>
 <p>Package with a URL that permanently redirects to a different site.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.checks.network.RedirectedUrl.message">
 <code class="sig-name descname">message</code><em class="property"> = 'permanently redirected'</em><a class="headerlink" href="#pkgcheck.checks.network.RedirectedUrl.message" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-<dl class="exception">
+<dl class="py exception">
 <dt id="pkgcheck.checks.network.RequestError">
-<em class="property">exception </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">RequestError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">msg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#RequestError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.RequestError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">RequestError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exc</span></em>, <em class="sig-param"><span class="n">msg</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#RequestError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.RequestError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._RequestException</span></code></p>
 <p>Wrapper for generic requests exception.</p>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.checks.network.SSLCertificateError">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">SSLCertificateError</code><span class="sig-paren">(</span><em class="sig-param">attr</em>, <em class="sig-param">url</em>, <em class="sig-param">message</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#SSLCertificateError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.SSLCertificateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">SSLCertificateError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#SSLCertificateError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.SSLCertificateError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._UrlResult</span></code></p>
 <p>Package with <a class="reference external" href="https://">https://</a> HOMEPAGE with an invalid SSL cert.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.checks.network.SSLCertificateError.desc">
 <em class="property">property </em><code class="sig-name descname">desc</code><a class="headerlink" href="#pkgcheck.checks.network.SSLCertificateError.desc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Result description.</p>
@@ -126,9 +128,9 @@
 
 </dd></dl>
 
-<dl class="exception">
+<dl class="py exception">
 <dt id="pkgcheck.checks.network.SSLError">
-<em class="property">exception </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">SSLError</code><span class="sig-paren">(</span><em class="sig-param">exc</em>, <em class="sig-param">msg=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#SSLError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.SSLError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pkgcheck.checks.network.</code><code class="sig-name descname">SSLError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">exc</span></em>, <em class="sig-param"><span class="n">msg</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/checks/network.html#SSLError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.checks.network.SSLError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcheck.checks.network._RequestException</span></code></p>
 <p>Wrapper for requests SSLError exception.</p>
 </dd></dl>
@@ -136,6 +138,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -171,12 +174,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.network module</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

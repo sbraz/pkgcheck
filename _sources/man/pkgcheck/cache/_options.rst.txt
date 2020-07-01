@@ -37,31 +37,6 @@ Base Options
                  enable color support when piping output or other sitations
                  where stdout is not a tty.
 
-Profiles
---------
-
--p PROFILE, --profiles PROFILE  
-                                Comma separated list of profiles to enable and disable for
-                                scanning. Any profiles specified in this fashion will be the
-                                only profiles that get scanned, skipping any disabled profiles.
-                                In addition, if no profiles are explicitly enabled, all
-                                profiles defined in the target repo's profiles.desc file will be
-                                scanned except those marked as experimental (exp).
-                                
-                                To specify disabled profiles prefix them with ``-`` which
-                                removes the from the list of profiles to be considered. Note
-                                that when starting the argument list with a disabled profile an
-                                equals sign must be used, e.g.  ``-p=-path/to/profile``,
-                                otherwise the disabled profile argument is treated as an
-                                option.
-                                
-                                The special keywords of ``stable``, ``dev``, ``exp``, and
-                                ``deprecated`` correspond to the lists of stable, development,
-                                experimental, and deprecated profiles, respectively. Therefore,
-                                to only scan all stable profiles pass the ``stable`` argument
-                                to --profiles. Additionally the keyword ``all`` can be used to
-                                scan all defined profiles in the target repo.
-
 Git
 ---
 
@@ -107,3 +82,28 @@ Arches
                         By default all repo defined arches are used; however,
                         stable-related checks (e.g. UnstableOnly) default to the set of
                         arches having stable profiles in the target repo.
+
+Profiles
+--------
+
+-p PROFILE, --profiles PROFILE  
+                                Comma separated list of profiles to enable and disable for
+                                scanning. Any profiles specified in this fashion will be the
+                                only profiles that get scanned, skipping any disabled profiles.
+                                In addition, if no profiles are explicitly enabled, all
+                                profiles defined in the target repo's profiles.desc file will be
+                                scanned except those marked as experimental (exp).
+                                
+                                To specify disabled profiles prefix them with ``-`` which
+                                removes the from the list of profiles to be considered. Note
+                                that when starting the argument list with a disabled profile an
+                                equals sign must be used, e.g.  ``-p=-path/to/profile``,
+                                otherwise the disabled profile argument is treated as an
+                                option.
+                                
+                                The special keywords of ``stable``, ``dev``, ``exp``, and
+                                ``deprecated`` correspond to the lists of stable, development,
+                                experimental, and deprecated profiles, respectively. Therefore,
+                                to only scan all stable profiles pass the ``stable`` argument
+                                to --profiles. Additionally the keyword ``all`` can be used to
+                                scan all defined profiles in the target repo.

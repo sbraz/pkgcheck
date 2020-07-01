@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.metadata &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.metadata</a></li> 
       </ul>
     </div>  
 
@@ -76,7 +78,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">licenses</span><span class="p">)</span>
         <span class="n">licenses</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">licenses</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;no matching license file</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{licenses}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;no matching license file</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">licenses</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="MissingLicense"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MissingLicense">[docs]</a><span class="k">class</span> <span class="nc">MissingLicense</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -104,8 +106,8 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">restrictions</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">restrictions</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.license_group}</span><span class="s1"> license </span><span class="si">{self.license!r}</span><span class="s1"> &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;requires RESTRICT=&quot;</span><span class="si">{restrictions}</span><span class="s1">&quot;&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">license_group</span><span class="si">}</span><span class="s1"> license </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">license</span><span class="si">!r}</span><span class="s1"> &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;requires RESTRICT=&quot;</span><span class="si">{</span><span class="n">restrictions</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -114,7 +116,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{self.category!r}</span><span class="s2"> packages shouldn&#39;t define LICENSE&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="si">!r}</span><span class="s2"> packages shouldn&#39;t define LICENSE&quot;</span></div>
 
 
 <div class="viewcode-block" id="LicenseCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.LicenseCheck">[docs]</a><span class="k">class</span> <span class="nc">LicenseCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -203,7 +205,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._type}</span><span class="s1"> USE flag</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{flags}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="si">}</span><span class="s1"> USE flag</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <div class="viewcode-block" id="InvalidUseFlags"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.InvalidUseFlags">[docs]</a><span class="k">class</span> <span class="nc">InvalidUseFlags</span><span class="p">(</span><span class="n">_UseFlagsResult</span><span class="p">):</span>
@@ -250,7 +252,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;uses </span><span class="si">{self._type}</span><span class="s2"> EAPI </span><span class="si">{self.eapi}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;uses </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_type</span><span class="si">}</span><span class="s2"> EAPI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eapi</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
 <div class="viewcode-block" id="DeprecatedEapi"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.DeprecatedEapi">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedEapi</span><span class="p">(</span><span class="n">_EapiResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -328,18 +330,18 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_profiles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_profiles</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">num_profiles</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{self.num_profiles}</span><span class="s1"> total)&#39;</span>
+                <span class="n">num_profiles</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_profiles</span><span class="si">}</span><span class="s1"> total)&#39;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">num_profiles</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
             <span class="c1"># collapsed version</span>
             <span class="k">return</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;profile: </span><span class="si">{self.profile!r}{num_profiles}</span><span class="s1"> &#39;</span>
-                <span class="sa">f</span><span class="s1">&#39;failed REQUIRED_USE: </span><span class="si">{self.required_use}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;profile: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="si">!r}{</span><span class="n">num_profiles</span><span class="si">}</span><span class="s1"> &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;failed REQUIRED_USE: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">required_use</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;keyword: </span><span class="si">{self.keyword}</span><span class="s1">, profile: </span><span class="si">{self.profile!r}</span><span class="s1">, &#39;</span>
-            <span class="sa">f</span><span class="s2">&quot;default USE: [{&#39;, &#39;.join(self.use)}] &quot;</span>
-            <span class="sa">f</span><span class="s1">&#39;-- failed REQUIRED_USE: </span><span class="si">{self.required_use}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;keyword: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">keyword</span><span class="si">}</span><span class="s1">, profile: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="si">!r}</span><span class="s1">, &#39;</span>
+            <span class="sa">f</span><span class="s2">&quot;default USE: [</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">use</span><span class="p">)</span><span class="si">}</span><span class="s2">] &quot;</span>
+            <span class="sa">f</span><span class="s1">&#39;-- failed REQUIRED_USE: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">required_use</span><span class="si">}</span><span class="s1">&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -415,7 +417,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;metadata.xml unused local USE flag</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{flags}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;metadata.xml unused local USE flag</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">flags</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="MatchingGlobalUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MatchingGlobalUse">[docs]</a><span class="k">class</span> <span class="nc">MatchingGlobalUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -427,7 +429,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;local USE flag matches a global: </span><span class="si">{self.flag!r}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;local USE flag matches a global: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="si">!r}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="ProbableGlobalUse"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.ProbableGlobalUse">[docs]</a><span class="k">class</span> <span class="nc">ProbableGlobalUse</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -439,7 +441,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;local USE flag closely matches a global: </span><span class="si">{self.flag!r}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;local USE flag closely matches a global: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="si">!r}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="ProbableUseExpand"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.ProbableUseExpand">[docs]</a><span class="k">class</span> <span class="nc">ProbableUseExpand</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -463,7 +465,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;USE_EXPAND group </span><span class="si">{self.group!r}</span><span class="s2"> matches local USE flag: </span><span class="si">{self.flag!r}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;USE_EXPAND group </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="si">!r}</span><span class="s2"> matches local USE flag: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="si">!r}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="UnderscoreInUseFlag"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.UnderscoreInUseFlag">[docs]</a><span class="k">class</span> <span class="nc">UnderscoreInUseFlag</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -482,7 +484,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;USE flag </span><span class="si">{self.flag!r}</span><span class="s2"> uses reserved underscore character&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;USE flag </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="si">!r}</span><span class="s2"> uses reserved underscore character&quot;</span></div>
 
 
 <div class="viewcode-block" id="LocalUseCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.LocalUseCheck">[docs]</a><span class="k">class</span> <span class="nc">LocalUseCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -520,7 +522,7 @@
                     <span class="k">yield</span> <span class="n">ProbableGlobalUse</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
             <span class="k">elif</span> <span class="s1">&#39;_&#39;</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_expand_groups</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{group}</span><span class="s1">_&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">flag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">group</span><span class="si">}</span><span class="s1">_&#39;</span><span class="p">):</span>
                         <span class="k">if</span> <span class="n">flag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_expand_groups</span><span class="p">[</span><span class="n">group</span><span class="p">]:</span>
                             <span class="k">yield</span> <span class="n">ProbableUseExpand</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span> <span class="n">group</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
                         <span class="k">break</span>
@@ -558,8 +560,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{self.dep!r}</span><span class="s2"> matches more than one slot: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;[ {&#39;, &#39;.join(self.dep_slots)} ]&quot;</span><span class="p">)</span></div>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="si">!r}</span><span class="s2"> matches more than one slot: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;[ </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dep_slots</span><span class="p">)</span><span class="si">}</span><span class="s2"> ]&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MissingSlotDepCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MissingSlotDepCheck">[docs]</a><span class="k">class</span> <span class="nc">MissingSlotDepCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -607,7 +609,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;=&quot; operator used without package revision: </span><span class="si">{self.dep}</span><span class="s1">=&quot;</span><span class="si">{self.atom}</span><span class="s1">&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;=&quot; operator used without package revision: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dep</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="MissingUseDepDefault"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MissingUseDepDefault">[docs]</a><span class="k">class</span> <span class="nc">MissingUseDepDefault</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -625,8 +627,8 @@
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgs</span><span class="p">)</span>
         <span class="n">pkgs</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgs</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.attr}</span><span class="s1">=&quot;</span><span class="si">{self.atom}</span><span class="s1">&quot;: USE flag </span><span class="si">{self.flag!r}</span><span class="s1"> missing from &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;package</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{pkgs}</span><span class="s1"> ]&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&quot;: USE flag </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="si">!r}</span><span class="s1"> missing from &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;package</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">pkgs</span><span class="si">}</span><span class="s1"> ]&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -645,8 +647,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;outdated blocker </span><span class="si">{self.attr}</span><span class="s1">=&quot;</span><span class="si">{self.atom}</span><span class="s1">&quot;: &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;last match removed </span><span class="si">{self.age}</span><span class="s1"> years ago&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;outdated blocker </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&quot;: &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;last match removed </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s1"> years ago&#39;</span>
         <span class="p">)</span></div>
 
 
@@ -667,7 +669,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;nonexistent blocker </span><span class="si">{self.attr}</span><span class="s1">=&quot;</span><span class="si">{self.atom}</span><span class="s1">&quot;: &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;nonexistent blocker </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&quot;: &#39;</span>
             <span class="s1">&#39;no matches in repo history&#39;</span>
         <span class="p">)</span></div>
 
@@ -682,7 +684,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;deprecated </span><span class="si">{self.attr}</span><span class="s1">: </span><span class="si">{self.atom}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;deprecated </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="BadDependency"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.BadDependency">[docs]</a><span class="k">class</span> <span class="nc">BadDependency</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -696,7 +698,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.msg}</span><span class="s1">: {self.depset.upper()}=&quot;</span><span class="si">{self.atom}</span><span class="s1">&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">depset</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="InvalidDepend"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.InvalidDepend">[docs]</a><span class="k">class</span> <span class="nc">InvalidDepend</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="p">):</span>
@@ -769,7 +771,7 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">deps</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">MetadataException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="bp">cls</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="sa">f</span><span class="s1">&#39;Invalid{attr.capitalize()}&#39;</span><span class="p">]</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="nb">globals</span><span class="p">()[</span><span class="sa">f</span><span class="s1">&#39;Invalid</span><span class="si">{</span><span class="n">attr</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
                 <span class="k">yield</span> <span class="bp">cls</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">msg</span><span class="p">(),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
                 <span class="k">continue</span>
 
@@ -816,7 +818,7 @@
                         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">existence_repo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                             <span class="c1"># check for outdated blockers (2+ years old)</span>
                             <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s1">&#39;=*&#39;</span><span class="p">:</span>
-                                <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;=</span><span class="si">{atom.cpvstr}</span><span class="s2">*&quot;</span>
+                                <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;=</span><span class="si">{</span><span class="n">atom</span><span class="o">.</span><span class="n">cpvstr</span><span class="si">}</span><span class="s2">*&quot;</span>
                             <span class="k">else</span><span class="p">:</span>
                                 <span class="n">s</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">op</span> <span class="o">+</span> <span class="n">atom</span><span class="o">.</span><span class="n">cpvstr</span>
                             <span class="n">unblocked</span> <span class="o">=</span> <span class="n">atom_cls</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -854,7 +856,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;unknown KEYWORDS: {&#39;, &#39;.join(map(repr, self.keywords))}&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;unknown KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="OverlappingKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.OverlappingKeywords">[docs]</a><span class="k">class</span> <span class="nc">OverlappingKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -866,7 +868,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;overlapping KEYWORDS: </span><span class="si">{self.keywords}</span><span class="s2">&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;overlapping KEYWORDS: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="DuplicateKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.DuplicateKeywords">[docs]</a><span class="k">class</span> <span class="nc">DuplicateKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -878,7 +880,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;duplicate KEYWORDS: {&#39;, &#39;.join(self.keywords)}&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;duplicate KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="UnsortedKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.UnsortedKeywords">[docs]</a><span class="k">class</span> <span class="nc">UnsortedKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -899,10 +901,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted_keywords</span><span class="p">:</span>
             <span class="c1"># verbose mode shows list of properly sorted keywords</span>
             <span class="k">return</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">unsorted KEYWORDS: {&#39;, &#39;.join(self.keywords)}&quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">sorted KEYWORDS: {&#39;, &#39;.join(self.sorted_keywords)}&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">unsorted KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">sorted KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sorted_keywords</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;unsorted KEYWORDS: {&#39;, &#39;.join(self.keywords)}&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;unsorted KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="MissingVirtualKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MissingVirtualKeywords">[docs]</a><span class="k">class</span> <span class="nc">MissingVirtualKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -914,7 +916,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;missing KEYWORDS: {&#39;, &#39;.join(self.keywords)}&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;missing KEYWORDS: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="KeywordsCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.KeywordsCheck">[docs]</a><span class="k">class</span> <span class="nc">KeywordsCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -989,7 +991,7 @@
                         <span class="n">keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
                             <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">keywords</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_arches</span><span class="p">)</span>
                 <span class="n">pkg_keywords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
-                <span class="n">pkg_keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{x}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;~&#39;</span><span class="p">)</span>
+                <span class="n">pkg_keywords</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;~&#39;</span><span class="p">)</span>
                 <span class="n">missing_keywords</span> <span class="o">=</span> <span class="n">keywords</span> <span class="o">-</span> <span class="n">pkg_keywords</span>
                 <span class="k">if</span> <span class="n">missing_keywords</span><span class="p">:</span>
                     <span class="k">yield</span> <span class="n">MissingVirtualKeywords</span><span class="p">(</span><span class="n">sort_keywords</span><span class="p">(</span><span class="n">missing_keywords</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
@@ -1006,7 +1008,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unfetchable file</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{filenames}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unfetchable file</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">filenames</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnknownMirror"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.UnknownMirror">[docs]</a><span class="k">class</span> <span class="nc">UnknownMirror</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -1019,7 +1021,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown mirror </span><span class="si">{self.mirror!r}</span><span class="s1"> from URI </span><span class="si">{self.uri!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown mirror </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mirror</span><span class="si">!r}</span><span class="s1"> from URI </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="BadProtocol"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.BadProtocol">[docs]</a><span class="k">class</span> <span class="nc">BadProtocol</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -1037,7 +1039,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uris</span><span class="p">)</span>
         <span class="n">uris</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uris</span><span class="p">))</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;bad protocol </span><span class="si">{self.protocol!r}</span><span class="s1"> in URI</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{uris}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;bad protocol </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">protocol</span><span class="si">!r}</span><span class="s1"> in URI</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">uris</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="RedundantUriRename"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.RedundantUriRename">[docs]</a><span class="k">class</span> <span class="nc">RedundantUriRename</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -1066,7 +1068,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;bad filename</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{filenames}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;bad filename</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">filenames</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="TarballAvailable"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.TarballAvailable">[docs]</a><span class="k">class</span> <span class="nc">TarballAvailable</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -1084,7 +1086,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uris</span><span class="p">)</span>
         <span class="n">uris</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uris</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;zip archive</span><span class="si">{s}</span><span class="s1"> used when tarball available: [ </span><span class="si">{uris}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;zip archive</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> used when tarball available: [ </span><span class="si">{</span><span class="n">uris</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="InvalidSrcUri"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.InvalidSrcUri">[docs]</a><span class="k">class</span> <span class="nc">InvalidSrcUri</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="p">):</span>
@@ -1144,7 +1146,7 @@
             <span class="n">unknown_mirrors</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">sub_uri</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">sub_uri</span> <span class="ow">in</span> <span class="n">mirrors</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">unknown_mirror</span><span class="p">)]</span>
             <span class="k">for</span> <span class="n">mirror</span><span class="p">,</span> <span class="n">sub_uri</span> <span class="ow">in</span> <span class="n">unknown_mirrors</span><span class="p">:</span>
-                <span class="n">uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{mirror}</span><span class="s2">/</span><span class="si">{sub_uri}</span><span class="s2">&quot;</span>
+                <span class="n">uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mirror</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">sub_uri</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="k">yield</span> <span class="n">UnknownMirror</span><span class="p">(</span><span class="n">mirror</span><span class="o">.</span><span class="n">mirror_name</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
 
             <span class="c1"># Check for unspecific filenames of the form ${PN}.ext, ${PV}.ext,</span>
@@ -1153,7 +1155,7 @@
             <span class="n">PN</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">PN</span><span class="p">)</span>
             <span class="n">PV</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">PV</span><span class="p">)</span>
             <span class="n">exts</span> <span class="o">=</span> <span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="o">.</span><span class="n">archive_exts_regex_pattern</span>
-            <span class="n">bad_filenames_re</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;^(</span><span class="si">{PN}</span><span class="s1">|v?</span><span class="si">{PV}</span><span class="s1">|[0-9a-f]{{40}})</span><span class="si">{exts}</span><span class="s1">$&#39;</span>
+            <span class="n">bad_filenames_re</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;^(</span><span class="si">{</span><span class="n">PN</span><span class="si">}</span><span class="s1">|v?</span><span class="si">{</span><span class="n">PV</span><span class="si">}</span><span class="s1">|[0-9a-f]</span><span class="si">{</span><span class="p">{</span><span class="mi">40</span><span class="p">}</span><span class="si">}</span><span class="s1">)</span><span class="si">{</span><span class="n">exts</span><span class="si">}</span><span class="s1">$&#39;</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">bad_filenames_re</span><span class="p">,</span> <span class="n">f_inst</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
                 <span class="n">bad_filenames</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">f_inst</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
 
@@ -1192,8 +1194,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">pkg_desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;DESCRIPTION=&quot;</span><span class="si">{self.pkg_desc}</span><span class="s1">&quot; &#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkg_desc</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{pkg_desc}{self.msg}</span><span class="s1">&#39;</span></div>
+        <span class="n">pkg_desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;DESCRIPTION=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_desc</span><span class="si">}</span><span class="s1">&quot; &#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pkg_desc</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pkg_desc</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="DescriptionCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.DescriptionCheck">[docs]</a><span class="k">class</span> <span class="nc">DescriptionCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -1257,19 +1259,19 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing_categories</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;HOMEPAGE should be undefined for </span><span class="si">{pkg.category!r}</span><span class="s1"> packages&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+                    <span class="sa">f</span><span class="s1">&#39;HOMEPAGE should be undefined for </span><span class="si">{</span><span class="n">pkg</span><span class="o">.</span><span class="n">category</span><span class="si">!r}</span><span class="s1"> packages&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">homepage</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">homepage</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">homepage</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">generic_sites</span><span class="p">:</span>
-                        <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;unspecific HOMEPAGE: </span><span class="si">{homepage}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+                        <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;unspecific HOMEPAGE: </span><span class="si">{</span><span class="n">homepage</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">i</span> <span class="o">=</span> <span class="n">homepage</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                            <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HOMEPAGE=</span><span class="si">{homepage!r}</span><span class="s1"> lacks protocol&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
+                            <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HOMEPAGE=</span><span class="si">{</span><span class="n">homepage</span><span class="si">!r}</span><span class="s1"> lacks protocol&#39;</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">homepage</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SrcUriCheck</span><span class="o">.</span><span class="n">valid_protos</span><span class="p">:</span>
                             <span class="k">yield</span> <span class="n">BadHomepage</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s1">&#39;HOMEPAGE=</span><span class="si">{homepage!r}</span><span class="s1"> uses unsupported &#39;</span>
-                                <span class="sa">f</span><span class="s1">&#39;protocol </span><span class="si">{homepage[:i]!r}</span><span class="s1">&#39;</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s1">&#39;HOMEPAGE=</span><span class="si">{</span><span class="n">homepage</span><span class="si">!r}</span><span class="s1"> uses unsupported &#39;</span>
+                                <span class="sa">f</span><span class="s1">&#39;protocol </span><span class="si">{</span><span class="n">homepage</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">,</span>
                                 <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 
 
@@ -1283,7 +1285,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">restricts</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">restricts</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown RESTRICT=&quot;</span><span class="si">{restricts}</span><span class="s1">&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown RESTRICT=&quot;</span><span class="si">{</span><span class="n">restricts</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnknownProperties"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.UnknownProperties">[docs]</a><span class="k">class</span> <span class="nc">UnknownProperties</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -1296,7 +1298,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown PROPERTIES=&quot;</span><span class="si">{properties}</span><span class="s1">&quot;&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;unknown PROPERTIES=&quot;</span><span class="si">{</span><span class="n">properties</span><span class="si">}</span><span class="s1">&quot;&#39;</span></div>
 
 
 <div class="viewcode-block" id="InvalidRestrict"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.InvalidRestrict">[docs]</a><span class="k">class</span> <span class="nc">InvalidRestrict</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">MetadataError</span><span class="p">):</span>
@@ -1325,7 +1327,7 @@
         <span class="c1"># pull allowed values from a repo and its masters</span>
         <span class="n">allowed</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">target_repo</span><span class="o">.</span><span class="n">trees</span><span class="p">:</span>
-            <span class="n">allowed</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1">_allowed&#39;</span><span class="p">))</span>
+            <span class="n">allowed</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">repo</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1">_allowed&#39;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allowed</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
@@ -1415,11 +1417,11 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unpackers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">dep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unpackers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">dep</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;|| ( {&#39; &#39;.join(self.unpackers)} )&quot;</span>
+            <span class="n">dep</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;|| ( </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unpackers</span><span class="p">)</span><span class="si">}</span><span class="s2"> )&quot;</span>
 
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
         <span class="n">filenames</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{dep_type}</span><span class="s1">=&quot;</span><span class="si">{dep}</span><span class="s1">&quot; for SRC_URI archive</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{filenames}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;missing </span><span class="si">{</span><span class="n">dep_type</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="n">dep</span><span class="si">}</span><span class="s1">&quot; for SRC_URI archive</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">filenames</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="MissingUnpackerDepCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.MissingUnpackerDepCheck">[docs]</a><span class="k">class</span> <span class="nc">MissingUnpackerDepCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -1471,6 +1473,7 @@
                 <span class="nb">str</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">eapi</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">filenames</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">unpackers</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1501,12 +1504,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.metadata</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

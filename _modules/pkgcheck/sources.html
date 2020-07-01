@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.sources &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -27,7 +28,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.sources</a></li> 
       </ul>
     </div>  
 
@@ -126,7 +128,7 @@
             <span class="c1"># determine the latest non-VCS and VCS pkgs for each slot</span>
             <span class="k">while</span> <span class="n">key</span> <span class="o">==</span> <span class="n">pkg</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">live</span><span class="p">:</span>
-                    <span class="n">selected_pkgs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;vcs-</span><span class="si">{pkg.slot}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pkg</span>
+                    <span class="n">selected_pkgs</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;vcs-</span><span class="si">{</span><span class="n">pkg</span><span class="o">.</span><span class="n">slot</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pkg</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">selected_pkgs</span><span class="p">[</span><span class="n">pkg</span><span class="o">.</span><span class="n">slot</span><span class="p">]</span> <span class="o">=</span> <span class="n">pkg</span>
 
@@ -218,7 +220,7 @@
 <span class="sd">        Deviates from parent in that no package name check is done.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cppath</span> <span class="o">=</span> <span class="n">pjoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">,</span> <span class="n">catpkg</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">catpkg</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">pkg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{catpkg[-1]}</span><span class="s1">-&#39;</span>
+        <span class="n">pkg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">catpkg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">-&#39;</span>
         <span class="n">lp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
         <span class="n">extension</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span>
         <span class="n">ext_len</span> <span class="o">=</span> <span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">extension</span><span class="p">)</span>
@@ -228,7 +230,7 @@
                 <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">ext_len</span><span class="p">:]</span> <span class="o">==</span> <span class="n">extension</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">EnvironmentError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">pjoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">catpkg</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed fetching versions for package </span><span class="si">{path}</span><span class="s1">: </span><span class="si">{e}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed fetching versions for package </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
 
 <div class="viewcode-block" id="RawRepoSource"><a class="viewcode-back" href="../../api/pkgcheck.sources.html#pkgcheck.sources.RawRepoSource">[docs]</a><span class="k">class</span> <span class="nc">RawRepoSource</span><span class="p">(</span><span class="n">RepoSource</span><span class="p">):</span>
@@ -378,6 +380,7 @@
     <span class="k">return</span> <span class="n">source</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -407,12 +410,13 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.sources</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.reporters &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -27,7 +28,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.reporters</a></li> 
       </ul>
     </div>  
 
@@ -201,7 +203,7 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
             <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scope_prefix_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">scope</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{prefix}{result.desc}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}{</span><span class="n">result</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
 
 
@@ -227,7 +229,7 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">scope</span> <span class="ow">in</span> <span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">version_scope</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">package_scope</span><span class="p">):</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{result.category}</span><span class="s1">/</span><span class="si">{result.package}</span><span class="s1">&#39;</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">package</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="k">elif</span> <span class="n">result</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="n">base</span><span class="o">.</span><span class="n">category_scope</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">category</span>
             <span class="k">else</span><span class="p">:</span>
@@ -242,7 +244,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">later_prefix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">)</span>
             <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
             <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">scope</span> <span class="ow">is</span> <span class="n">base</span><span class="o">.</span><span class="n">version_scope</span><span class="p">:</span>
-                <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;version </span><span class="si">{result.version}</span><span class="s2">: &quot;</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;version </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">: &quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">fg</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">color</span><span class="p">),</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">reset</span><span class="p">,</span>
@@ -423,12 +425,12 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">decoder</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">UnicodeDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed loading: </span><span class="si">{data!r}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed loading: </span><span class="si">{</span><span class="n">data</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">cls</span> <span class="o">=</span> <span class="n">objects</span><span class="o">.</span><span class="n">KEYWORDS</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__class__&#39;</span><span class="p">)]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;missing result class: </span><span class="si">{data!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;missing result class: </span><span class="si">{</span><span class="n">data</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
 
         <span class="c1"># reconstruct a package object</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">Result</span><span class="o">.</span><span class="n">attrs_to_pkg</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
@@ -436,7 +438,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed loading: </span><span class="si">{data!r}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed loading: </span><span class="si">{</span><span class="n">data</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
 
 <div class="viewcode-block" id="JsonStream.from_file"><a class="viewcode-back" href="../../api/pkgcheck.reporters.html#pkgcheck.reporters.JsonStream.from_file">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
@@ -445,7 +447,7 @@
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">DeserializationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid entry on line </span><span class="si">{i}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
+            <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid entry on line </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
 
     <span class="nd">@coroutine</span>
     <span class="k">def</span> <span class="nf">_process_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -478,7 +480,7 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Result</span><span class="p">):</span>
                     <span class="k">yield</span> <span class="n">result</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid data type: </span><span class="si">{result!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid data type: </span><span class="si">{</span><span class="n">result</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">pickle</span><span class="o">.</span><span class="n">UnpicklingError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DeserializationError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;failed unpickling result&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span></div>
 
@@ -505,6 +507,7 @@
     <span class="n">protocol</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -534,12 +537,13 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.reporters</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

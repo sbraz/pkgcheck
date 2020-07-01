@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.unstable_only &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.unstable_only</a></li> 
       </ul>
     </div>  
 
@@ -61,7 +63,7 @@
         <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
         <span class="n">arches</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
         <span class="n">versions</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">versions</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;for arch</span><span class="si">{es}</span><span class="s1">: [ </span><span class="si">{arches}</span><span class="s1"> ], all versions are unstable: [ </span><span class="si">{versions}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;for arch</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">arches</span><span class="si">}</span><span class="s1"> ], all versions are unstable: [ </span><span class="si">{</span><span class="n">versions</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="UnstableOnlyCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.unstable_only.html#pkgcheck.checks.unstable_only.UnstableOnlyCheck">[docs]</a><span class="k">class</span> <span class="nc">UnstableOnlyCheck</span><span class="p">(</span><span class="n">GentooRepoCheck</span><span class="p">):</span>
@@ -83,7 +85,7 @@
                 <span class="n">packages</span><span class="o">.</span><span class="n">PackageRestriction</span><span class="p">(</span>
                     <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">ContainmentMatch2</span><span class="p">((</span><span class="n">arch</span><span class="p">,))),</span>
                 <span class="n">packages</span><span class="o">.</span><span class="n">PackageRestriction</span><span class="p">(</span>
-                    <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">ContainmentMatch2</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;~</span><span class="si">{arch}</span><span class="s2">&quot;</span><span class="p">,)))</span>
+                    <span class="s2">&quot;keywords&quot;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">ContainmentMatch2</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;~</span><span class="si">{</span><span class="n">arch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,)))</span>
             <span class="p">]</span>
 
 <div class="viewcode-block" id="UnstableOnlyCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.unstable_only.html#pkgcheck.checks.unstable_only.UnstableOnlyCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkgset</span><span class="p">):</span>
@@ -107,6 +109,7 @@
             <span class="k">yield</span> <span class="n">UnstableOnly</span><span class="p">(</span><span class="n">versions</span><span class="p">,</span> <span class="n">sort_keywords</span><span class="p">(</span><span class="n">unstable_arches</span><span class="p">[</span><span class="n">pkgs</span><span class="p">]),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkgs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -137,12 +140,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.unstable_only</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

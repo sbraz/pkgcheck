@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.glsa &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.glsa</a></li> 
       </ul>
     </div>  
 
@@ -64,7 +66,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
         <span class="n">arches</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;vulnerable via </span><span class="si">{self.glsa}</span><span class="s1">, keyword</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{arches}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;vulnerable via </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">glsa</span><span class="si">}</span><span class="s1">, keyword</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">arches</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="GlsaCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.glsa.html#pkgcheck.checks.glsa.GlsaCheck">[docs]</a><span class="k">class</span> <span class="nc">GlsaCheck</span><span class="p">(</span><span class="n">GentooRepoCheck</span><span class="p">):</span>
@@ -96,7 +98,7 @@
                 <span class="n">glsa_dirs</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">repr</span><span class="p">,</span> <span class="n">glsa_dirs</span><span class="p">))</span>
                 <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="s1">&#39;--glsa-dir needs to be specified to select one of &#39;</span>
-                    <span class="sa">f</span><span class="s1">&#39;multiple glsa sources: </span><span class="si">{glsa_dirs}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="sa">f</span><span class="s1">&#39;multiple glsa sources: </span><span class="si">{</span><span class="n">glsa_dirs</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">glsa_loc</span> <span class="o">=</span> <span class="n">glsa_dirs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -136,7 +138,7 @@
                         <span class="n">arches</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">restriction</span><span class="o">.</span><span class="n">vals</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s1">&#39;unexpected restriction sequence- </span><span class="si">{v.restriction}</span><span class="s1"> in </span><span class="si">{vuln}</span><span class="s1">&#39;</span><span class="p">)</span>
+                            <span class="sa">f</span><span class="s1">&#39;unexpected restriction sequence- </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">restriction</span><span class="si">}</span><span class="s1"> in </span><span class="si">{</span><span class="n">vuln</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
                 <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)}</span>
                 <span class="k">if</span> <span class="n">arches</span><span class="p">:</span>
                     <span class="n">arches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">arches</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span>
@@ -146,6 +148,7 @@
                 <span class="k">yield</span> <span class="n">VulnerablePackage</span><span class="p">(</span><span class="n">arches</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">vuln</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -176,12 +179,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.glsa</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

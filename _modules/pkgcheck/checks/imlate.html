@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.imlate &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.imlate</a></li> 
       </ul>
     </div>  
 
@@ -63,7 +65,7 @@
         <span class="n">stable</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stable</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
         <span class="n">keywords</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;slot(</span><span class="si">{self.slot}</span><span class="s1">), stabled arch</span><span class="si">{es}</span><span class="s1">: [ </span><span class="si">{stable}</span><span class="s1"> ], potential</span><span class="si">{s}</span><span class="s1">: [ </span><span class="si">{keywords}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;slot(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="si">}</span><span class="s1">), stabled arch</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">stable</span><span class="si">}</span><span class="s1"> ], potential</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">keywords</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="LaggingStable"><a class="viewcode-back" href="../../../api/pkgcheck.checks.imlate.html#pkgcheck.checks.imlate.LaggingStable">[docs]</a><span class="k">class</span> <span class="nc">LaggingStable</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Info</span><span class="p">):</span>
@@ -80,7 +82,7 @@
         <span class="n">es</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stable</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;es&#39;</span><span class="p">)</span>
         <span class="n">stable</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stable</span><span class="p">)</span>
         <span class="n">keywords</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;slot(</span><span class="si">{self.slot}</span><span class="s1">), stabled arch</span><span class="si">{es}</span><span class="s1">: [ </span><span class="si">{stable}</span><span class="s1"> ], lagging: [ </span><span class="si">{keywords}</span><span class="s1"> ]&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;slot(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">slot</span><span class="si">}</span><span class="s1">), stabled arch</span><span class="si">{</span><span class="n">es</span><span class="si">}</span><span class="s1">: [ </span><span class="si">{</span><span class="n">stable</span><span class="si">}</span><span class="s1"> ], lagging: [ </span><span class="si">{</span><span class="n">keywords</span><span class="si">}</span><span class="s1"> ]&#39;</span></div>
 
 
 <div class="viewcode-block" id="ImlateCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.imlate.html#pkgcheck.checks.imlate.ImlateCheck">[docs]</a><span class="k">class</span> <span class="nc">ImlateCheck</span><span class="p">(</span><span class="n">Check</span><span class="p">):</span>
@@ -107,7 +109,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_arches</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stable_arches</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">arch</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">stable_arches</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">target_arches</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{arch}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stable_arches</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_arches</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;~</span><span class="si">{</span><span class="n">arch</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">arch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stable_arches</span><span class="p">)</span>
 
         <span class="n">source_arches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">source_arches</span>
         <span class="k">if</span> <span class="n">source_arches</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -157,6 +159,7 @@
                 <span class="k">break</span></div></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -187,12 +190,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.imlate</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

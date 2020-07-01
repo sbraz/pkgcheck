@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.header &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.header</a></li> 
       </ul>
     </div>  
 
@@ -76,7 +78,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;invalid copyright: </span><span class="si">{self.line!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;invalid copyright: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="OldGentooCopyright"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.OldGentooCopyright">[docs]</a><span class="k">class</span> <span class="nc">OldGentooCopyright</span><span class="p">(</span><span class="n">_FileHeaderResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -95,7 +97,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;old copyright, update to &quot;Gentoo Authors&quot;: </span><span class="si">{self.line!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;old copyright, update to &quot;Gentoo Authors&quot;: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="NonGentooAuthorsCopyright"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.NonGentooAuthorsCopyright">[docs]</a><span class="k">class</span> <span class="nc">NonGentooAuthorsCopyright</span><span class="p">(</span><span class="n">_FileHeaderResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -111,7 +113,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;copyright line must state &quot;Gentoo Authors&quot;: </span><span class="si">{self.line!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;copyright line must state &quot;Gentoo Authors&quot;: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="InvalidLicenseHeader"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.InvalidLicenseHeader">[docs]</a><span class="k">class</span> <span class="nc">InvalidLicenseHeader</span><span class="p">(</span><span class="n">_FileHeaderResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -128,7 +130,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;invalid license header: </span><span class="si">{self.line!r}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;invalid license header: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">!r}</span><span class="s1">&#39;</span></div>
 
 
 <span class="k">class</span> <span class="nc">_HeaderCheck</span><span class="p">(</span><span class="n">GentooRepoCheck</span><span class="p">):</span>
@@ -207,7 +209,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: {super().desc}&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassOldGentooCopyright"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.EclassOldGentooCopyright">[docs]</a><span class="k">class</span> <span class="nc">EclassOldGentooCopyright</span><span class="p">(</span><span class="n">OldGentooCopyright</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">EclassResult</span><span class="p">):</span>
@@ -215,7 +217,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: {super().desc}&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassNonGentooAuthorsCopyright"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.EclassNonGentooAuthorsCopyright">[docs]</a><span class="k">class</span> <span class="nc">EclassNonGentooAuthorsCopyright</span><span class="p">(</span><span class="n">NonGentooAuthorsCopyright</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">EclassResult</span><span class="p">):</span>
@@ -223,7 +225,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: {super().desc}&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassInvalidLicenseHeader"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.EclassInvalidLicenseHeader">[docs]</a><span class="k">class</span> <span class="nc">EclassInvalidLicenseHeader</span><span class="p">(</span><span class="n">InvalidLicenseHeader</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">EclassResult</span><span class="p">):</span>
@@ -231,7 +233,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self.eclass}</span><span class="s1">: {super().desc}&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">eclass</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">desc</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="EclassHeaderCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.header.html#pkgcheck.checks.header.EclassHeaderCheck">[docs]</a><span class="k">class</span> <span class="nc">EclassHeaderCheck</span><span class="p">(</span><span class="n">_HeaderCheck</span><span class="p">):</span>
@@ -250,6 +252,7 @@
     <span class="n">_item_attr</span> <span class="o">=</span> <span class="s1">&#39;eclass&#39;</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -280,12 +283,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.header</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

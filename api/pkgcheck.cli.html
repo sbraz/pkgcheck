@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.cli module &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +27,8 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.cli module</a></li> 
       </ul>
     </div>  
 
@@ -38,31 +40,31 @@
   <div class="section" id="module-pkgcheck.cli">
 <span id="pkgcheck-cli-module"></span><h1>pkgcheck.cli module<a class="headerlink" href="#module-pkgcheck.cli" title="Permalink to this headline">¶</a></h1>
 <p>Various command-line specific support.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.cli.ConfigArgumentParser">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.cli.</code><code class="sig-name descname">ConfigArgumentParser</code><span class="sig-paren">(</span><em class="sig-param">configs=()</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#ConfigArgumentParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.ConfigArgumentParser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.cli.</code><code class="sig-name descname">ConfigArgumentParser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">configs</span><span class="o">=</span><span class="default_value">()</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#ConfigArgumentParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.ConfigArgumentParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">snakeoil.cli.arghparse.ArgumentParser</span></code></p>
 <p>Argument parser that supports loading settings from specified config files.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="pkgcheck.cli.ConfigArgumentParser.config">
 <code class="sig-name descname">config</code><a class="headerlink" href="#pkgcheck.cli.ConfigArgumentParser.config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Config file object related to a given parser.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.cli.ConfigArgumentParser.parse_config_options">
-<code class="sig-name descname">parse_config_options</code><span class="sig-paren">(</span><em class="sig-param">namespace</em>, <em class="sig-param">section='DEFAULT'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#ConfigArgumentParser.parse_config_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.ConfigArgumentParser.parse_config_options" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">parse_config_options</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">namespace</span></em>, <em class="sig-param"><span class="n">section</span><span class="o">=</span><span class="default_value">'DEFAULT'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#ConfigArgumentParser.parse_config_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.ConfigArgumentParser.parse_config_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse options from config if they exist.</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="pkgcheck.cli.Tool">
-<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.cli.</code><code class="sig-name descname">Tool</code><span class="sig-paren">(</span><em class="sig-param">parser</em>, <em class="sig-param">outfile=None</em>, <em class="sig-param">errfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#Tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.Tool" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pkgcheck.cli.</code><code class="sig-name descname">Tool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">outfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">errfile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#Tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.Tool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pkgcore.util.commandline.Tool</span></code></p>
 <p>Suppress log messages globally.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="pkgcheck.cli.Tool.main">
 <code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/cli.html#Tool.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.cli.Tool.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute the main script function.</p>
@@ -73,6 +75,7 @@
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -108,12 +111,13 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pkgcheck master documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.cli module</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -27,7 +28,8 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks</a></li> 
       </ul>
     </div>  
 
@@ -114,7 +116,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">skip</span><span class="p">:</span>
             <span class="n">skip</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">namespace</span><span class="o">.</span><span class="n">gentoo_repo</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{cls.__name__}</span><span class="s1">, not running against gentoo repo&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, not running against gentoo repo&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span></div></div>
 
 
@@ -126,7 +128,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">skip</span><span class="p">:</span>
             <span class="n">skip</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">namespace</span><span class="o">.</span><span class="n">target_repo</span><span class="o">.</span><span class="n">masters</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{cls.__name__}</span><span class="s1">, not running against overlay repo&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, not running against overlay repo&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span></div></div>
 
 
@@ -148,7 +150,7 @@
 
             <span class="n">skip</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">keywords</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{cls.__name__}</span><span class="s1">, not explicitly enabled&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, not explicitly enabled&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span></div></div>
 
 
@@ -160,7 +162,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">skip</span><span class="p">:</span>
             <span class="n">skip</span> <span class="o">=</span> <span class="n">namespace</span><span class="o">.</span><span class="n">commits</span> <span class="ow">is</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{cls.__name__}</span><span class="s1">, not explicitly enabled&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, not explicitly enabled&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span></div></div>
 
 
@@ -183,7 +185,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">skip</span><span class="p">:</span>
             <span class="n">skip</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">namespace</span><span class="o">.</span><span class="n">net</span>
             <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{cls.__name__}</span><span class="s1">, network checks not enabled&#39;</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;skipping </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">, network checks not enabled&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="n">namespace</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="n">skip</span><span class="p">)</span></div></div>
 
 
@@ -196,7 +198,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">check_name</span> <span class="o">=</span> <span class="n">check</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{check_name}</span><span class="s1">: </span><span class="si">{msg}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">check_name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="init_checks"><a class="viewcode-back" href="../../api/pkgcheck.checks.html#pkgcheck.checks.init_checks">[docs]</a><span class="k">def</span> <span class="nf">init_checks</span><span class="p">(</span><span class="n">enabled_addons</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
@@ -230,6 +232,7 @@
     <span class="k">return</span> <span class="n">enabled</span><span class="p">,</span> <span class="n">caches</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -259,12 +262,13 @@
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../index.html">pkgcheck master documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>

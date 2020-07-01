@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pkgcheck.checks.metadata_xml &#8212; pkgcheck master documentation</title>
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -28,7 +29,8 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" accesskey="U">pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.metadata_xml</a></li> 
       </ul>
     </div>  
 
@@ -60,7 +62,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1"> is missing </span><span class="si">{self.filename}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1"> is missing </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <span class="k">class</span> <span class="nc">_BadlyFormedXml</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -73,7 +75,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1"> </span><span class="si">{self.filename}</span><span class="s1"> is not well formed xml: </span><span class="si">{self.error}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s1"> is not well formed xml: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <span class="k">class</span> <span class="nc">_InvalidXml</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -86,7 +88,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1"> </span><span class="si">{self.filename}</span><span class="s1"> violates metadata.xsd:</span><span class="se">\n</span><span class="si">{self.message}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s1"> violates metadata.xsd:</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <span class="k">class</span> <span class="nc">_MetadataXmlInvalidPkgRef</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -100,8 +102,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1"> </span><span class="si">{self.filename}</span><span class="s1"> &lt;pkg/&gt; &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;references unknown/invalid package: </span><span class="si">{self.pkgtext!r}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s1"> &lt;pkg/&gt; &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;references unknown/invalid package: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pkgtext</span><span class="si">!r}</span><span class="s1">&#39;</span>
         <span class="p">)</span>
 
 
@@ -116,8 +118,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{self._attr}</span><span class="s1"> </span><span class="si">{self.filename}</span><span class="s1"> &lt;cat/&gt; references &#39;</span>
-            <span class="sa">f</span><span class="s1">&#39;unknown/invalid category: </span><span class="si">{self.cattext!r}</span><span class="s1">&#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s1"> &lt;cat/&gt; references &#39;</span>
+            <span class="sa">f</span><span class="s1">&#39;unknown/invalid category: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cattext</span><span class="si">!r}</span><span class="s1">&#39;</span>
         <span class="p">)</span>
 
 
@@ -152,7 +154,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maintainers</span><span class="p">)</span>
         <span class="n">maintainers</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maintainers</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;proxied maintainer</span><span class="si">{s}</span><span class="s1"> missing proxy dev/project: </span><span class="si">{maintainers}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;proxied maintainer</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> missing proxy dev/project: </span><span class="si">{</span><span class="n">maintainers</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="StaleProxyMaintProject"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata_xml.html#pkgcheck.checks.metadata_xml.StaleProxyMaintProject">[docs]</a><span class="k">class</span> <span class="nc">StaleProxyMaintProject</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -184,7 +186,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emails</span><span class="p">)</span>
         <span class="n">emails</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emails</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;nonexistent project maintainer</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{emails}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;nonexistent project maintainer</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">emails</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="WrongMaintainerType"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata_xml.html#pkgcheck.checks.metadata_xml.WrongMaintainerType">[docs]</a><span class="k">class</span> <span class="nc">WrongMaintainerType</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
@@ -199,7 +201,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emails</span><span class="p">)</span>
         <span class="n">emails</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emails</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;project maintainer</span><span class="si">{s}</span><span class="s1"> with type=&quot;person&quot;: </span><span class="si">{emails}</span><span class="s1">&#39;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;project maintainer</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1"> with type=&quot;person&quot;: </span><span class="si">{</span><span class="n">emails</span><span class="si">}</span><span class="s1">&#39;</span></div>
 
 
 <div class="viewcode-block" id="PkgMissingMetadataXml"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata_xml.html#pkgcheck.checks.metadata_xml.PkgMissingMetadataXml">[docs]</a><span class="k">class</span> <span class="nc">PkgMissingMetadataXml</span><span class="p">(</span><span class="n">_MissingXml</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">PackageResult</span><span class="p">):</span>
@@ -257,7 +259,7 @@
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;metadata.xml has inconsistent indentation on line</span><span class="si">{s}</span><span class="s1">: </span><span class="si">{lines}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;metadata.xml has inconsistent indentation on line</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">lines</span><span class="si">}</span><span class="s1">&#39;</span>
 
 
 <div class="viewcode-block" id="CatMetadataXmlIndentation"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata_xml.html#pkgcheck.checks.metadata_xml.CatMetadataXmlIndentation">[docs]</a><span class="k">class</span> <span class="nc">CatMetadataXmlIndentation</span><span class="p">(</span><span class="n">_MetadataXmlIndentation</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">CategoryResult</span><span class="p">):</span>
@@ -284,7 +286,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;metadata.xml has empty element </span><span class="si">{self.element!r}</span><span class="s2"> on line </span><span class="si">{self.line}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;metadata.xml has empty element </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="si">!r}</span><span class="s2"> on line </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
 <div class="viewcode-block" id="CatMetadataXmlEmptyElement"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata_xml.html#pkgcheck.checks.metadata_xml.CatMetadataXmlEmptyElement">[docs]</a><span class="k">class</span> <span class="nc">CatMetadataXmlEmptyElement</span><span class="p">(</span><span class="n">_MetadataXmlEmptyElement</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">CategoryResult</span><span class="p">):</span>
@@ -379,7 +381,7 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_format_lxml_errors</span><span class="p">(</span><span class="n">error_log</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">error_log</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="sa">f</span><span class="s1">&#39;line </span><span class="si">{l.line}</span><span class="s1">, col </span><span class="si">{l.column}</span><span class="s1">: (</span><span class="si">{l.type_name}</span><span class="s1">) </span><span class="si">{l.message}</span><span class="s1">&#39;</span>
+            <span class="k">yield</span> <span class="sa">f</span><span class="s1">&#39;line </span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">line</span><span class="si">}</span><span class="s1">, col </span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">column</span><span class="si">}</span><span class="s1">: (</span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">type_name</span><span class="si">}</span><span class="s1">) </span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span>
 
     <span class="k">def</span> <span class="nf">_parse_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">loc</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -510,6 +512,7 @@
         <span class="k">return</span> <span class="n">pjoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_base</span><span class="p">,</span> <span class="n">pkg</span><span class="o">.</span><span class="n">category</span><span class="p">,</span> <span class="s1">&#39;metadata.xml&#39;</span><span class="p">)</span></div>
 </pre></div>
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -540,12 +543,13 @@
              >modules</a> |</li>
         <li class="nav-item nav-item-0"><a href="../../../index.html">pkgcheck master documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
-          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li> 
+          <li class="nav-item nav-item-2"><a href="../checks.html" >pkgcheck.checks</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pkgcheck.checks.metadata_xml</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   </body>
 </html>
