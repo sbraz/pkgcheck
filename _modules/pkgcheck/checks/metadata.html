@@ -1378,19 +1378,20 @@
 
     <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span><span class="n">MissingTestRestrict</span><span class="p">])</span>
 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="c1"># create &quot;!test? ( test )&quot; conditional to match restrictions against</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_restrict</span> <span class="o">=</span> <span class="n">packages</span><span class="o">.</span><span class="n">Conditional</span><span class="p">(</span>
+            <span class="s1">&#39;use&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">ContainmentMatch2</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">negate</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])</span>
+
 <div class="viewcode-block" id="RestrictTestCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.RestrictTestCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="c1"># if the package has unconditional restriction, additional conditional</span>
-        <span class="c1"># is unnecessary</span>
-        <span class="k">if</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">restrict</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="c1"># otherwise, it should have top-level &quot;!test? ( test )&quot;</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">packages</span><span class="o">.</span><span class="n">Conditional</span><span class="p">)</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">restriction</span><span class="o">.</span><span class="n">vals</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;test&#39;</span><span class="p">}</span> <span class="ow">and</span>
-               <span class="n">r</span><span class="o">.</span><span class="n">restriction</span><span class="o">.</span><span class="n">negate</span> <span class="ow">and</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">payload</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">restrict</span><span class="p">):</span>
-            <span class="k">return</span>
+        <span class="c1"># conditional is unnecessary if it already exists or is in unconditional form</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">restrict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_restrict</span><span class="p">):</span>
+                <span class="k">return</span>
 
         <span class="k">yield</span> <span class="n">MissingTestRestrict</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 
