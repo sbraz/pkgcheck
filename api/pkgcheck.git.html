@@ -169,7 +169,7 @@ activated (because it runs before the commandline is parsed).</p>
 <dt id="pkgcheck.git.GitStash">
 <em class="property">class </em><code class="sig-prename descclassname">pkgcheck.git.</code><code class="sig-name descname">GitStash</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">parser</span></em>, <em class="sig-param"><span class="n">repo</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pkgcheck/git.html#GitStash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pkgcheck.git.GitStash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">contextlib.AbstractContextManager</span></code></p>
-<p>Context manager for stashing untracked or unmodified files.</p>
+<p>Context manager for stashing untracked or modified/uncommitted files.</p>
 <p>This assumes that no git actions are performed on the repo while a scan is
 underway otherwise <cite>git stash</cite> usage may cause issues.</p>
 </dd></dl>

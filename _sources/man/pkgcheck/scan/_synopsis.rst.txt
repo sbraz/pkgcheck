@@ -1,4 +1,4 @@
 Synopsis
 --------
 
-pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [--source-arches ARCH] [--glsa-dir GLSA_LOCATION] [--timeout TIMEOUT] [--user-agent USER_AGENT] [--reset-caching-per {version,package,category}] [-p PROFILE] [-a ARCH] [--commits [COMMIT]] [TARGET [TARGET ...]]
+pkgcheck scan [-R REPORTER] [--format FORMAT_STR] [-h] [--debug] [-q] [-v] [--color BOOLEAN] [--config CONFIG_FILE] [-r REPO] [-f {latest,repo}] [--sorted] [-j JOBS] [-t TASKS] [--cache CACHE] [-c CHECK] [-k KEYWORD] [-s SCOPE] [--net] [-p PROFILE] [--commits [COMMIT]] [--reset-caching-per {version,package,category}] [--timeout TIMEOUT] [--user-agent USER_AGENT] [--glsa-dir GLSA_LOCATION] [--source-arches ARCH] [-a ARCH] [TARGET [TARGET ...]]
