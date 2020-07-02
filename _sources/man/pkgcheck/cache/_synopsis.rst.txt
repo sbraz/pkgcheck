@@ -1,4 +1,4 @@
 Synopsis
 --------
 
-pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [-a ARCH] [--commits [COMMIT]]
+pkgcheck cache [-h] [--debug] [-q] [-v] [--color BOOLEAN] [-u | -r] [-f] [-n] [-t CACHE] [-p PROFILE] [--commits [COMMIT]] [-a ARCH]
