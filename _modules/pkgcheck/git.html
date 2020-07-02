@@ -405,6 +405,15 @@
         <span class="sd">&quot;&quot;&quot;Stub method for matching eclasses against commits.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">eclass</span> <span class="ow">in</span> <span class="n">committed</span>
 
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_pkg_atoms</span><span class="p">(</span><span class="n">paths</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter package atoms from commit paths.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">atom_cls</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="k">except</span> <span class="n">MalformedAtom</span><span class="p">:</span>
+                <span class="k">continue</span>
+
 <div class="viewcode-block" id="GitAddon.check_args"><a class="viewcode-back" href="../../api/pkgcheck.git.html#pkgcheck.git.GitAddon.check_args">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">check_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">namespace</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">namespace</span><span class="o">.</span><span class="n">commits</span><span class="p">:</span>
@@ -435,7 +444,7 @@
 
             <span class="n">pkgs</span><span class="p">,</span> <span class="n">eclasses</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(),</span> <span class="n">predicate</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;eclass/&#39;</span><span class="p">))</span>
-            <span class="n">pkgs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">atom_cls</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkgs</span><span class="p">)</span>
+            <span class="n">pkgs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_pkg_atoms</span><span class="p">(</span><span class="n">pkgs</span><span class="p">))</span>
             <span class="n">eclasses</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">(</span><span class="n">eclass_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">eclasses</span><span class="p">))</span>
             <span class="n">eclasses</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s1">&#39;eclass&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">eclasses</span><span class="p">)</span>
 
