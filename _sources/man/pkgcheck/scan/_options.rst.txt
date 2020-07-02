@@ -156,14 +156,20 @@ Check Selection
 Plugin Options
 --------------
 
---glsa-dir GLSA_LOCATION  
-                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
-
 --source-arches ARCH      
                           Comma separated list of arches to compare against for
                           lagging stabilization.
                           
                           The default arches are all stable arches (unless --arches is specified).
+
+--glsa-dir GLSA_LOCATION  
+                          source directory for glsas; tries to autodetermine it, may be required if no glsa dirs are known
+
+Query Caching
+-------------
+
+--reset-caching-per {version,package,category}  
+                                                control how often the cache is cleared (version, package or category)
 
 Profiles
 --------
@@ -190,14 +196,20 @@ Profiles
                                 to --profiles. Additionally the keyword ``all`` can be used to
                                 scan all defined profiles in the target repo.
 
-Network
--------
+Arches
+------
 
---timeout TIMEOUT        
-                         timeout used for network checks
-
---user-agent USER_AGENT  
-                         custom user agent spoofing
+-a ARCH, --arches ARCH  
+                        Comma separated list of arches to enable and disable.
+                        
+                        To specify disabled arches prefix them with '-'. Note that when
+                        starting the argument list with a disabled arch an equals sign
+                        must be used, e.g. -a=-arch, otherwise the disabled arch
+                        argument is treated as an option.
+                        
+                        By default all repo defined arches are used; however,
+                        stable-related checks (e.g. UnstableOnly) default to the set of
+                        arches having stable profiles in the target repo.
 
 Git
 ---
@@ -230,23 +242,11 @@ origin master`` or similar will also create the reference.
                     Note that will also enable eclass-specific checks if it
                     determines any commits have been made to eclasses.
 
-Arches
-------
+Network
+-------
 
--a ARCH, --arches ARCH  
-                        Comma separated list of arches to enable and disable.
-                        
-                        To specify disabled arches prefix them with '-'. Note that when
-                        starting the argument list with a disabled arch an equals sign
-                        must be used, e.g. -a=-arch, otherwise the disabled arch
-                        argument is treated as an option.
-                        
-                        By default all repo defined arches are used; however,
-                        stable-related checks (e.g. UnstableOnly) default to the set of
-                        arches having stable profiles in the target repo.
+--timeout TIMEOUT        
+                         timeout used for network checks
 
-Query Caching
--------------
-
---reset-caching-per {version,package,category}  
-                                                control how often the cache is cleared (version, package or category)
+--user-agent USER_AGENT  
+                         custom user agent spoofing
