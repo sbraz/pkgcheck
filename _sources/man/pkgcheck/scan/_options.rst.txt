@@ -53,7 +53,13 @@ Main Options
 ------------
 
 --config CONFIG_FILE                      
-                                          use custom pkgcheck scan settings file
+                                          Load custom pkgcheck scan settings from a given file.
+                                          
+                                          Note that custom user settings override all other system and repo-level
+                                          settings.
+                                          
+                                          It's also possible to disable all types of settings loading by
+                                          specifying an argument of 'false' or 'no'.
 
 -r REPO, --repo REPO                      
                                           repo to pull packages from
