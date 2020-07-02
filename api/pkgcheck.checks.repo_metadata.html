@@ -109,7 +109,7 @@
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.GlobalUseCheck.known_results">
-<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.UnusedGlobalUse'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.PotentialGlobalUse'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.PotentialLocalUse'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.GlobalUseCheck.known_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.PotentialGlobalUse'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.PotentialLocalUse'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.UnusedGlobalUse'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.GlobalUseCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -124,7 +124,7 @@
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.GlobalUseCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.GlobalUseCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.GlobalUseCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -158,7 +158,7 @@
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.LicenseGroupsCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.LicenseGroupsCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.LicenseGroupsCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -178,7 +178,7 @@ extraneous entries, and that the required hashes are in use.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.ManifestCheck.known_results">
-<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.UnknownManifest'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.DeprecatedChksum'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MissingChksum'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.UnnecessaryManifest'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MissingManifest'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCheck.known_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.MissingManifest'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.DeprecatedChksum'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.UnnecessaryManifest'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MissingChksum'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.UnknownManifest'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -188,7 +188,7 @@ extraneous entries, and that the required hashes are in use.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.ManifestCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7f8f39a7a278&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='package' &#64;0x7efe68c82278&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -213,7 +213,7 @@ different filenames with matching checksums.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.ManifestCollisionCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCollisionCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ManifestCollisionCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -319,12 +319,12 @@ the update files.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.PackageUpdatesCheck.known_results">
-<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.MultiMovePackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.OldMultiMovePackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.BadPackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MovedPackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.OldPackageUpdate'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.PackageUpdatesCheck.known_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">known_results</code><em class="property"> = frozenset({&lt;class 'pkgcheck.checks.repo_metadata.BadPackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.OldMultiMovePackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MovedPackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.OldPackageUpdate'&gt;, &lt;class 'pkgcheck.checks.repo_metadata.MultiMovePackageUpdate'&gt;})</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.PackageUpdatesCheck.known_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.PackageUpdatesCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='profiles' &#64;0x7f8f39a7a320&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.PackageUpdatesCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='profiles' &#64;0x7efe68c82320&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.PackageUpdatesCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -373,7 +373,7 @@ the update files.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.ProjectMetadataCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ProjectMetadataCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.ProjectMetadataCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -454,7 +454,7 @@ the update files.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.UnusedEclassesCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedEclassesCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedEclassesCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -515,7 +515,7 @@ the update files.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.UnusedLicensesCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedLicensesCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedLicensesCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -563,7 +563,7 @@ the update files.</p>
 
 <dl class="py attribute">
 <dt id="pkgcheck.checks.repo_metadata.UnusedMirrorsCheck.scope">
-<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7f8f39a7a208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedMirrorsCheck.scope" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scope</code><em class="property"> = &lt;Scope desc='repo' &#64;0x7efe68c82208&gt;</em><a class="headerlink" href="#pkgcheck.checks.repo_metadata.UnusedMirrorsCheck.scope" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

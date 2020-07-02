@@ -53,7 +53,7 @@ Main Options
 ------------
 
 --config CONFIG_FILE                      
-                                          config file to load scan settings from
+                                          use custom pkgcheck scan settings file
 
 -r REPO, --repo REPO                      
                                           repo to pull packages from

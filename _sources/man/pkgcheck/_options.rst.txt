@@ -30,19 +30,19 @@ Config Options
 ==============
 
 --add-config SECTION KEY VALUE  
-                                modify an existing configuration section
+                                modify existing pkgcore config section
 
 --new-config SECTION KEY VALUE  
-                                add a new configuration section
+                                add new pkgcore config section
 
 --empty-config                  
-                                do not load user/system configuration
+                                skip loading user/system pkgcore config
 
 --config PATH                   
-                                override location of config files
+                                use custom pkgcore config file
 
 --domain DOMAIN                 
-                                domain to use for this operation
+                                custom pkgcore domain to use for this operation
 
 Subcommands
 ===========
