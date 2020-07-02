@@ -555,11 +555,14 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">arches_addon</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-        <span class="c1"># use known stable arches if arches aren&#39;t specified</span>
+        <span class="n">target_repo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">target_repo</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">selected_arches</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">stable_arches</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="p">(</span>
-                <span class="n">repo</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">arches</span><span class="p">(</span><span class="s1">&#39;stable&#39;</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">target_repo</span><span class="o">.</span><span class="n">trees</span><span class="p">))</span>
+            <span class="c1"># use known stable arches (GLEP 72) if arches aren&#39;t specified</span>
+            <span class="n">stable_arches</span> <span class="o">=</span> <span class="n">target_repo</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">arches_desc</span><span class="p">[</span><span class="s1">&#39;stable&#39;</span><span class="p">]</span>
+            <span class="c1"># fallback to determining stable arches from profiles.desc if arches.desc doesn&#39;t exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">stable_arches</span><span class="p">:</span>
+                <span class="n">stable_arches</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="o">*</span><span class="p">(</span>
+                    <span class="n">repo</span><span class="o">.</span><span class="n">profiles</span><span class="o">.</span><span class="n">arches</span><span class="p">(</span><span class="s1">&#39;stable&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">target_repo</span><span class="o">.</span><span class="n">trees</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">stable_arches</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
 
