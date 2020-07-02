@@ -216,7 +216,10 @@
 
 
 <div class="viewcode-block" id="NonsolvableDepsInExp"><a class="viewcode-back" href="../../../api/pkgcheck.checks.visibility.html#pkgcheck.checks.visibility.NonsolvableDepsInExp">[docs]</a><span class="k">class</span> <span class="nc">NonsolvableDepsInExp</span><span class="p">(</span><span class="n">_NonsolvableDeps</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;No potential solution for dependency on exp profile.&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;No potential solution for dependency on exp profile.&quot;&quot;&quot;</span>
+
+    <span class="c1"># results require experimental profiles to be enabled</span>
+    <span class="n">_profile</span> <span class="o">=</span> <span class="s1">&#39;exp&#39;</span></div>
 
 
 <div class="viewcode-block" id="VisibilityCheck"><a class="viewcode-back" href="../../../api/pkgcheck.checks.visibility.html#pkgcheck.checks.visibility.VisibilityCheck">[docs]</a><span class="k">class</span> <span class="nc">VisibilityCheck</span><span class="p">(</span><span class="n">feeds</span><span class="o">.</span><span class="n">EvaluateDepSet</span><span class="p">,</span> <span class="n">feeds</span><span class="o">.</span><span class="n">QueryCache</span><span class="p">,</span> <span class="n">Check</span><span class="p">):</span>
