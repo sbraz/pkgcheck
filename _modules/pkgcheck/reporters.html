@@ -100,7 +100,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">out</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="n">verbosity</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_keywords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">keywords</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filtered_keywords</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">keywords</span>
 
         <span class="c1"># initialize result processing coroutines</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">report</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_report</span><span class="p">()</span><span class="o">.</span><span class="n">send</span>
