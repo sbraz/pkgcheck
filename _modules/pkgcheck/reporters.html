@@ -384,8 +384,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">format_str</span> <span class="o">=</span> <span class="n">format_str</span>
-        <span class="c1"># provide expansions for result desc and level properties</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">)</span>
+        <span class="c1"># provide expansions for result desc, level, and output name properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
 
     <span class="nd">@coroutine</span>
     <span class="k">def</span> <span class="nf">_process_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
