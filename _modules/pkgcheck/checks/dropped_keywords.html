@@ -71,8 +71,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">arches</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">arches</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DroppedKeywordsCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.dropped_keywords.html#pkgcheck.checks.dropped_keywords.DroppedKeywordsCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkgset</span><span class="p">):</span>
-        <span class="c1"># skip live ebuilds otherwise they&#39;re flagged</span>
-        <span class="n">pkgset</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">pkg</span><span class="o">.</span><span class="n">live</span><span class="p">]</span>
+        <span class="c1"># only consider non-live pkgs with KEYWORDS</span>
+        <span class="n">pkgset</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">keywords</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pkg</span><span class="o">.</span><span class="n">live</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pkgset</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span>
