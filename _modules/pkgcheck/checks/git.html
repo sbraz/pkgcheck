@@ -321,8 +321,8 @@
         <span class="sd">&quot;&quot;&quot;Check for issues due to package modifications.&quot;&quot;&quot;</span>
         <span class="n">pkg</span> <span class="o">=</span> <span class="n">modified</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="c1"># don&#39;t flag live ebuilds for RDEPEND changes</span>
         <span class="n">new_pkg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">versioned_atom</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># don&#39;t flag live ebuilds for RDEPEND changes</span>
         <span class="k">if</span> <span class="n">new_pkg</span><span class="o">.</span><span class="n">live</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -339,9 +339,12 @@
 
 <div class="viewcode-block" id="GitPkgCommitsCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.git.html#pkgcheck.checks.git.GitPkgCommitsCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkgset</span><span class="p">):</span>
         <span class="n">removed</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;D&#39;</span><span class="p">]</span>
+        <span class="n">renamed</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
+        <span class="c1"># packages not available in current repo</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">removed</span> <span class="o">+</span> <span class="n">renamed</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">removed</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">removal_checks</span><span class="p">(</span><span class="n">removed</span><span class="p">)</span>
-        <span class="n">modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">]</span>
+        <span class="n">modified</span> <span class="o">=</span> <span class="p">[</span><span class="n">pkg</span> <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgset</span> <span class="k">if</span> <span class="n">pkg</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">pkg</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">modified</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">modified_checks</span><span class="p">(</span><span class="n">modified</span><span class="p">)</span>
 
@@ -356,14 +359,12 @@
                 <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;summary missing matching package prefix&#39;</span>
                 <span class="k">yield</span> <span class="n">BadCommitSummary</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">summary</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="n">git_pkg</span><span class="o">.</span><span class="n">commit</span><span class="p">)</span>
 
-            <span class="c1"># remaining checks are irrelevant for removed packages</span>
-            <span class="k">if</span> <span class="n">git_pkg</span> <span class="ow">in</span> <span class="n">removed</span><span class="p">:</span>
+            <span class="c1"># remaining checks are irrelevant for old packages</span>
+            <span class="k">if</span> <span class="n">git_pkg</span> <span class="ow">in</span> <span class="n">old</span><span class="p">:</span>
                 <span class="k">continue</span>
 
-            <span class="c1"># Pull actual package object from repo. Note that ebuilds with</span>
-            <span class="c1"># sourcing errors will cause StopIteration to be raised,</span>
-            <span class="c1"># terminating this check, and should be caught by other checks.</span>
-            <span class="n">pkg</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">itermatch</span><span class="p">(</span><span class="n">git_pkg</span><span class="o">.</span><span class="n">versioned_atom</span><span class="p">))</span>
+            <span class="c1"># pull actual package object from repo</span>
+            <span class="n">pkg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">git_pkg</span><span class="o">.</span><span class="n">versioned_atom</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">pkg</span><span class="o">.</span><span class="n">ebuild</span><span class="o">.</span><span class="n">text_fileobj</span><span class="p">())</span>
 
             <span class="c1"># check copyright on new/modified ebuilds</span>
