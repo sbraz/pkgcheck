@@ -1981,20 +1981,20 @@ information.</p>
 <li><p>related check: <a class="reference internal" href="#eapicheck">EapiCheck</a></p></li>
 </ul>
 </div>
+<div class="section" id="deprecateddep">
+<h4>DeprecatedDep<a class="headerlink" href="#deprecateddep" title="Permalink to this headline">¶</a></h4>
+<p>Package dependencies matching deprecated packages flagged in profiles/package.deprecated.</p>
+<ul class="simple">
+<li><p>level: warning</p></li>
+<li><p>related check: <a class="reference internal" href="#dependencycheck">DependencyCheck</a></p></li>
+</ul>
+</div>
 <div class="section" id="deprecatedeapi">
 <h4>DeprecatedEapi<a class="headerlink" href="#deprecatedeapi" title="Permalink to this headline">¶</a></h4>
 <p>Package's EAPI is deprecated according to repo metadata.</p>
 <ul class="simple">
 <li><p>level: warning</p></li>
 <li><p>related check: <a class="reference internal" href="#eapicheck">EapiCheck</a></p></li>
-</ul>
-</div>
-<div class="section" id="deprecatedpkg">
-<h4>DeprecatedPkg<a class="headerlink" href="#deprecatedpkg" title="Permalink to this headline">¶</a></h4>
-<p>Package dependency is flagged in profiles/package.deprecated.</p>
-<ul class="simple">
-<li><p>level: warning</p></li>
-<li><p>related check: <a class="reference internal" href="#dependencycheck">DependencyCheck</a></p></li>
 </ul>
 </div>
 <div class="section" id="duplicatekeywords">
@@ -2983,7 +2983,7 @@ Instead they'll be caught by the UnstableOnly check.</p>
 <div class="section" id="dependencycheck">
 <h4>DependencyCheck<a class="headerlink" href="#dependencycheck" title="Permalink to this headline">¶</a></h4>
 <p>Check BDEPEND, DEPEND, RDEPEND, and PDEPEND.</p>
-<p>(known results: <a class="reference internal" href="#baddependency">BadDependency</a>, <a class="reference internal" href="#deprecatedpkg">DeprecatedPkg</a>, <a class="reference internal" href="#invalidbdepend">InvalidBdepend</a>,
+<p>(known results: <a class="reference internal" href="#baddependency">BadDependency</a>, <a class="reference internal" href="#deprecateddep">DeprecatedDep</a>, <a class="reference internal" href="#invalidbdepend">InvalidBdepend</a>,
 <a class="reference internal" href="#invaliddepend">InvalidDepend</a>, <a class="reference internal" href="#invalidpdepend">InvalidPdepend</a>, <a class="reference internal" href="#invalidrdepend">InvalidRdepend</a>, <a class="reference internal" href="#missingpackagerevision">MissingPackageRevision</a>,
 <a class="reference internal" href="#missingusedepdefault">MissingUseDepDefault</a>, <a class="reference internal" href="#nonexistentblocker">NonexistentBlocker</a>, <a class="reference internal" href="#outdatedblocker">OutdatedBlocker</a>, <a class="reference internal" href="#unstatediuse">UnstatedIuse</a>)</p>
 </div>
@@ -3462,8 +3462,8 @@ a custom timeout of 15 seconds:</p>
 <li><a class="reference internal" href="#badkeywords">BadKeywords</a></li>
 <li><a class="reference internal" href="#badprotocol">BadProtocol</a></li>
 <li><a class="reference internal" href="#bannedeapi">BannedEapi</a></li>
+<li><a class="reference internal" href="#deprecateddep">DeprecatedDep</a></li>
 <li><a class="reference internal" href="#deprecatedeapi">DeprecatedEapi</a></li>
-<li><a class="reference internal" href="#deprecatedpkg">DeprecatedPkg</a></li>
 <li><a class="reference internal" href="#duplicatekeywords">DuplicateKeywords</a></li>
 <li><a class="reference internal" href="#invalidbdepend">InvalidBdepend</a></li>
 <li><a class="reference internal" href="#invaliddepend">InvalidDepend</a></li>

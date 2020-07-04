@@ -1409,6 +1409,14 @@ Package's EAPI is banned according to repo metadata.
 - level: error
 - related check: `EapiCheck`_
 
+DeprecatedDep
+^^^^^^^^^^^^^
+
+Package dependencies matching deprecated packages flagged in profiles/package.deprecated.
+
+- level: warning
+- related check: `DependencyCheck`_
+
 DeprecatedEapi
 ^^^^^^^^^^^^^^
 
@@ -1416,14 +1424,6 @@ Package's EAPI is deprecated according to repo metadata.
 
 - level: warning
 - related check: `EapiCheck`_
-
-DeprecatedPkg
-^^^^^^^^^^^^^
-
-Package dependency is flagged in profiles/package.deprecated.
-
-- level: warning
-- related check: `DependencyCheck`_
 
 DuplicateKeywords
 ^^^^^^^^^^^^^^^^^

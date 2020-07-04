@@ -446,7 +446,7 @@ DependencyCheck
 
 Check BDEPEND, DEPEND, RDEPEND, and PDEPEND.
 
-(known results: `BadDependency`_, `DeprecatedPkg`_, `InvalidBdepend`_,
+(known results: `BadDependency`_, `DeprecatedDep`_, `InvalidBdepend`_,
 `InvalidDepend`_, `InvalidPdepend`_, `InvalidRdepend`_, `MissingPackageRevision`_,
 `MissingUseDepDefault`_, `NonexistentBlocker`_, `OutdatedBlocker`_, `UnstatedIuse`_)
 

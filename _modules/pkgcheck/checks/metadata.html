@@ -48,7 +48,7 @@
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">attrgetter</span>
 
-<span class="kn">from</span> <span class="nn">pkgcore.ebuild</span> <span class="kn">import</span> <span class="n">atom</span>
+<span class="kn">from</span> <span class="nn">pkgcore.ebuild</span> <span class="kn">import</span> <span class="n">atom</span> <span class="k">as</span> <span class="n">atom_mod</span>
 <span class="kn">from</span> <span class="nn">pkgcore.ebuild.atom</span> <span class="kn">import</span> <span class="n">atom</span> <span class="k">as</span> <span class="n">atom_cls</span>
 <span class="kn">from</span> <span class="nn">pkgcore.ebuild.eapi</span> <span class="kn">import</span> <span class="n">get_eapi</span>
 <span class="kn">from</span> <span class="nn">pkgcore.ebuild.misc</span> <span class="kn">import</span> <span class="n">sort_keywords</span>
@@ -213,6 +213,7 @@
 
     <span class="n">_type</span> <span class="o">=</span> <span class="s1">&#39;invalid&#39;</span></div>
 
+
 <div class="viewcode-block" id="UnknownUseFlags"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.UnknownUseFlags">[docs]</a><span class="k">class</span> <span class="nc">UnknownUseFlags</span><span class="p">(</span><span class="n">_UseFlagsResult</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Package IUSE contains unknown USE flags.&quot;&quot;&quot;</span>
 
@@ -230,7 +231,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">iuse_handler</span> <span class="o">=</span> <span class="n">use_addon</span>
 
 <div class="viewcode-block" id="IuseCheck.feed"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.IuseCheck.feed">[docs]</a>    <span class="k">def</span> <span class="nf">feed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg</span><span class="p">):</span>
-        <span class="n">invalid</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse_stripped</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">atom</span><span class="o">.</span><span class="n">valid_use_flag</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+        <span class="n">invalid</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pkg</span><span class="o">.</span><span class="n">iuse_stripped</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">atom_mod</span><span class="o">.</span><span class="n">valid_use_flag</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
         <span class="k">if</span> <span class="n">invalid</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">InvalidUseFlags</span><span class="p">(</span><span class="n">invalid</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
 
@@ -674,17 +675,18 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DeprecatedPkg"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.DeprecatedPkg">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedPkg</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Package dependency is flagged in profiles/package.deprecated.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DeprecatedDep"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.DeprecatedDep">[docs]</a><span class="k">class</span> <span class="nc">DeprecatedDep</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Package dependencies matching deprecated packages flagged in profiles/package.deprecated.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">atom</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">attr</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">atom</span> <span class="o">=</span> <span class="n">atom</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">atoms</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;deprecated </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">atom</span><span class="si">}</span><span class="s1">&#39;</span></div>
+        <span class="n">ies</span> <span class="o">=</span> <span class="n">pluralism</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">,</span> <span class="n">singular</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s1">&#39;ies&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s2">: deprecated dependenc</span><span class="si">{</span><span class="n">ies</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">atoms</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="BadDependency"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.BadDependency">[docs]</a><span class="k">class</span> <span class="nc">BadDependency</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Error</span><span class="p">):</span>
@@ -731,7 +733,7 @@
     <span class="n">required_addons</span> <span class="o">=</span> <span class="p">(</span><span class="n">addons</span><span class="o">.</span><span class="n">UseAddon</span><span class="p">,</span> <span class="n">git</span><span class="o">.</span><span class="n">GitAddon</span><span class="p">)</span>
     <span class="n">known_results</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">([</span>
         <span class="n">BadDependency</span><span class="p">,</span> <span class="n">MissingPackageRevision</span><span class="p">,</span> <span class="n">MissingUseDepDefault</span><span class="p">,</span>
-        <span class="n">OutdatedBlocker</span><span class="p">,</span> <span class="n">NonexistentBlocker</span><span class="p">,</span> <span class="n">UnstatedIuse</span><span class="p">,</span> <span class="n">DeprecatedPkg</span><span class="p">,</span>
+        <span class="n">OutdatedBlocker</span><span class="p">,</span> <span class="n">NonexistentBlocker</span><span class="p">,</span> <span class="n">UnstatedIuse</span><span class="p">,</span> <span class="n">DeprecatedDep</span><span class="p">,</span>
         <span class="n">InvalidDepend</span><span class="p">,</span> <span class="n">InvalidRdepend</span><span class="p">,</span> <span class="n">InvalidPdepend</span><span class="p">,</span> <span class="n">InvalidBdepend</span><span class="p">,</span>
     <span class="p">])</span>
 
@@ -837,8 +839,8 @@
                 <span class="k">yield</span> <span class="n">OutdatedBlocker</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">atom</span><span class="p">),</span> <span class="n">years</span><span class="p">,</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">nonexistent_blockers</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">NonexistentBlocker</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">atom</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">deprecated</span><span class="p">):</span>
-                <span class="k">yield</span> <span class="n">DeprecatedPkg</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="nb">str</span><span class="p">(</span><span class="n">atom</span><span class="p">),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
+            <span class="k">if</span> <span class="n">deprecated</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">DeprecatedDep</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">deprecated</span><span class="p">))),</span> <span class="n">pkg</span><span class="o">=</span><span class="n">pkg</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="BadKeywords"><a class="viewcode-back" href="../../../api/pkgcheck.checks.metadata.html#pkgcheck.checks.metadata.BadKeywords">[docs]</a><span class="k">class</span> <span class="nc">BadKeywords</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">VersionResult</span><span class="p">,</span> <span class="n">results</span><span class="o">.</span><span class="n">Warning</span><span class="p">):</span>
