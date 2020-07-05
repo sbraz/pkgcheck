@@ -47,6 +47,28 @@
             
   <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pkgcheck-0-7-7-2020-07-05">
+<h2>pkgcheck 0.7.7 (2020-07-05)<a class="headerlink" href="#pkgcheck-0-7-7-2020-07-05" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Avoid trying to match old packages against current repo for git support (#215).</p></li>
+<li><p>Rename DeprecatedPkg result keyword to DeprecatedDep and try to disambiguate its output
+message (#218).</p></li>
+<li><p>FormatReporter: Use an empty string for unmatched variables (#211) and add the result output
+name to the available attributes.</p></li>
+<li><p>DroppedKeywordsCheck: Disregard non-VCS pkgs without KEYWORDS (#224).</p></li>
+<li><p>Ignore license and keyword settings from system config for StableRequest results (#229).</p></li>
+<li><p>pkgcheck scan: Support output name arguments for -k/--keywords (#221).</p></li>
+<li><p>StableArchesAddon: Use known stable arches from arches.desc (GLEP 72) if available (#230).</p></li>
+<li><p>pkgcheck scan: Fully support custom user config files via --config.</p></li>
+<li><p>ProfilesAddon: Automatically enable experimental profiles for selected arches that only have
+experimental profiles (#222) and selected keywords that require them (#225).</p></li>
+<li><p>VisibilityCheck: Sort failed package atoms for NonsolvableDep results (#223).</p></li>
+<li><p>Filter package atoms from path list when scanning git commits (#217).</p></li>
+<li><p>Use a <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">stash</span></code> context manager when scanning commits so untracked files or uncommitted
+changes are ignored.</p></li>
+<li><p>Only add eclass directory when scanning git commits if it exists in the target repo (#231).</p></li>
+</ul>
+</div>
 <div class="section" id="pkgcheck-0-7-6-2020-02-09">
 <h2>pkgcheck 0.7.6 (2020-02-09)<a class="headerlink" href="#pkgcheck-0-7-6-2020-02-09" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -807,6 +829,7 @@ to run via pcheck.  See README for details.</p></li>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Release Notes</a><ul>
+<li><a class="reference internal" href="#pkgcheck-0-7-7-2020-07-05">pkgcheck 0.7.7 (2020-07-05)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-6-2020-02-09">pkgcheck 0.7.6 (2020-02-09)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-5-2020-01-26">pkgcheck 0.7.5 (2020-01-26)</a></li>
 <li><a class="reference internal" href="#pkgcheck-0-7-4-2020-01-11">pkgcheck 0.7.4 (2020-01-11)</a></li>
@@ -908,7 +931,7 @@ to run via pcheck.  See README for details.</p></li>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2006-2019, pkgcheck contributors.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>
